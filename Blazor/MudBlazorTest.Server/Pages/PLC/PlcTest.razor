@@ -1,0 +1,443 @@
+﻿@page "/testPLC"
+@using System.ComponentModel.DataAnnotations
+@using MudBlazorTest.Server.Shared.Components
+@using libplctag
+@using libplctag.DataTypes
+@using FluentValidation
+
+<style>
+	.contents {
+		display: flex;
+		flex-direction: row;
+		flex: 1 0 auto;
+		justify-content: center;
+		align-content: flex-start;
+
+	}
+
+	.contents-left {
+		flex: 2 0 auto;
+		display: flex;
+		flex-direction: column;
+		padding: 4px;
+		border: 1px solid white;
+	}
+
+	.contents-mid {
+		flex: 0 0 10px;
+	}
+
+	.contents-right {
+		background-color: #D0E89D;
+		flex: 1 0 auto;
+	}
+</style>
+
+@*Create a perfectly centered area to place the butto ns*@
+
+@* <div class="d-flex flex-grow-1 gap-4 my-4">
+	<MudPaper Class="invisible px-8 flex-none" Width="10%">
+
+	</MudPaper>
+	<MudPaper Class="flex-shrink-1 py-1" Elevation="3" Width="100%">
+
+	<div class="form">
+	<div class="form-header mb-1">
+	<div class="form-header-0 px-8 ">
+	<MudPaper></MudPaper>
+	</div>
+	<div class="form-header-1 ">
+	<MudText Typo="Typo.h5">Tag Entry Form</MudText>
+	</div>
+
+	<MudDivider Class="mx-0" DividerType="DividerType.FullWidth" Vertical="true" FlexItem="true" />
+	<div class="form-header-2 flex-auto">
+	<MudButton Color="Color.Primary" Variant="Variant.Outlined">Submit</MudButton>
+	</div>
+	</div>
+	<MudDivider DividerType="DividerType.FullWidth" />
+	<div class="form-body">
+	<div class="form-left pa-4">
+	<MudAutocomplete Margin="Margin.Dense" Dense="true" T="string" Label="Tag ID" @bind-Value="value1"
+	SearchFunc="@Search1" Variant="Variant.Filled" ShowProgressIndicator="true"
+	ProgressIndicatorColor="SelectedColor" />
+	<MudAutocomplete T="string" Label="Gateway" @bind-Value="value3" SearchFunc="@Search1"
+	Variant="Variant.Filled" ProgressIndicatorColor="SelectedColor">
+	<ProgressIndicatorInPopoverTemplate>
+	<MudList Clickable="false">
+	<MudListItem>
+	Loading...
+	</MudListItem>
+	</MudList>
+	</ProgressIndicatorInPopoverTemplate>
+	</MudAutocomplete>
+	<MudAutocomplete T="string" Label="COM Protocol" @bind-Value="value2" SearchFunc="@Search1"
+	Variant="Variant.Filled" ShowProgressIndicator="true">
+	<ProgressIndicatorTemplate>
+	<MudProgressLinear Size="Size.Small" Indeterminate="true" Color="SelectedColor" />
+	</ProgressIndicatorTemplate>
+	</MudAutocomplete>
+	</div>
+	<MudDivider Class="mx-0" DividerType="DividerType.Middle" Vertical="true" FlexItem="true" />
+
+	<div class="form-right pa-4">
+	<MudNumericField @bind-Value="IntValue" Label="Standard" Variant="Variant.Outlined" Min="0"
+	Max="10" />
+	<MudNumericField @bind-Value="DoubleValue" Label="Filled" Variant="Variant.Outlined" Min="0.0" />
+	<MudNumericField @bind-Value="DecimalValue" Label="Outlined" Variant="Variant.Outlined"
+	Step=".2M" />
+	</div>
+	</div>
+	</div>
+	</MudPaper>
+	<MudPaper Class="invisible px-8 flex-none" Width="10%">
+
+	</MudPaper>
+	</div> *@
+
+<TagForm />
+
+<MudDivider />
+
+<div class="contents gap-4 my-4">
+	<div class="contents-left">
+
+		<TagCard />
+		<TagCard />
+		<TagCard />
+		@* <MudGrid>
+			</MudGrid> *@
+	</div>
+	<div class="contents-mid">
+
+	</div>
+
+	<div class="contents-right">
+
+	</div>
+</div>
+
+
+<EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+	<DataAnnotationsValidator />
+	<MudGrid>
+		<MudItem xs="12" sm="7">
+			<MudCard>
+				<MudCardContent>
+					<MudTextField Label="First name" HelperText="Max. 8 characters" @bind-Value="model.Username"
+						For="@(() => model.Username)" />
+					<MudTextField Label="Email" Class="mt-3" @bind-Value="model.Email" For="@(() => model.Email)" />
+					<MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+						@bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password" />
+					<MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
+						@bind-Value="model.Password2" For="@(() => model.Password2)" InputType="InputType.Password" />
+				</MudCardContent>
+				<MudCardActions>
+					<MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary"
+						Class="ml-auto">Register</MudButton>
+				</MudCardActions>
+			</MudCard>
+		</MudItem>
+		<MudItem xs="12" sm="5">
+			<MudPaper Class="pa-4 mud-height-full">
+				<MudText Typo="Typo.subtitle2">Validation Summary</MudText>
+				@if (success)
+				{
+					<MudText Color="Color.Success">Success</MudText>
+				}
+				else
+				{
+					<MudText Color="@Color.Error">
+						<ValidationSummary />
+					</MudText>
+				}
+			</MudPaper>
+		</MudItem>
+		<MudItem xs="12">
+			<MudText Typo="Typo.body2" Align="Align.Center">
+				Fill out the form correctly to see the success message.
+			</MudText>
+		</MudItem>
+	</MudGrid>
+</EditForm>
+
+
+@code {
+	RegisterAccountForm model = new RegisterAccountForm();
+	bool success;
+
+	public class RegisterAccountForm
+	{
+		[Required]
+		[StringLength(8,ErrorMessage = "Name length can't be more than 8.")]
+		public string Username { get; set; } = "";
+
+		[Required]
+		[EmailAddress]
+		public string Email { get; set; } = "";
+
+		[Required]
+		[StringLength(30,ErrorMessage = "Password must be at least 8 characters long.",MinimumLength = 8)]
+		public string Password { get; set; } = "";
+
+		[Required]
+		[Compare(nameof(Password))]
+		public string Password2 { get; set; } = "";
+
+	}
+
+	private void OnValidSubmit(EditContext context)
+	{
+		success = true;
+		StateHasChanged();
+	}
+
+}
+
+
+
+@* ---- moved to code-behind file ----
+	@code {
+	[Inject] ISnackbar? Snackbar { get; set; }
+
+	MudForm? form;
+
+	OrderModelFluentValidator orderValidator = new OrderModelFluentValidator();
+
+	OrderDetailsModelFluentValidator orderDetailsValidator = new OrderDetailsModelFluentValidator();
+
+	OrderModel model = new OrderModel();
+
+	public class OrderModel
+	{
+	public string? Name { get; set; }
+	public string? Email { get; set; }
+	public string CCNumber { get; set; } = "4012 8888 8888 1881";
+	public AddressModel Address { get; set; } = new AddressModel();
+	public List<OrderDetailsModel> OrderDetails = new List<OrderDetailsModel>()
+	{
+	new OrderDetailsModel()
+	{
+	Description = "Perform Work order 1",
+	Offer = 100
+	},
+	new OrderDetailsModel()
+	};
+	}
+
+	public class AddressModel
+	{
+	public string? Address { get; set; }
+	public string? City { get; set; }
+	public string? Country { get; set; }
+	}
+
+	public class OrderDetailsModel
+	{
+	public string? Description { get; set; }
+	public decimal Offer { get; set; }
+	}
+
+	private async Task Submit()
+	{
+	await form!.Validate();
+
+	if (form.IsValid)
+	{
+	Snackbar!.Add("Submited!");
+	}
+	}
+
+	/// <summary>
+	/// A standard AbstractValidator which contains multiple rules and can be shared with the back end API
+	/// </summary>
+	/// <typeparam name="OrderModel"></typeparam>
+	public class OrderModelFluentValidator : AbstractValidator<OrderModel>
+	{
+	public OrderModelFluentValidator()
+	{
+	RuleFor(x => x.Name)
+	.NotEmpty()
+	.Length(1,100);
+
+	RuleFor(x => x.Email)
+	.Cascade(CascadeMode.Stop)
+	.NotEmpty()
+	.EmailAddress()
+	.MustAsync(async (value, cancellationToken) => await IsUniqueAsync(value));
+
+	RuleFor(x => x.CCNumber)
+	.NotEmpty()
+	.Length(1,100)
+	.CreditCard();
+
+	RuleFor(x => x.Address.Address)
+	.NotEmpty()
+	.Length(1,100);
+
+	RuleFor(x => x.Address.City)
+	.NotEmpty()
+	.Length(1,100);
+
+	RuleFor(x => x.Address.Country)
+	.NotEmpty()
+	.Length(1,100);
+
+	RuleForEach(x => x.OrderDetails)
+	.SetValidator(new OrderDetailsModelFluentValidator());
+	}
+
+	private async Task<bool> IsUniqueAsync(string email)
+	{
+	// Simulates a long running http call
+	await Task.Delay(2000);
+	return email.ToLower() != "test@test.com";
+	}
+
+	public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
+	{
+	var result = await ValidateAsync(ValidationContext<OrderModel>.CreateWithOptions((OrderModel)model, x =>
+	x.IncludeProperties(propertyName)));
+	if (result.IsValid)
+	return Array.Empty<string>();
+	return result.Errors.Select(e => e.ErrorMessage);
+	};
+	}
+
+	/// <summary>
+	/// A standard AbstractValidator for the Collection Object
+	/// </summary>
+	/// <typeparam name="OrderDetailsModel"></typeparam>
+	public class OrderDetailsModelFluentValidator : AbstractValidator<OrderDetailsModel>
+	{
+	public OrderDetailsModelFluentValidator()
+	{
+	RuleFor(x => x.Description)
+	.NotEmpty()
+	.Length(1,100);
+
+	RuleFor(x => x.Offer)
+	.GreaterThan(0)
+	.LessThan(999);
+	}
+
+	public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
+	{
+	var result = await ValidateAsync(ValidationContext<OrderDetailsModel>.CreateWithOptions((OrderDetailsModel)model, x =>
+	x.IncludeProperties(propertyName)));
+	if (result.IsValid)
+	return Array.Empty<string>();
+	return result.Errors.Select(e => e.ErrorMessage);
+	};
+	}
+	} *@
+
+
+@* ---- PlcTag First implementation ----
+	@code {
+
+
+	readonly string _ipAddress = "192.168.0.23";
+	readonly string _path = "1,0";
+
+	public class TagModel
+	{
+	//Auto increment the Tag Id
+	[Key, Required]
+	public int ID { get; set; }
+
+	[Required]
+	public string? Name { get; set; }
+
+	public DebugLevel DebugLevel { get; set; } = DebugLevel.None;
+	public TimeSpan Timeout { get; set; } = TimeSpan.FromMilliseconds(5000);
+	public TimeSpan AutoUpdateTimer { get; set; }
+
+	public short Value { get; set; }
+
+	}
+
+
+	// when the form is validated and submitted
+	private async Task OnValidSubmit()
+	{
+	// assign the form values to the model
+	var userTag = new TagModel
+	{
+	Name = "Test",
+	DebugLevel = DebugLevel.None,
+	Timeout = TimeSpan.FromMilliseconds(5000),
+	AutoUpdateTimer = TimeSpan.FromMilliseconds(5000),
+	Value = 0
+	};
+
+	// create a new tag
+	var tag = new Tag<IntPlcMapper, short>()
+	{
+	Name = userTag.Name,
+	Gateway = _ipAddress,
+	Path = _path,
+	PlcType = PlcType.Slc500,
+	Protocol = Protocol.ab_eip,
+	Timeout = _plcTimeout,
+	AutoSyncReadInterval = TimeSpan.FromMilliseconds(1000),
+	DebugLevel = DebugLevel.Info,
+	};
+
+
+
+
+	}
+	}*@
+
+
+@* <MudCard> Form Validation Sample
+	<MudForm Model="@model" @ref="@form" Validation="@(orderValidator.ValidateValue)" ValidationDelay="0">
+	<MudCardContent>
+	<MudTextField @bind-Value="model.Name" For="@(() => model.Name)" Immediate="true" Label="Name" />
+
+	<MudTextField @bind-Value="model.Email" For="@(() => model.Email)" Immediate="true" Label="Email" />
+
+	<MudTextField @bind-Value="model.CCNumber" For="@(() => model.CCNumber)" Immediate="true"
+	Label="Credit card nr" />
+
+	<MudTextField @bind-Value="model.Address.Address" For="@(() => model.Address.Address)"
+	Immediate="true" Label="Address" />
+
+	<MudTextField @bind-Value="model.Address.City" For="@(() => model.Address.City)" Immediate="true"
+	Label="City" />
+
+	<MudTextField @bind-Value="model.Address.Country" For="@(() => model.Address.Country)"
+	Immediate="true" Label="Country" />
+	</MudCardContent>
+	<MudCardContent Class="pa-0">
+
+	<MudTable Items="@model.OrderDetails" Hover="true" Breakpoint="Breakpoint.None" Dense="@true"
+	Elevation="0">
+	<HeaderContent>
+	<MudTh>Description</MudTh>
+	<MudTh>Offer</MudTh>
+	</HeaderContent>
+	<RowTemplate>
+	<MudTd DataLabel="Description">
+	<MudForm Model="@context" Validation=@(orderDetailsValidator.ValidateValue)>
+	<MudTextField Label="Enter Description" @bind-Value="context.Description"
+	For="(() => context.Description)" />
+	</MudForm>
+	</MudTd>
+	<MudTd DataLabel="Offer">
+	<MudForm Model="@context">
+	<MudNumericField Label="Enter Offer" @bind-Value="context.Offer"
+	Validation=@(orderDetailsValidator.ValidateValue) For="(() => context.Offer)" />
+	</MudForm>
+	</MudTd>
+	</RowTemplate>
+	</MudTable>
+
+	</MudCardContent>
+	</MudForm>
+	<MudCardActions>
+	<MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto"
+	OnClick="@(async () => await Submit())">Order</MudButton>
+	</MudCardActions>
+	</MudCard> *@

@@ -1,0 +1,181 @@
+@using System.ComponentModel.DataAnnotations
+@using MudBlazorTest.Server.Shared.Components
+@using libplctag
+@using libplctag.DataTypes
+@using FluentValidation
+
+<style>
+	.form {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.form-header {
+		display: flex;
+		flex-direction: row;
+		flex: 1 0 auto;
+		align-items: center;
+
+		/*
+			background-color: pink;
+			*/
+	}
+
+	.form-header-0 {
+		flex: 0 1 10%;
+		/*
+		background-color: red;
+		*/
+	}
+
+	.form-header-1 {
+		text-align: center;
+		flex-grow: 1;
+		flex-shrink: 1;
+		flex-basis: 80%;
+		/*
+		background-color: green;
+		*/
+	}
+
+	.form-header-2 {
+		flex: 0 1 10%;
+		margin-left: 4px;
+		margin-right: 4px;
+		/* 
+		background-color: yellow; 
+		*/
+	}
+
+	.form-body {
+		display: flex;
+		flex-direction: row;
+		/*background-color: aliceblue;
+		*/
+	}
+
+	.form-left,
+	.form-right {
+		width: 50%;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		text-align: center;
+	}
+
+	.form-right>label {
+		margin: 10px;
+	}
+
+</style>
+
+@*Create a perfectly centered area to place the butto ns*@
+
+<div class="d-flex flex-grow-1 gap-4 my-4">
+	<MudPaper Class="invisible px-8 flex-none" Width="10%">
+
+	</MudPaper>
+	<MudPaper Class="flex-shrink-1 py-1" Elevation="3" Width="100%">
+
+		<div class="form">
+			<div class="form-header  mb-1">
+				<div class="form-header-0 px-8 ">
+					<MudPaper></MudPaper>
+				</div>
+				<div class="form-header-1 ">
+					<MudText Typo="Typo.h5">Tag Entry Form</MudText>
+				</div>
+
+				@* <MudDivider Class="mx-0" DividerType="DividerType.FullWidth" Vertical="true" FlexItem="true" /> *@
+				<div class="form-header-2 flex-auto">
+					<MudButton Class="Elevation" Color="Color.Primary" Variant="Variant.Filled">Submit</MudButton>
+				</div>
+			</div>
+			<MudDivider DividerType="DividerType.FullWidth" />
+			<div class="form-body">
+				<div class="form-left pa-4">
+					<MudAutocomplete Margin="Margin.Dense" Dense="true" T="string" Label="Tag ID" @bind-Value="value1"
+						SearchFunc="@Search1" Variant="Variant.Filled" ShowProgressIndicator="true"
+						ProgressIndicatorColor="SelectedColor" />
+					<MudAutocomplete T="string" Label="Gateway" @bind-Value="value3" SearchFunc="@Search1"
+						Variant="Variant.Filled" ProgressIndicatorColor="SelectedColor">
+						<ProgressIndicatorInPopoverTemplate>
+							<MudList Clickable="false">
+								<MudListItem>
+									Loading...
+								</MudListItem>
+							</MudList>
+						</ProgressIndicatorInPopoverTemplate>
+					</MudAutocomplete>
+					<MudAutocomplete T="string" Label="COM Protocol" @bind-Value="value2" SearchFunc="@Search1"
+						Variant="Variant.Filled" ShowProgressIndicator="true">
+						<ProgressIndicatorTemplate>
+							<MudProgressLinear Size="Size.Small" Indeterminate="true" Color="SelectedColor" />
+						</ProgressIndicatorTemplate>
+					</MudAutocomplete>
+				</div>
+				<MudDivider Class="mx-0" DividerType="DividerType.Middle" Vertical="true" FlexItem="true" />
+
+				<div class="form-right pa-4">
+					<MudNumericField @bind-Value="IntValue" Label="Standard" Variant="Variant.Outlined" Min="0"
+						Max="10" />
+					<MudNumericField @bind-Value="DoubleValue" Label="Filled" Variant="Variant.Outlined" Min="0.0" />
+					<MudNumericField @bind-Value="DecimalValue" Label="Outlined" Variant="Variant.Outlined"
+						Step=".2M" />
+				</div>
+			</div>
+		</div>
+	</MudPaper>
+	<MudPaper Class="invisible px-8 flex-none" Width="10%">
+
+	</MudPaper>
+</div>
+
+@code {
+	public Color SelectedColor { get; set; } = Color.Info;
+	public static int plcTimeout = 5000;
+
+	private string? value1;
+	private string? value2;
+	private string? value3;
+
+	private string[] _tags =
+	{
+"O0:0/1", "I1:0/1", "B3:0/1",
+
+};
+	public int IntValue { get; set; }
+	public double DoubleValue { get; set; }
+	public decimal DecimalValue { get; set; }
+
+	//readonly string _ipAddress = "192.168.0.23";
+	//readonly string _path = "1,0";
+
+	public class TagModel
+	{
+		//Auto increment the Tag Id
+		[Key, Required]
+		public int ID { get; set; }
+
+		[Required]
+		public string? Name { get; set; }
+
+		public DebugLevel DebugLevel { get; set; } = DebugLevel.None;
+		public TimeSpan Timeout { get; set; } = TimeSpan.FromMilliseconds(plcTimeout);
+		public TimeSpan AutoUpdateTimer { get; set; }
+
+		public short Value { get; set; }
+
+	}
+
+	private async Task<IEnumerable<string>> Search1(string value)
+	{
+		// In real life use an asynchronous function for fetching data from an api.
+		await Task.Delay(500);
+
+		// if text is null or empty, show complete list
+		if (string.IsNullOrEmpty(value))
+			return _tags;
+		return _tags.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+	}
+}

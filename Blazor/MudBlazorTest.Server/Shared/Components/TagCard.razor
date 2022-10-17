@@ -1,0 +1,98 @@
+﻿<style>
+    .card-left {
+        flex: 1 0 20%;
+        text-align: center;
+    }
+
+    .card-right {
+        margin-inline-start: 20px;
+        flex: 1 0 80%;
+
+    }
+</style>
+
+
+
+<MudItem xs="12">
+    <MudGrid Justify="@justification" Spacing="0" Class="my-1">
+        @for (int i = 0; i < papers; i++)
+        {
+            int localindex = i;
+
+            <MudItem xs="@breaks[localindex]">
+                <MudPaper Class="d-inline-flex flex-row align-center mud-width-full" Elevation="5">
+
+                    <div class="card-left">
+                        <MudText Style="margin:auto" Typo=" Typo.subtitle1" Align="Align.Center">@breaks[localindex]
+                        </MudText>
+                        @* <MudPaper Class="d-flex ml-2 flex-column justify-center">
+                            @* <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowUp"
+                            OnClick="(()=>UpdateBreaks(localindex,1))" Size="Size.Small" />
+
+                            <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                            OnClick="(()=>UpdateBreaks(localindex,-1))" Size="Size.Small" />
+                            </MudPaper> *@
+                    </div>
+                    <MudDivider Class="mx-0 gap-0" DividerType="DividerType.FullWidth" Vertical="true" FlexItem="true" />
+                    <div class="card-right">
+                        <MudStack Spacing="1">
+                            <MudText Typo="Typo.caption">TagID: @localindex</MudText>
+                            <MudText>Content</MudText>
+                        </MudStack>
+                    </div>
+
+                </MudPaper>
+            </MudItem>
+        }
+    </MudGrid>
+</MudItem>
+
+
+@code {
+
+    int _papers = 1;
+    int papers { get { return _papers; } set { UpdatePapers(value); } }
+
+    int[] breaks = new int[2] { 12, 12 };
+
+    Justify justification = Justify.Center;
+
+    void UpdatePapers(int value)
+    {
+
+        int[] newbreaks = Enumerable.Repeat(3, value).ToArray();
+
+        for (int i = 0; i < newbreaks.Length; i++)
+        {
+            if (i < breaks.Length)
+            {
+                newbreaks[i] = breaks[i];
+            }
+        }
+
+        breaks = newbreaks;
+
+        _papers = value;
+
+        StateHasChanged();
+    }
+
+    void UpdateBreaks(int index, int changeamount)
+    {
+        List<int> newbreaks = breaks.ToList();
+        if (newbreaks[index] + changeamount > 12 || newbreaks[index] + changeamount < 1) return; //don't go above 12 or below 1
+        newbreaks[index] += changeamount;
+
+        breaks = newbreaks.ToArray();
+
+        StateHasChanged();
+    }
+
+    void AddPaper()
+    {
+        papers++;
+    }
+
+
+
+}
