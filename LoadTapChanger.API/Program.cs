@@ -15,7 +15,9 @@ builder.Services
     .AddSignalR();
 
 builder.Services.AddDbContext<DataContext>(options =>
-options.UseSqlite(builder.Configuration.GetConnectionString("SqliteDb")));
+options.UseSqlite(builder.Configuration.GetConnectionString("SqliteDb"),
+options => options.MigrationsAssembly("LoaddTapChanger.API")));
+
 
 builder.Services.AddCors(options =>
 {
@@ -32,7 +34,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app
+    _ = app
         .UseSwagger()
         .UseSwaggerUI();
 }

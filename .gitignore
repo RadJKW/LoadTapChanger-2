@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+LoadTapChanger.API/LoadTapChanger.db-shm
+LoadTapChanger.API/LoadTapChanger.db-wal
