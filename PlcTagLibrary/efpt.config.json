@@ -1,0 +1,49 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "LoadTapChangerDBContext",
+   "ContextNamespace": "Datas",
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": "Modelss",
+   "OutputContextPath": "Datas",
+   "OutputPath": "Modelss",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "PlcTagLibrary",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[MicrologixPlcs]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MicrologixTags]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ListTagsByPLC]",
+         "ObjectType": 3
+      }
+   ],
+   "UiHint": "pydev-001.LoadTapChangerDB.dbo",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

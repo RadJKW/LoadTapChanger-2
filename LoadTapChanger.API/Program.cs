@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PlcTagLibrary.Data;
+using Microsoft.Extensions.Hosting;
+using PlcTagLibrary;
+using PlcTagLibrary.Datas;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +16,17 @@ builder.Services
 builder.Services
     .AddSignalR();
 
-builder.Services.AddDbContext<DataContext>(options =>
-options.UseSqlite(builder.Configuration.GetConnectionString("SqliteDb"),
-options => options.MigrationsAssembly("LoaddTapChanger.API")));
+//builder.Services.AddDbContext<DataContext>(options =>
+//options.UseSqlite(builder.Configuration.GetConnectionString("SqliteDb"),
+//options => options.MigrationsAssembly("LoaddTapChanger.API")));
+
+//builder.Services.AddSqlServer<LoadTapChangerDBContext>(builder.Configuration.GetConnectionString("SqlServerDb"));
+
+
+//options =>
+//options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerDb"),
+//options => options.MigrationsAssembly(typeof(DataContext).Assembly.FullName))); ;
+
 
 
 builder.Services.AddCors(options =>
@@ -30,6 +40,24 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<LoadTapChangerDBContext>();
+
+
+        //DataSeeder.Initialize(context);
+    }
+    catch (Exception)
+    {
+        Console.WriteLine("An error occurred while seeding the database.");
+    }
+}
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
