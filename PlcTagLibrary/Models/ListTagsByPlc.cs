@@ -2,18 +2,15 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-
+                                                  
 namespace PlcTagLibrary.Models
 {
-    public partial class MicrologixTag
+    public partial class ListTagsByPlc
     {
-        public int TagId { get; set; }
-        public string CustomName { get; set; }
+        public string Name { get; set; }
+        public string Gateway { get; set; }
+        public string TagType { get; set; }
         public string ConfiguredName { get; set; }
         public int? Value { get; set; }
-        public string TagType { get; set; }
-        public int? PlcDeviceId { get; set; }
-
-        public virtual MicrologixPlc PlcDevice { get; set; }
     }
 }
