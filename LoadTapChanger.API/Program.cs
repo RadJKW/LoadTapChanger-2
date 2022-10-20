@@ -1,7 +1,7 @@
 ﻿using LoadTapChanger.API;
-using LoadTapChanger.API.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using PlcTagLibrary.Configurations;
 using PlcTagLibrary.Data;
 using PlcTagLibrary.Repositories;
 
@@ -51,6 +51,7 @@ using (var scope = app.Services.CreateScope())
 
         var context = services.GetRequiredService<LoadTapChangerDBContext>();
         // TODO: implement DataSeeder
+        //await DataSeeder.SeedDataAsync(context);
     }
     catch (Exception)
     {

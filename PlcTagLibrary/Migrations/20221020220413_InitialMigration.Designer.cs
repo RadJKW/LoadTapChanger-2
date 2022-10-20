@@ -12,8 +12,8 @@ using PlcTagLibrary.Data;
 namespace PlcTagLibrary.Migrations
 {
     [DbContext(typeof(LoadTapChangerDBContext))]
-    [Migration("20221019223715_SeedDataMigration")]
-    partial class SeedDataMigration
+    [Migration("20221020220413_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,7 +61,7 @@ namespace PlcTagLibrary.Migrations
 
                     b.Property<string>("DefaultName")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("nvarchar(max)")
                         .HasComputedColumnSql("('PLC' + '-' + CAST([PlcId] as varchar(10)))", false);
 
                     b.Property<string>("Gateway")
@@ -102,6 +102,15 @@ namespace PlcTagLibrary.Migrations
                             PlcType = "Slc500",
                             Protocol = "ab_eip",
                             TimeoutSeconds = (short)3
+                        },
+                        new
+                        {
+                            PlcId = 2,
+                            Gateway = "192.168.0.200",
+                            Name = "Micrologix1200",
+                            PlcType = "ControlLogix",
+                            Protocol = "ab_eip",
+                            TimeoutSeconds = (short)5
                         });
                 });
 
@@ -156,6 +165,22 @@ namespace PlcTagLibrary.Migrations
                             TagId = 2,
                             CustomName = "Input:1",
                             PlcDeviceId = 1,
+                            RslinxTagName = "I1:0/1",
+                            TagType = 1
+                        },
+                        new
+                        {
+                            TagId = 3,
+                            CustomName = "Output:1",
+                            PlcDeviceId = 2,
+                            RslinxTagName = "O0:0/1",
+                            TagType = 0
+                        },
+                        new
+                        {
+                            TagId = 4,
+                            CustomName = "Input:1",
+                            PlcDeviceId = 2,
                             RslinxTagName = "I1:0/1",
                             TagType = 1
                         });

@@ -9,27 +9,79 @@ using PlcTagLibrary.Data;
 using PlcTagLibrary.Dtos.MicrologixPLC;
 using PlcTagLibrary.Models;
 
-namespace PlcTagLibrary.Repositories;
-public class MicrologixPlcRepository : GenericRepository<MicrologixPlc>, IMicrologixPlcRepository
+namespace PlcTagLibrary.Repositories
 {
-    private readonly LoadTapChangerDBContext _context;
-    private readonly IMapper _mapper;
-
-    public MicrologixPlcRepository(LoadTapChangerDBContext context, IMapper mapper) : base(context, mapper)
+    public class MicrologixPlcRepository : GenericRepository<MicrologixPlc>, IMicrologixPlcRepository
     {
-        _context = context;
-        _mapper = mapper;
-    }
+        private readonly LoadTapChangerDBContext _context;
+        private readonly IMapper _mapper;
 
-    public async Task<DetailsPlcDto> GetPlcDetailsAsync(int id)
-    {
-        var plc = await _context.MicrologixPlcs
-                    .Include(plc => plc.PlcId)
-                    .ProjectTo<DetailsPlcDto>(_mapper.ConfigurationProvider)
+        public MicrologixPlcRepository(LoadTapChangerDBContext context, IMapper mapper) : base(context, mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
+
+        public async Task<ServiceResponse<IEnumerable<ReadPlcDto>>> GetAllPlcAsync()
+        {
+            var response = new ServiceResponse<IEnumerable<ReadPlcDto>>();
+            try
+            {
+                var plc = await _context.MicrologixPlcs.ToListAsync();
+                var plcDto = _mapper.Map<IEnumerable<ReadPlcDto>>(plc);
+                response.Data = plcDto;
+            }
+            //return the error so the controller can handle it
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+
+            }
+            return response;
+        }
+
+        public async Task<ServiceResponse<DetailsPlcDto>> GetPlcDetailsAsync(int id)
+        {
+            var response = new ServiceResponse<DetailsPlcDto>();
+            try
+            {
+                var plc = await _context.MicrologixPlcs
+                           .ProjectTo<DetailsPlcDto>(_mapper.ConfigurationProvider)
+                           .Include(plc => plc.PlcTags)
+                           .Where(plc => plc.Id == id)
+                           .FirstOrDefaultAsync();
+
+
+                response.Data = plc;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
+
+        }
+
+        public async Task<ServiceResponse<ReadPlcDto>> GetPlcByIdAsync(int id)
+        {
+            var response = new ServiceResponse<ReadPlcDto>();
+            try
+            {
+                var plc = await _context.MicrologixPlcs
+                    .ProjectTo<ReadPlcDto>(_mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync(q => q.Id == id);
+                response.Data = plc;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
 
-        return plc!;
 
+        }
     }
 }
-

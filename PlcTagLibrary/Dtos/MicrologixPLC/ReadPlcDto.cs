@@ -8,5 +8,5 @@ public class ReadPlcDto : BaseDto
 {
     public string? Name { get; set; }
     public string? Gateway { get; set; }
-    public PlcType PlcType { get; set; }
+    public string? PlcType { get; set; }
 }

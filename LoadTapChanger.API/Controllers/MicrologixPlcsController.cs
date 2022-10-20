@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using LoadTapChanger.API.Static;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PlcTagLibrary.Data;
-using PlcTagLibrary.Dtos.MicrologixPLC;
 using PlcTagLibrary.Models;
 using PlcTagLibrary.Repositories;
 
@@ -13,48 +11,42 @@ namespace LoadTapChanger.API.Controllers
     [ApiController]
     public class MicrologixPlcsController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly ILogger<MicrologixPlcsController> _logger;
         private readonly LoadTapChangerDBContext _context;
-        private readonly IMapper _mapper;
         private readonly IMicrologixPlcRepository _plcRepository;
 
-        public MicrologixPlcsController(ILogger<MicrologixPlcsController> logger, LoadTapChangerDBContext context, IMapper mapper, IMicrologixPlcRepository plcRepository)
+        public MicrologixPlcsController(ILogger<MicrologixPlcsController> logger, IMapper mapper, LoadTapChangerDBContext context, IMicrologixPlcRepository plcRepository)
         {
             _logger = logger;
-            _context = context;
             _mapper = mapper;
+            _context = context;
             _plcRepository = plcRepository;
         }
 
         // GET: api/MicrologixPlcs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MicrologixPlc>>> GetPlcAll()
+        public async Task<ActionResult<ServiceResponse<IEnumerable<MicrologixPlc>>>> GetPlcs()
         {
-            var plc = await _plcRepository.GetAllAsync();
-            var plcDto = _mapper.Map<IEnumerable<ReadPlcDto>>(plc);
-
-            return Ok(plcDto);
+            return Ok(await _plcRepository.GetAllPlcAsync());
         }
 
         // GET: api/MicrologixPlcs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<MicrologixPlc>> GetPlc(int id)
+        public async Task<ActionResult<ServiceResponse<MicrologixPlc>>> GetPlc(int id)
         {
+            return Ok(await _plcRepository.GetPlcByIdAsync(id));
 
-            try
-            {
-                var plc = await _plcRepository.GetAsync(id);
-                var plcDto = _mapper.Map<ReadPlcDto>(plc);
-                if (plc == null)
-                {
-                    return NotFound();
-                }
-                return Ok(plcDto);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            // try
+            // {
+            //     var plc = await _plcRepository.GetAsync(id);
+            //     var plcDto = _mapper.Map<ReadPlcDto>(plc);
+            //     return plc == null ? (ActionResult<MicrologixPlc>)NotFound() : (ActionResult<MicrologixPlc>)Ok(plcDto);
+            // }
+            // catch (Exception)
+            // {
+            //     throw;
+            // }
 
 
         }
@@ -62,24 +54,24 @@ namespace LoadTapChanger.API.Controllers
         [HttpGet("details/{id}")]
         public async Task<ActionResult<MicrologixPlc>> GetPlcDetails(int id)
         {
-            try
-            {
-                var plc = await _plcRepository.GetPlcDetailsAsync(id);
-                if (plc == null)
-                {
+            return Ok(await _plcRepository.GetPlcDetailsAsync(id));
+            // try
+            // {
+            //     var plc = await _plcRepository.GetPlcDetailsAsync(id);
+            //     if (plc == null)
+            //     {
+            //         _logger.LogWarning(message: $"Record Not Found");
+            //         return NotFound();
+            //     }
+            //     return Ok(plc);
+            // }
+            // catch (Exception ex)
+            // {
+            //     var func = nameof(GetPlcDetails);
 
-                    _logger.LogWarning(message: $"Record Not Found");
-                    return NotFound();
-                }
-                return Ok(plc);
-            }
-            catch (Exception ex)
-            {
-                var func = nameof(GetPlcDetails);
-
-                _logger.LogError(message: "Error: {func} - ID: {id} - {ex.Message}", func, id, ex.Message);
-                return StatusCode(500, ErrorMessages.Error500);
-            }
+            //     _logger.LogError(message: "Error: {func} - ID: {id} - {ex.Message}", func, id, ex.Message);
+            //     return StatusCode(500, ErrorMessages.Error500);
+            // }
 
         }
 
@@ -97,7 +89,7 @@ namespace LoadTapChanger.API.Controllers
 
             try
             {
-                await _context.SaveChangesAsync();
+                _ = await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -119,8 +111,8 @@ namespace LoadTapChanger.API.Controllers
         [HttpPost]
         public async Task<ActionResult<MicrologixPlc>> AddPlc(MicrologixPlc micrologixPlc)
         {
-            _context.MicrologixPlcs.Add(micrologixPlc);
-            await _context.SaveChangesAsync();
+            _ = _context.MicrologixPlcs.Add(micrologixPlc);
+            _ = await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMicrologixPlc", new { id = micrologixPlc.PlcId }, micrologixPlc);
         }
@@ -135,8 +127,8 @@ namespace LoadTapChanger.API.Controllers
                 return NotFound();
             }
 
-            _context.MicrologixPlcs.Remove(micrologixPlc);
-            await _context.SaveChangesAsync();
+            _ = _context.MicrologixPlcs.Remove(micrologixPlc);
+            _ = await _context.SaveChangesAsync();
 
             return NoContent();
         }

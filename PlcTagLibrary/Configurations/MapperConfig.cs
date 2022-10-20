@@ -6,15 +6,14 @@ using PlcTagLibrary.Dtos.MicrologixPLC;
 using PlcTagLibrary.Dtos.PlcTag;
 using PlcTagLibrary.Models;
 
-namespace LoadTapChanger.API.Configurations;
+namespace PlcTagLibrary.Configurations;
 
 public class MapperConfig : Profile
 {
     public MapperConfig()
     {
-
+        // map the ReadPlcDto.Id to MicrologixPlc.PlcId
         CreateMap<ReadPlcDto, MicrologixPlc>()
-            // map the ReadPlcDto.Id to MicrologixPlc.PlcId
             .ForMember(dest => dest.PlcId, opt => opt.MapFrom(src => src.Id))
             .ReverseMap();
 

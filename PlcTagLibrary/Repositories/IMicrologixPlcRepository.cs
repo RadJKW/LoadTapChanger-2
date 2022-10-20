@@ -5,9 +5,14 @@
 using PlcTagLibrary.Dtos.MicrologixPLC;
 using PlcTagLibrary.Models;
 
-namespace PlcTagLibrary.Repositories;
-
-public interface IMicrologixPlcRepository : IGenericRepository<MicrologixPlc>
+namespace PlcTagLibrary.Repositories
 {
-    Task<DetailsPlcDto> GetPlcDetailsAsync(int id);
+    public interface IMicrologixPlcRepository : IGenericRepository<MicrologixPlc>
+    {
+        Task<ServiceResponse<IEnumerable<ReadPlcDto>>> GetAllPlcAsync();
+
+        Task<ServiceResponse<DetailsPlcDto>> GetPlcDetailsAsync(int id);
+
+        Task<ServiceResponse<ReadPlcDto>> GetPlcByIdAsync(int id);
+    }
 }
