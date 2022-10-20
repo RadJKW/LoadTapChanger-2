@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PlcTagLibrary.Models;
 
 namespace PlcTagLibrary.Configurations;
-public class MicrologixTagConfig : IEntityTypeConfiguration<MicrologixTag>
+public class MicrologixTagConfig : IEntityTypeConfiguration<PlcTag>
 {
-    public void Configure(EntityTypeBuilder<MicrologixTag> builder)
+    public void Configure(EntityTypeBuilder<PlcTag> builder)
 
     {
         // not implemented 

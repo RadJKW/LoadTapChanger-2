@@ -15,7 +15,7 @@ namespace PlcTagLibrary.Migrations
                     PlcId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
-                    DefaultName = table.Column<int>(type: "int", nullable: true, computedColumnSql: "('PLC-'+[PlcId])", stored: false),
+                    DefaultName = table.Column<string>(type: "nvarchar(64)", nullable: true, computedColumnSql: "('PLC' + '-' + CAST([PlcId] as varchar(10)))", stored: false),
                     Gateway = table.Column<string>(type: "varchar(15)", unicode: false, maxLength: 15, nullable: true),
                     TimeoutSeconds = table.Column<short>(type: "smallint", nullable: false),
                     PlcType = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -27,20 +27,20 @@ namespace PlcTagLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MicrologixTags",
+                name: "PlcTags",
                 columns: table => new
                 {
                     TagId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomName = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
-                    ConfiguredName = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
+                    RslinxTagName = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     Value = table.Column<int>(type: "int", nullable: true),
-                    TagType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TagType = table.Column<int>(type: "int", nullable: false),
                     PlcDeviceId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MicrologixTags", x => x.TagId);
+                    table.PrimaryKey("PK_PlcTags", x => x.TagId);
                     table.ForeignKey(
                         name: "FK_PlcTag_Plc",
                         column: x => x.PlcDeviceId,
@@ -58,21 +58,21 @@ namespace PlcTagLibrary.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_MicrologixTags_PlcDeviceId",
-                table: "MicrologixTags",
+                table: "PlcTags",
                 column: "PlcDeviceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MicrologixTags_TagId_CustomName_ConfiguredName",
-                table: "MicrologixTags",
-                columns: new[] { "TagId", "CustomName", "ConfiguredName" },
+                table: "PlcTags",
+                columns: new[] { "TagId", "CustomName", "RslinxTagName" },
                 unique: true,
-                filter: "([CustomName] IS NOT NULL AND [ConfiguredName] IS NOT NULL)");
+                filter: "([CustomName] IS NOT NULL AND [RslinxTagName] IS NOT NULL)");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MicrologixTags");
+                name: "PlcTags");
 
             migrationBuilder.DropTable(
                 name: "MicrologixPlcs");

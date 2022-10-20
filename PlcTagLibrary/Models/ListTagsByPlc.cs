@@ -10,7 +10,7 @@ namespace PlcTagLibrary.Models
         public string Name { get; set; }
         public string Gateway { get; set; }
         public string TagType { get; set; }
-        public string ConfiguredName { get; set; }
+        public string RslinxTagName { get; set; }
         public int? Value { get; set; }
     }
 }

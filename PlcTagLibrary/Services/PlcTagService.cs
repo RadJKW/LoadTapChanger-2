@@ -3,16 +3,16 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using PlcTagLibrary.Data;
 using PlcTagLibrary.Models;
+using PlcTagLibrary.Repositories;
 
 namespace PlcTagLibrary.Services;
-public class PlcTagService : IPlcTagService
+public class PlcTagService
 {
 
 
-    public Task<IEnumerable<MicrologixTag>> GetTags()
-    {
-        throw new NotImplementedException();
-    }
+
 }
 

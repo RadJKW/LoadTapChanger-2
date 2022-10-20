@@ -1,14 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using PlcTagLibrary;
-using PlcTagLibrary.Datas;
+﻿using LoadTapChanger.API;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using PlcTagLibrary.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services
-    .AddControllers();
+    .AddControllers()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
 builder.Services
     .AddEndpointsApiExplorer();
 builder.Services
@@ -16,18 +19,10 @@ builder.Services
 builder.Services
     .AddSignalR();
 
-//builder.Services.AddDbContext<DataContext>(options =>
-//options.UseSqlite(builder.Configuration.GetConnectionString("SqliteDb"),
-//options => options.MigrationsAssembly("LoaddTapChanger.API")));
-
-//builder.Services.AddSqlServer<LoadTapChangerDBContext>(builder.Configuration.GetConnectionString("SqlServerDb"));
-
-
-//options =>
-//options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerDb"),
-//options => options.MigrationsAssembly(typeof(DataContext).Assembly.FullName))); ;
-
-
+builder.Services.AddDbContext<LoadTapChangerDBContext>(
+    db => db.UseSqlServer(
+        builder.Configuration.GetConnectionString("SqlServerDB"),
+        ss => ss.MigrationsAssembly(typeof(LoadTapChangerDBContext).Name)));
 
 builder.Services.AddCors(options =>
 {
@@ -46,10 +41,10 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
+        //get the full filepath of 'appsettings.json' to pass into the DbContextBuilder
+
         var context = services.GetRequiredService<LoadTapChangerDBContext>();
-
-
-        //DataSeeder.Initialize(context);
+        // TODO: implement DataSeeder
     }
     catch (Exception)
     {
@@ -57,12 +52,10 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    _ = app
+    app
         .UseSwagger()
         .UseSwaggerUI();
 }
@@ -72,3 +65,12 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+//static IHostBuilder CreateHostBuilder(string[] args)
+//{
+//    return Host.CreateDefaultBuilder(args)
+//        .ConfigureWebHostDefaults(webBuilder =>
+//        {
+//            webBuilder.UseStartup<Program>();
+//        });
+//}

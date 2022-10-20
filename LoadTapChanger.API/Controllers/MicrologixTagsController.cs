@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PlcTagLibrary.Datas;
+using PlcTagLibrary.Data;
 using PlcTagLibrary.Models;
 
 namespace LoadTapChanger.API.Controllers
@@ -18,16 +18,16 @@ namespace LoadTapChanger.API.Controllers
 
         // GET: api/MicrologixTags
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MicrologixTag>>> GetMicrologixTags()
+        public async Task<ActionResult<IEnumerable<PlcTag>>> GetMicrologixTags()
         {
-            return await _context.MicrologixTags.ToListAsync();
+            return await _context.PlcTags.ToListAsync();
         }
 
         // GET: api/MicrologixTags/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<MicrologixTag>> GetMicrologixTag(int id)
+        public async Task<ActionResult<PlcTag>> GetMicrologixTag(int id)
         {
-            var micrologixTag = await _context.MicrologixTags.FindAsync(id);
+            var micrologixTag = await _context.PlcTags.FindAsync(id);
 
             if (micrologixTag == null)
             {
@@ -40,7 +40,7 @@ namespace LoadTapChanger.API.Controllers
         // PUT: api/MicrologixTags/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMicrologixTag(int id, MicrologixTag micrologixTag)
+        public async Task<IActionResult> PutMicrologixTag(int id, PlcTag micrologixTag)
         {
             if (id != micrologixTag.TagId)
             {
@@ -71,9 +71,9 @@ namespace LoadTapChanger.API.Controllers
         // POST: api/MicrologixTags
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<MicrologixTag>> PostMicrologixTag(MicrologixTag micrologixTag)
+        public async Task<ActionResult<PlcTag>> PostMicrologixTag(PlcTag micrologixTag)
         {
-            _context.MicrologixTags.Add(micrologixTag);
+            _context.PlcTags.Add(micrologixTag);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMicrologixTag", new { id = micrologixTag.TagId }, micrologixTag);
@@ -83,13 +83,13 @@ namespace LoadTapChanger.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMicrologixTag(int id)
         {
-            var micrologixTag = await _context.MicrologixTags.FindAsync(id);
+            var micrologixTag = await _context.PlcTags.FindAsync(id);
             if (micrologixTag == null)
             {
                 return NotFound();
             }
 
-            _context.MicrologixTags.Remove(micrologixTag);
+            _context.PlcTags.Remove(micrologixTag);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -97,7 +97,7 @@ namespace LoadTapChanger.API.Controllers
 
         private bool MicrologixTagExists(int id)
         {
-            return _context.MicrologixTags.Any(e => e.TagId == id);
+            return _context.PlcTags.Any(e => e.TagId == id);
         }
     }
 }

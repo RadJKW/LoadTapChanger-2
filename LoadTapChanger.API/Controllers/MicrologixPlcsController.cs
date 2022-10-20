@@ -5,20 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PlcTagLibrary.Datas;
+using PlcTagLibrary.Data;
 using PlcTagLibrary.Models;
 
 namespace LoadTapChanger.API.Controllers
 {
+
+
     [Route("api/[controller]")]
     [ApiController]
     public class MicrologixPlcsController : ControllerBase
     {
+        private readonly IServiceProvider _serviceProvider;
         private readonly LoadTapChangerDBContext _context;
 
-        public MicrologixPlcsController(LoadTapChangerDBContext context)
+        public MicrologixPlcsController(IServiceProvider serviceProvider, LoadTapChangerDBContext context)
         {
+            _serviceProvider = serviceProvider;
             _context = context;
+
         }
 
         // GET: api/MicrologixPlcs

@@ -7,10 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PlcTagLibrary.Models;
 
-namespace PlcTagLibrary.Services;
-public interface IPlcTagService
+namespace PlcTagLibrary.Repositories;
+internal class MicrologixPlcRepository
 {
-    Task<IEnumerable<PlcTag>> GetTags();
 }

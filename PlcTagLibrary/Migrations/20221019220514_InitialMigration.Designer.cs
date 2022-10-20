@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlcTagLibrary.Data;
 
@@ -11,9 +12,10 @@ using PlcTagLibrary.Data;
 namespace PlcTagLibrary.Migrations
 {
     [DbContext(typeof(LoadTapChangerDBContext))]
-    partial class LoadTapChangerDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221019220514_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,17 +92,6 @@ namespace PlcTagLibrary.Migrations
                         .HasFilter("([Name] IS NOT NULL)");
 
                     b.ToTable("MicrologixPlcs");
-
-                    b.HasData(
-                        new
-                        {
-                            PlcId = 1,
-                            Gateway = "192.168.0.23",
-                            Name = "Micrologix1100",
-                            PlcType = "Slc500",
-                            Protocol = "ab_eip",
-                            TimeoutSeconds = (short)3
-                        });
                 });
 
             modelBuilder.Entity("PlcTagLibrary.Models.PlcTag", b =>
@@ -139,24 +130,6 @@ namespace PlcTagLibrary.Migrations
                         .HasFilter("([CustomName] IS NOT NULL AND [RslinxTagName] IS NOT NULL)");
 
                     b.ToTable("PlcTags");
-
-                    b.HasData(
-                        new
-                        {
-                            TagId = 1,
-                            CustomName = "Output:1",
-                            PlcDeviceId = 1,
-                            RslinxTagName = "O0:0/1",
-                            TagType = 0
-                        },
-                        new
-                        {
-                            TagId = 2,
-                            CustomName = "Input:1",
-                            PlcDeviceId = 1,
-                            RslinxTagName = "I1:0/1",
-                            TagType = 1
-                        });
                 });
 
             modelBuilder.Entity("PlcTagLibrary.Models.PlcTag", b =>

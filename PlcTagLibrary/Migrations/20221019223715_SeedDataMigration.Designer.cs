@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PlcTagLibrary.Datas;
+using PlcTagLibrary.Data;
 
 #nullable disable
 
 namespace PlcTagLibrary.Migrations
 {
     [DbContext(typeof(LoadTapChangerDBContext))]
-    [Migration("20221019000046_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20221019223715_SeedDataMigration")]
+    partial class SeedDataMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,19 +24,19 @@ namespace PlcTagLibrary.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("PlcTagLibrary.Modelss.ListTagsByPlc", b =>
+            modelBuilder.Entity("PlcTagLibrary.Models.ListTagsByPlc", b =>
                 {
-                    b.Property<string>("ConfiguredName")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
                     b.Property<string>("Gateway")
                         .HasMaxLength(15)
                         .IsUnicode(false)
                         .HasColumnType("varchar(15)");
 
                     b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("RslinxTagName")
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
@@ -51,7 +51,7 @@ namespace PlcTagLibrary.Migrations
                     b.ToView("ListTagsByPLC");
                 });
 
-            modelBuilder.Entity("PlcTagLibrary.Modelss.MicrologixPlc", b =>
+            modelBuilder.Entity("PlcTagLibrary.Models.MicrologixPlc", b =>
                 {
                     b.Property<int>("PlcId")
                         .ValueGeneratedOnAdd()
@@ -59,10 +59,10 @@ namespace PlcTagLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlcId"), 1L, 1);
 
-                    b.Property<int?>("DefaultName")
+                    b.Property<string>("DefaultName")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int")
-                        .HasComputedColumnSql("('PLC-'+[PlcId])", false);
+                        .HasColumnType("nvarchar(64)")
+                        .HasComputedColumnSql("('PLC' + '-' + CAST([PlcId] as varchar(10)))", false);
 
                     b.Property<string>("Gateway")
                         .HasMaxLength(15)
@@ -92,20 +92,26 @@ namespace PlcTagLibrary.Migrations
                         .HasFilter("([Name] IS NOT NULL)");
 
                     b.ToTable("MicrologixPlcs");
+
+                    b.HasData(
+                        new
+                        {
+                            PlcId = 1,
+                            Gateway = "192.168.0.23",
+                            Name = "Micrologix1100",
+                            PlcType = "Slc500",
+                            Protocol = "ab_eip",
+                            TimeoutSeconds = (short)3
+                        });
                 });
 
-            modelBuilder.Entity("PlcTagLibrary.Modelss.MicrologixTag", b =>
+            modelBuilder.Entity("PlcTagLibrary.Models.PlcTag", b =>
                 {
                     b.Property<int>("TagId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagId"), 1L, 1);
-
-                    b.Property<string>("ConfiguredName")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("CustomName")
                         .HasMaxLength(50)
@@ -115,9 +121,13 @@ namespace PlcTagLibrary.Migrations
                     b.Property<int?>("PlcDeviceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TagType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("RslinxTagName")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("TagType")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Value")
                         .HasColumnType("int");
@@ -126,16 +136,34 @@ namespace PlcTagLibrary.Migrations
 
                     b.HasIndex(new[] { "PlcDeviceId" }, "IX_MicrologixTags_PlcDeviceId");
 
-                    b.HasIndex(new[] { "TagId", "CustomName", "ConfiguredName" }, "IX_MicrologixTags_TagId_CustomName_ConfiguredName")
+                    b.HasIndex(new[] { "TagId", "CustomName", "RslinxTagName" }, "IX_MicrologixTags_TagId_CustomName_ConfiguredName")
                         .IsUnique()
-                        .HasFilter("([CustomName] IS NOT NULL AND [ConfiguredName] IS NOT NULL)");
+                        .HasFilter("([CustomName] IS NOT NULL AND [RslinxTagName] IS NOT NULL)");
 
-                    b.ToTable("MicrologixTags");
+                    b.ToTable("PlcTags");
+
+                    b.HasData(
+                        new
+                        {
+                            TagId = 1,
+                            CustomName = "Output:1",
+                            PlcDeviceId = 1,
+                            RslinxTagName = "O0:0/1",
+                            TagType = 0
+                        },
+                        new
+                        {
+                            TagId = 2,
+                            CustomName = "Input:1",
+                            PlcDeviceId = 1,
+                            RslinxTagName = "I1:0/1",
+                            TagType = 1
+                        });
                 });
 
-            modelBuilder.Entity("PlcTagLibrary.Modelss.MicrologixTag", b =>
+            modelBuilder.Entity("PlcTagLibrary.Models.PlcTag", b =>
                 {
-                    b.HasOne("PlcTagLibrary.Modelss.MicrologixPlc", "PlcDevice")
+                    b.HasOne("PlcTagLibrary.Models.MicrologixPlc", "PlcDevice")
                         .WithMany("MicrologixTags")
                         .HasForeignKey("PlcDeviceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -144,7 +172,7 @@ namespace PlcTagLibrary.Migrations
                     b.Navigation("PlcDevice");
                 });
 
-            modelBuilder.Entity("PlcTagLibrary.Modelss.MicrologixPlc", b =>
+            modelBuilder.Entity("PlcTagLibrary.Models.MicrologixPlc", b =>
                 {
                     b.Navigation("MicrologixTags");
                 });

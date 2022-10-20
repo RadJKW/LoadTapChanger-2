@@ -3,23 +3,87 @@
 using System;
 using System.Collections.Generic;
 
-namespace PlcTagLibrary.Models
+namespace PlcTagLibrary.Models;
+
+public partial class MicrologixPlc
 {
-    public partial class MicrologixPlc
+    private readonly short _timeoutSeconds = 5;
+    private readonly PlcType _plcType = PlcType.Slc500;
+    private readonly Protocol _protocol = Protocol.ab_eip;
+    public MicrologixPlc()
     {
-        public MicrologixPlc()
-        {
-            MicrologixTags = new HashSet<MicrologixTag>();
-        }
-
-        public int PlcId { get; set; }
-        public string Name { get; set; }
-        public int? DefaultName { get; set; }
-        public string Gateway { get; set; }
-        public short TimeoutSeconds { get; set; }
-        public string PlcType { get; set; }
-        public string Protocol { get; set; }
-
-        public virtual ICollection<MicrologixTag> MicrologixTags { get; set; }
+        TimeoutSeconds = _timeoutSeconds;
+        PlcType = _plcType;
+        Protocol = _protocol;
+        MicrologixTags = new HashSet<PlcTag>();
     }
+
+    public int PlcId { get; set; }
+    public string Name { get; set; }
+    public int? DefaultName { get; set; }
+    public string Gateway { get; set; }
+    public short TimeoutSeconds { get; set; }
+    public PlcType PlcType { get; set; }
+    public Protocol Protocol { get; set; }
+
+    public virtual ICollection<PlcTag> MicrologixTags { get; set; }
+
 }
+
+/// <summary>
+/// Types of PLC's supported by the library
+/// </summary>
+public enum PlcType
+{
+    /// <summary>
+    /// Control Logix-class PLC. Synonym for lgx, logix, controllogix, contrologix, compactlogix, clgx.
+    /// </summary>
+    ControlLogix,
+
+    /// <summary>
+    /// PLC/5 PLC. Synonym for plc5, plc.
+    /// </summary>
+    Plc5,
+
+    /// <summary>
+    /// SLC 500 PLC. Synonym for slc500, slc.
+    /// </summary>
+    Slc500,
+
+    /// <summary>
+    /// Control Logix-class PLC using the PLC/5 protocol. Synonym for lgxpccc, logixpccc, lgxplc5, lgx_pccc, logix_pccc, lgx_plc5.
+    /// </summary>
+    LogixPccc,
+
+    /// <summary>
+    /// Micro800-class PLC. Synonym for micrologix800, mlgx800, micro800.
+    /// </summary>
+    Micro800,
+
+    /// <summary>
+    /// MicroLogix PLC. Synonym for micrologix, mlgx.
+    /// </summary>
+    MicroLogix,
+
+    /// <summary>
+    /// Omron PLC. Synonym for omron-njnx, omron-nj, omron-nx, njnx, nx1p2
+    /// </summary>
+    Omron,
+}
+
+/// <summary>
+/// Communication Protocols supported by the library
+/// </summary>
+public enum Protocol
+{
+    /// <summary>
+    /// Allen-Bradley specific flavor of EIP
+    /// </summary>
+    ab_eip,
+
+    /// <summary>
+    /// A Modbus TCP implementation used by many PLCs
+    /// </summary>
+    modbus_tcp
+}
+

@@ -8,112 +8,129 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 using PlcTagLibrary.Models;
 
-namespace PlcTagLibrary.Datas
+namespace PlcTagLibrary.Data;
+
+public partial class LoadTapChangerDBContext : DbContext
 {
-    public partial class LoadTapChangerDBContext : DbContext
+    public LoadTapChangerDBContext()
     {
-        public LoadTapChangerDBContext()
-        {
-        }
-
-
-        public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<LoadTapChangerDBContext>
-        {
-            public LoadTapChangerDBContext CreateDbContext(string[] args)
-            {
-                IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(@Directory.GetCurrentDirectory() + "/../LoadTapChanger.API/appsettings.json").Build();
-                var builder = new DbContextOptionsBuilder<LoadTapChangerDBContext>();
-                var connectionString = configuration.GetConnectionString("SqlServerDB");
-                builder.UseSqlServer(connectionString);
-                return new LoadTapChangerDBContext(builder.Options);
-            }
-        }
-
-        public LoadTapChangerDBContext(DbContextOptions<LoadTapChangerDBContext> options)
-            : base(options)
-        {
-        }
-
-        public virtual DbSet<ListTagsByPlc> ListTagsByPlcs { get; set; }
-        public virtual DbSet<MicrologixPlc> MicrologixPlcs { get; set; }
-        public virtual DbSet<MicrologixTag> MicrologixTags { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ListTagsByPlc>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("ListTagsByPLC");
-
-                entity.Property(e => e.ConfiguredName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Gateway)
-                    .HasMaxLength(15)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TagType).IsRequired();
-            });
-
-            modelBuilder.Entity<MicrologixPlc>(entity =>
-            {
-                entity.HasKey(e => e.PlcId);
-
-                entity.HasIndex(e => new { e.PlcId, e.Name }, "IX_MicrologixPlcs_PlcId_Name")
-                    .IsUnique()
-                    .HasFilter("([Name] IS NOT NULL)");
-
-                entity.Property(e => e.DefaultName).HasComputedColumnSql("('PLC-'+[PlcId])", false);
-
-                entity.Property(e => e.Gateway)
-                    .HasMaxLength(15)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PlcType).IsRequired();
-
-                entity.Property(e => e.Protocol).IsRequired();
-            });
-
-            modelBuilder.Entity<MicrologixTag>(entity =>
-            {
-                entity.HasKey(e => e.TagId);
-
-                entity.HasIndex(e => e.PlcDeviceId, "IX_MicrologixTags_PlcDeviceId");
-
-                entity.HasIndex(e => new { e.TagId, e.CustomName, e.ConfiguredName }, "IX_MicrologixTags_TagId_CustomName_ConfiguredName")
-                    .IsUnique()
-                    .HasFilter("([CustomName] IS NOT NULL AND [ConfiguredName] IS NOT NULL)");
-
-                entity.Property(e => e.ConfiguredName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CustomName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TagType).IsRequired();
-
-                entity.HasOne(d => d.PlcDevice)
-                    .WithMany(p => p.MicrologixTags)
-                    .HasForeignKey(d => d.PlcDeviceId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_PlcTag_Plc");
-            });
-
-            OnModelCreatingPartial(modelBuilder);
-        }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
+
+
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<LoadTapChangerDBContext>
+    {
+        public LoadTapChangerDBContext CreateDbContext(string[] args)
+
+
+        {   //create a IconfigurationRoot object and get the path from which ever project is accessing this method
+            //C:\Users\jwest\source\LoadTapChanger-2
+            IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath("C:/Users/jwest/source/LoadTapChanger-2/").AddJsonFile("LoadTapChanger.API/appsettings.json").Build();
+            var builder = new DbContextOptionsBuilder<LoadTapChangerDBContext>();
+            var connectionString = configuration.GetConnectionString("SqlServerDB");
+            builder.UseSqlServer(connectionString);
+                //, sql => sql.MigrationsAssembly(typeof(LoadTapChangerDBContext).Assembly.FullName));
+            return new LoadTapChangerDBContext(builder.Options);
+        }
+    }
+
+    public LoadTapChangerDBContext(DbContextOptions<LoadTapChangerDBContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<ListTagsByPlc> ListTagsByPlcs { get; set; }
+    public virtual DbSet<MicrologixPlc> MicrologixPlcs { get; set; }
+    public virtual DbSet<PlcTag> PlcTags { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ListTagsByPlc>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.ToView("ListTagsByPLC");
+
+            entity.Property(e => e.RslinxTagName)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.Property(e => e.Gateway)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.Property(e => e.TagType).IsRequired();
+        });
+
+        modelBuilder.Entity<MicrologixPlc>(entity =>
+        {
+            entity.HasKey(e => e.PlcId);
+
+            entity.HasIndex(e => new { e.PlcId, e.Name }, "IX_MicrologixPlcs_PlcId_Name")
+                .IsUnique()
+                .HasFilter("([Name] IS NOT NULL)");
+
+            entity.Property(e => e.DefaultName).HasComputedColumnSql("('PLC' + '-' + CAST([PlcId] as varchar(10)))", false).HasConversion<string>();
+
+            entity.Property(e => e.Gateway)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.Property(e => e.PlcType)
+                .HasConversion<string>()
+                .IsRequired();
+
+            entity.Property(e => e.Protocol)
+                .HasConversion<string>()
+                .IsRequired();
+        });
+
+        modelBuilder.Entity<PlcTag>(entity =>
+        {
+            entity.HasKey(e => e.TagId);
+
+            entity.HasIndex(e => e.PlcDeviceId, "IX_MicrologixTags_PlcDeviceId");
+
+            entity.HasIndex(e => new { e.TagId, e.CustomName, e.RslinxTagName }, "IX_MicrologixTags_TagId_CustomName_ConfiguredName")
+                .IsUnique()
+                .HasFilter("([CustomName] IS NOT NULL AND [RslinxTagName] IS NOT NULL)");
+
+            entity.Property(e => e.RslinxTagName)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.Property(e => e.CustomName)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.Property(e => e.TagType).IsRequired();
+
+            entity.HasOne(d => d.PlcDevice)
+                .WithMany(p => p.MicrologixTags)
+                .HasForeignKey(d => d.PlcDeviceId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_PlcTag_Plc");
+        });
+
+        modelBuilder.Entity<MicrologixPlc>().HasData(
+                new MicrologixPlc { PlcId = 1, Name = "Micrologix1100", Gateway = "192.168.0.23", Protocol = Protocol.ab_eip, PlcType = PlcType.Slc500, TimeoutSeconds = 3 });
+
+        modelBuilder.Entity<PlcTag>().HasData(
+            new PlcTag { TagId = 1, CustomName = "Output:1", RslinxTagName = "O0:0/1", TagType = TagType.Output, Value = null, PlcDeviceId = 1 }); ;
+
+        modelBuilder.Entity<PlcTag>().HasData(
+            new PlcTag { TagId = 2, CustomName = "Input:1", RslinxTagName = "I1:0/1", TagType = TagType.Input, Value = null, PlcDeviceId = 1 });
+
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
