@@ -20,7 +20,7 @@ public partial class MicrologixPlc
 
     public int PlcId { get; set; }
     public string Name { get; set; }
-    public int? DefaultName { get; set; }
+    public string DefaultName { get; set; }
     public string Gateway { get; set; }
     public short TimeoutSeconds { get; set; }
     public PlcType PlcType { get; set; }

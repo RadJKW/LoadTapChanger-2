@@ -1,7 +1,9 @@
 ﻿using LoadTapChanger.API;
+using LoadTapChanger.API.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PlcTagLibrary.Data;
+using PlcTagLibrary.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,11 @@ builder.Services
     .AddSwaggerGen();
 builder.Services
     .AddSignalR();
+builder.Services
+    .AddScoped<IMicrologixPlcRepository, MicrologixPlcRepository>();
+
+builder.Services
+    .AddAutoMapper(typeof(MapperConfig));
 
 builder.Services.AddDbContext<LoadTapChangerDBContext>(
     db => db.UseSqlServer(
@@ -26,12 +33,11 @@ builder.Services.AddDbContext<LoadTapChangerDBContext>(
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("CorsPolicy",
+    options.AddPolicy("AllowAll",
         builder => builder
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .SetIsOriginAllowed((host) => true)
-            .AllowCredentials());
+            .AllowAnyOrigin());
 });
 
 var app = builder.Build();
@@ -60,9 +66,11 @@ if (app.Environment.IsDevelopment())
         .UseSwaggerUI();
 }
 
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
 
 app.Run();
 

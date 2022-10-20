@@ -9,6 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PlcTagLibrary.Dtos.PlcTag;
-internal class UpdatePlcTagDto
+public class UpdatePlcTagDto
 {
 }

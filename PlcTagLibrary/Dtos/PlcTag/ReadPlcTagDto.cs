@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PlcTagLibrary.Dtos.PlcTag;
-internal class ReadPlcTagDto
+public class ReadPlcTagDto : BaseDto
 {
+
 }

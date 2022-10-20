@@ -9,6 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PlcTagLibrary.Dtos.MicrologixPLC;
-internal class CreatePlcDto
+public class CreatePlcDto
 {
 }
