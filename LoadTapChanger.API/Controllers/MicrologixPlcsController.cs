@@ -11,15 +11,15 @@ namespace LoadTapChanger.API.Controllers
     [ApiController]
     public class MicrologixPlcsController : ControllerBase
     {
-        private readonly IMapper _mapper;
+
         private readonly ILogger<MicrologixPlcsController> _logger;
         private readonly LoadTapChangerDBContext _context;
         private readonly IMicrologixPlcRepository _plcRepository;
 
-        public MicrologixPlcsController(ILogger<MicrologixPlcsController> logger, IMapper mapper, LoadTapChangerDBContext context, IMicrologixPlcRepository plcRepository)
+        public MicrologixPlcsController(ILogger<MicrologixPlcsController> logger, LoadTapChangerDBContext context, IMicrologixPlcRepository plcRepository)
         {
             _logger = logger;
-            _mapper = mapper;
+
             _context = context;
             _plcRepository = plcRepository;
         }
@@ -36,43 +36,12 @@ namespace LoadTapChanger.API.Controllers
         public async Task<ActionResult<ServiceResponse<MicrologixPlc>>> GetPlc(int id)
         {
             return Ok(await _plcRepository.GetPlcByIdAsync(id));
-
-            // try
-            // {
-            //     var plc = await _plcRepository.GetAsync(id);
-            //     var plcDto = _mapper.Map<ReadPlcDto>(plc);
-            //     return plc == null ? (ActionResult<MicrologixPlc>)NotFound() : (ActionResult<MicrologixPlc>)Ok(plcDto);
-            // }
-            // catch (Exception)
-            // {
-            //     throw;
-            // }
-
-
         }
 
         [HttpGet("details/{id}")]
-        public async Task<ActionResult<MicrologixPlc>> GetPlcDetails(int id)
+        public async Task<ActionResult<ServiceResponse<MicrologixPlc>>> GetPlcDetails(int id)
         {
             return Ok(await _plcRepository.GetPlcDetailsAsync(id));
-            // try
-            // {
-            //     var plc = await _plcRepository.GetPlcDetailsAsync(id);
-            //     if (plc == null)
-            //     {
-            //         _logger.LogWarning(message: $"Record Not Found");
-            //         return NotFound();
-            //     }
-            //     return Ok(plc);
-            // }
-            // catch (Exception ex)
-            // {
-            //     var func = nameof(GetPlcDetails);
-
-            //     _logger.LogError(message: "Error: {func} - ID: {id} - {ex.Message}", func, id, ex.Message);
-            //     return StatusCode(500, ErrorMessages.Error500);
-            // }
-
         }
 
         // PUT: api/MicrologixPlcs/5

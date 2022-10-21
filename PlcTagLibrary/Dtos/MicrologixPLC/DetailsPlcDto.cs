@@ -3,14 +3,18 @@
 // See the LICENSE file in the project root for more information.
 
 using PlcTagLibrary.Dtos.PlcTag;
+using PlcTagLibrary.Models;
 
 namespace PlcTagLibrary.Dtos.MicrologixPLC
 {
-    public class DetailsPlcDto : ReadPlcDto
+    public class DetailsPlcDto
     {
 
-
+        public int? Id { get; set; }
+        public string? Name { get; set; }
         public string? DefaultName { get; set; }
+
+        public string? PlcType { get; set; }
         public short TimeoutSeconds { get; set; }
         public string? Protocol { get; set; }
 

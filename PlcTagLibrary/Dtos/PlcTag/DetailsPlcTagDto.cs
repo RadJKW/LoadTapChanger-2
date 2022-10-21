@@ -9,6 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PlcTagLibrary.Dtos.PlcTag;
-internal class DetailsPlcTagDto
+public class DetailsPlcTagDto : ReadPlcTagDto
 {
+    public string? RsLinxTagName { get; set; }
+    public int? Value { get; set; }
+    public string? Description { get; set; }
+    public string? PlcId { get; set; }
 }

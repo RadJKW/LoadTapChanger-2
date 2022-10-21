@@ -1,0 +1,422 @@
+---
+openapi: 3.0.1
+info:
+  title: LoadTapChanger.API
+  version: "1.0"
+paths:
+  "/api/MicrologixPlcs":
+    get:
+      tags:
+        - MicrologixPlcs
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/MicrologixPlcIEnumerableServiceResponse"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MicrologixPlcIEnumerableServiceResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/MicrologixPlcIEnumerableServiceResponse"
+    post:
+      tags:
+        - MicrologixPlcs
+      operationId: CreateMicrologixPlc
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/MicrologixPlc"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MicrologixPlc"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/MicrologixPlc"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/MicrologixPlc"
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/MicrologixPlc"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MicrologixPlc"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/MicrologixPlc"
+  "/api/MicrologixPlcs/{id}":
+    get:
+      tags:
+        - MicrologixPlcs
+      operationId: GetMicrologixPlc
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/MicrologixPlcServiceResponse"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MicrologixPlcServiceResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/MicrologixPlcServiceResponse"
+    put:
+      tags:
+        - MicrologixPlcs
+      operationId: UpdateMicrologixPlc
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/MicrologixPlc"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MicrologixPlc"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/MicrologixPlc"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/MicrologixPlc"
+      responses:
+        "200":
+          description: Success
+    delete:
+      tags:
+        - MicrologixPlcs
+      operationId: DeleteMicrologixPlc
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+  "/api/MicrologixPlcs/details/{id}":
+    get:
+      tags:
+        - MicrologixPlcs
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/MicrologixPlcServiceResponse"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/MicrologixPlcServiceResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/MicrologixPlcServiceResponse"
+  "/api/MicrologixTags":
+    get:
+      tags:
+        - MicrologixTags
+      operationId: GetMicrologixTags
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/PlcTag"
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/PlcTag"
+            text/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/PlcTag"
+    post:
+      tags:
+        - MicrologixTags
+      operationId: CreateMicrologixTag
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/PlcTag"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PlcTag"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/PlcTag"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/PlcTag"
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/PlcTag"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PlcTag"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/PlcTag"
+  "/api/MicrologixTags/{id}":
+    get:
+      tags:
+        - MicrologixTags
+      operationId: GetMicrologixTag
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/PlcTag"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PlcTag"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/PlcTag"
+    put:
+      tags:
+        - MicrologixTags
+      operationId: UpdateMicrologixTag
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/PlcTag"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PlcTag"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/PlcTag"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/PlcTag"
+      responses:
+        "200":
+          description: Success
+    delete:
+      tags:
+        - MicrologixTags
+      operationId: DeleteMicrologixTag
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+  "/WeatherForecast":
+    get:
+      tags:
+        - WeatherForecast
+      operationId: GetWeatherForecast
+      responses:
+        "200":
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/WeatherForecast"
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/WeatherForecast"
+            text/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/WeatherForecast"
+components:
+  schemas:
+    MicrologixPlc:
+      type: object
+      properties:
+        plcId:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        defaultName:
+          type: string
+          nullable: true
+        gateway:
+          type: string
+          nullable: true
+        timeoutSeconds:
+          type: integer
+          format: int32
+        plcType:
+          "$ref": "#/components/schemas/PlcType"
+        protocol:
+          "$ref": "#/components/schemas/Protocol"
+        plcTags:
+          type: array
+          items:
+            "$ref": "#/components/schemas/PlcTag"
+          nullable: true
+      additionalProperties: false
+    MicrologixPlcIEnumerableServiceResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MicrologixPlc"
+          nullable: true
+        success:
+          type: boolean
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
+    MicrologixPlcServiceResponse:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/MicrologixPlc"
+        success:
+          type: boolean
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
+    PlcTag:
+      type: object
+      properties:
+        tagId:
+          type: integer
+          format: int32
+        customName:
+          type: string
+          nullable: true
+        rslinxTagName:
+          type: string
+          nullable: true
+        value:
+          type: integer
+          format: int32
+          nullable: true
+        tagType:
+          "$ref": "#/components/schemas/TagType"
+        plcDeviceId:
+          type: integer
+          format: int32
+          nullable: true
+        plcDevice:
+          "$ref": "#/components/schemas/MicrologixPlc"
+      additionalProperties: false
+    PlcType:
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+      type: integer
+      format: int32
+    Protocol:
+      enum:
+        - 0
+        - 1
+      type: integer
+      format: int32
+    TagType:
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
+        - 12
+      type: integer
+      format: int32
+    WeatherForecast:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        temperatureC:
+          type: integer
+          format: int32
+        temperatureF:
+          type: integer
+          format: int32
+          readOnly: true
+        summary:
+          type: string
+          nullable: true
+      additionalProperties: false

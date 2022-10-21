@@ -15,7 +15,7 @@ public partial class MicrologixPlc
         TimeoutSeconds = _timeoutSeconds;
         PlcType = _plcType;
         Protocol = _protocol;
-        MicrologixTags = new HashSet<PlcTag>();
+        PlcTags = new HashSet<PlcTag>();
     }
 
     public int PlcId { get; set; }
@@ -26,7 +26,7 @@ public partial class MicrologixPlc
     public PlcType PlcType { get; set; }
     public Protocol Protocol { get; set; }
 
-    public virtual ICollection<PlcTag> MicrologixTags { get; set; }
+    public virtual ICollection<PlcTag> PlcTags { get; set; }
 
 }
 

@@ -2,11 +2,13 @@
 // MudBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections.Immutable;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using PlcTagLibrary.Data;
 using PlcTagLibrary.Dtos.MicrologixPLC;
+using PlcTagLibrary.Dtos.PlcTag;
 using PlcTagLibrary.Models;
 
 namespace PlcTagLibrary.Repositories
@@ -46,12 +48,12 @@ namespace PlcTagLibrary.Repositories
             var response = new ServiceResponse<DetailsPlcDto>();
             try
             {
+                //get the plc by id
+                // include every plcTag where the PlcDeviceId = plc.id
                 var plc = await _context.MicrologixPlcs
-                           .ProjectTo<DetailsPlcDto>(_mapper.ConfigurationProvider)
-                           .Include(plc => plc.PlcTags)
-                           .Where(plc => plc.Id == id)
-                           .FirstOrDefaultAsync();
-
+                    .Include(p => p.PlcTags)
+                    .ProjectTo<DetailsPlcDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync(p => p.Id == id);
 
                 response.Data = plc;
             }

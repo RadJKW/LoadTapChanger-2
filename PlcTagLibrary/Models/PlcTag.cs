@@ -7,6 +7,7 @@ namespace PlcTagLibrary.Models;
 
 public partial class PlcTag
 {
+ 
     // TODO: Generate ConfiguredName from TagType and BitNumber
     // TODO: Add BitNumber to Model
 

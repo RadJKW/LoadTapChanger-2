@@ -17,8 +17,23 @@ public class MapperConfig : Profile
             .ForMember(dest => dest.PlcId, opt => opt.MapFrom(src => src.Id))
             .ReverseMap();
 
+        CreateMap<DetailsPlcDto, MicrologixPlc>()
+            .ForMember(dest => dest.PlcId, opt => opt.MapFrom(src => src.Id))
+            .ReverseMap();
+
+        CreateMap<CreatePlcDto, MicrologixPlc>()
+            .ReverseMap();
+
+        CreateMap<UpdatePlcDto, MicrologixPlc>()
+            .ForMember(dest => dest.PlcId, opt => opt.MapFrom(src => src.Id))
+            .ReverseMap();
+
         CreateMap<ReadPlcTagDto, PlcTag>()
 
+            .ForMember(dest => dest.TagId, opt => opt.MapFrom(src => src.Id))
+            .ReverseMap();
+
+        CreateMap<DetailsPlcTagDto, PlcTag>()
             .ForMember(dest => dest.TagId, opt => opt.MapFrom(src => src.Id))
             .ReverseMap();
 

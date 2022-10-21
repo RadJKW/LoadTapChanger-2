@@ -113,7 +113,7 @@ public partial class LoadTapChangerDBContext : DbContext
             entity.Property(e => e.TagType).IsRequired();
 
             entity.HasOne(d => d.PlcDevice)
-                .WithMany(p => p.MicrologixTags)
+                .WithMany(p => p.PlcTags)
                 .HasForeignKey(d => d.PlcDeviceId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_PlcTag_Plc");
