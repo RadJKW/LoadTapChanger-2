@@ -59,7 +59,8 @@ _Necessary Requirements to procede with *Development*_
 <details>
 <summary>
     Layout
-</summary> 
+</summary>
+
 - [ ] **HTTP METHODS**
     > - [ ] GetAll
     > - [ ] GetById
