@@ -10,7 +10,7 @@
 
 **MINIMAL**
 
-_Necessary Requirements to procede with *Development*_
+_Necessary Requirements to proceed with *Development*_
 
 - [ ] **PLC**: *Data Manipulation*
  

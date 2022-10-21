@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MudBlazorTest.Server", "Blazor\MudBlazorTest.Server\MudBlazorTest.Server.csproj", "{8D6BA7F0-6C5F-4984-B4AB-6E285756447C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{EB9339D0-2FE3-4F61-8B0C-877E47131E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB9339D0-2FE3-4F61-8B0C-877E47131E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB9339D0-2FE3-4F61-8B0C-877E47131E2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D6BA7F0-6C5F-4984-B4AB-6E285756447C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D6BA7F0-6C5F-4984-B4AB-6E285756447C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D6BA7F0-6C5F-4984-B4AB-6E285756447C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D6BA7F0-6C5F-4984-B4AB-6E285756447C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

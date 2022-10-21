@@ -1,0 +1,54 @@
+﻿@page "/testPlc"
+@using FluentValidation
+@using System.ComponentModel.DataAnnotations
+@using System.Net.Http.Json
+
+@inject HttpClient _httpClient
+@*@inject ISnackbar _snackbar*@
+
+<MudTable Items="@Elements" Dense="true">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Periodic Elements</MudText>
+        <MudPaper Class="d-flex mx-8 flex-nowrap justify-center align-content-center align-center" Elevation="4">
+            <MudText Class="mx-4" Typo="Typo.button">Options: </MudText>
+            <MudDivider Vertical="true" FlexItem="true" DividerType="DividerType.FullWidth"/>
+            <MudSwitch Class="px-4" @bind-Checked="@ronly" Color="Color.Tertiary">Read Only</MudSwitch>
+        </MudPaper>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <ColGroup>
+
+    </ColGroup>
+    <HeaderContent>
+
+    </HeaderContent>
+    <RowTemplate>
+
+    </RowTemplate>
+
+    <RowEditingTemplate>
+
+    </RowEditingTemplate>
+
+</MudTable>
+
+@code {
+    private class Element
+    {
+        private int Id { get; set; }
+    }
+
+    private List<string> editEvents = new();
+    private bool ronly = false;
+    private string searchString = "";
+    private Element selectedItem1 = null;
+    private Element elementBeforeEdit;
+    private HashSet<Element> selectedItems1 = new HashSet<Element>();
+    private TableApplyButtonPosition applyButtonPosition = TableApplyButtonPosition.End;
+    private IEnumerable<Element> Elements = new List<Element>();
+
+
+
+
+}
