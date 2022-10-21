@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,4 +12,9 @@ using System.Threading.Tasks;
 namespace PlcTagLibrary.Dtos.MicrologixPLC;
 public class UpdatePlcDto
 {
+    [Required]
+    public int Id { get; set; }
+    public string? DefaultName { get; set; }
+    public short TimeoutSeconds { get; set; }
+    public string? Protocol { get; set; }
 }

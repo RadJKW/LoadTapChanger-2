@@ -1,0 +1,880 @@
+{
+	"info": {
+		"_postman_id": "da6c34cc-4429-4c9d-b312-93a5f4a3429e",
+		"name": "LoadTapChanger.API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22094889"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "Micrologix Plcs",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/MicrologixPlcs/:id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/MicrologixPlcs/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"MicrologixPlcs",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "90021384",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "localhost:5241/api/MicrologixPlcs/:id",
+													"host": [
+														"localhost"
+													],
+													"port": "5241",
+													"path": [
+														"api",
+														"MicrologixPlcs",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "90021384",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"data\": {\n    \"plcId\": -65092586,\n    \"name\": \"sint eu\",\n    \"defaultName\": \"ullamco esse\",\n    \"gateway\": \"aliqua ea\",\n    \"timeoutSeconds\": -78284747,\n    \"plcType\": 0,\n    \"protocol\": 1,\n    \"plcTags\": [\n      {\n        \"tagId\": -72321979,\n        \"customName\": \"ullamco\",\n        \"rslinxTagName\": \"consequat\",\n        \"value\": 18131806,\n        \"tagType\": 12,\n        \"plcDeviceId\": 64017794,\n        \"plcDevice\": {\n          \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n        }\n      },\n      {\n        \"tagId\": -86003572,\n        \"customName\": \"non in laboris\",\n        \"rslinxTagName\": \"Excepteur exercitation Duis\",\n        \"value\": -46673214,\n        \"tagType\": 10,\n        \"plcDeviceId\": -14676830,\n        \"plcDevice\": {\n          \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n        }\n      }\n    ]\n  },\n  \"success\": true,\n  \"message\": \"id minim consectetur Ut\"\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/MicrologixPlcs/:id",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"plcId\": -12688377,\n  \"name\": \"proident qui et minim\",\n  \"defaultName\": \"aliquip nulla in\",\n  \"gateway\": \"mollit Ut cupidatat\",\n  \"timeoutSeconds\": 23024979,\n  \"plcType\": 6,\n  \"protocol\": 1,\n  \"plcTags\": [\n    {\n      \"tagId\": 71541362,\n      \"customName\": \"non adipisicing cillum in\",\n      \"rslinxTagName\": \"esse\",\n      \"value\": -1496794,\n      \"tagType\": 2,\n      \"plcDeviceId\": 85740793,\n      \"plcDevice\": {\n        \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n      }\n    },\n    {\n      \"tagId\": -84780545,\n      \"customName\": \"quis\",\n      \"rslinxTagName\": \"consequat laborum qui o\",\n      \"value\": 12493787,\n      \"tagType\": 10,\n      \"plcDeviceId\": -9932124,\n      \"plcDevice\": {\n        \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n      }\n    }\n  ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/MicrologixPlcs/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"MicrologixPlcs",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "90021384",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"plcId\": -12688377,\n  \"name\": \"proident qui et minim\",\n  \"defaultName\": \"aliquip nulla in\",\n  \"gateway\": \"mollit Ut cupidatat\",\n  \"timeoutSeconds\": 23024979,\n  \"plcType\": 6,\n  \"protocol\": 1,\n  \"plcTags\": [\n    {\n      \"tagId\": 71541362,\n      \"customName\": \"non adipisicing cillum in\",\n      \"rslinxTagName\": \"esse\",\n      \"value\": -1496794,\n      \"tagType\": 2,\n      \"plcDeviceId\": 85740793,\n      \"plcDevice\": {\n        \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n      }\n    },\n    {\n      \"tagId\": -84780545,\n      \"customName\": \"quis\",\n      \"rslinxTagName\": \"consequat laborum qui o\",\n      \"value\": 12493787,\n      \"tagType\": 10,\n      \"plcDeviceId\": -9932124,\n      \"plcDevice\": {\n        \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n      }\n    }\n  ]\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5241/api/MicrologixPlcs/:id",
+													"host": [
+														"localhost"
+													],
+													"port": "5241",
+													"path": [
+														"api",
+														"MicrologixPlcs",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "90021384",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "/api/MicrologixPlcs/:id",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/MicrologixPlcs/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"MicrologixPlcs",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "90021384",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "localhost:5241/api/MicrologixPlcs/:id",
+													"host": [
+														"localhost"
+													],
+													"port": "5241",
+													"path": [
+														"api",
+														"MicrologixPlcs",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "90021384",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/MicrologixPlcs",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/MicrologixPlcs",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"MicrologixPlcs"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:5241/api/MicrologixPlcs",
+											"host": [
+												"localhost"
+											],
+											"port": "5241",
+											"path": [
+												"api",
+												"MicrologixPlcs"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"data\": [\n    {\n      \"plcId\": 3528662,\n      \"name\": \"voluptate Duis ullamco\",\n      \"defaultName\": \"reprehenderit\",\n      \"gateway\": \"aliqu\",\n      \"timeoutSeconds\": 81051632,\n      \"plcType\": 5,\n      \"protocol\": 0,\n      \"plcTags\": [\n        {\n          \"tagId\": -95016207,\n          \"customName\": \"cillum eiusmod irure exercit\",\n          \"rslinxTagName\": \"esse Lorem ad\",\n          \"value\": -32540982,\n          \"tagType\": 3,\n          \"plcDeviceId\": 64691879,\n          \"plcDevice\": {\n            \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n          }\n        },\n        {\n          \"tagId\": -40599547,\n          \"customName\": \"ullamco amet sit\",\n          \"rslinxTagName\": \"incididunt in ex\",\n          \"value\": -21060715,\n          \"tagType\": 1,\n          \"plcDeviceId\": -71169903,\n          \"plcDevice\": {\n            \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n          }\n        }\n      ]\n    },\n    {\n      \"plcId\": 26446726,\n      \"name\": \"eiusmod ut mollit\",\n      \"defaultName\": \"Lorem cupidatat exercitation non\",\n      \"gateway\": \"et voluptate cu\",\n      \"timeoutSeconds\": -141607,\n      \"plcType\": 0,\n      \"protocol\": 0,\n      \"plcTags\": [\n        {\n          \"tagId\": 55659523,\n          \"customName\": \"anim\",\n          \"rslinxTagName\": \"laboris consequat eu sunt\",\n          \"value\": -37504467,\n          \"tagType\": 7,\n          \"plcDeviceId\": 60386201,\n          \"plcDevice\": {\n            \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n          }\n        },\n        {\n          \"tagId\": -65181614,\n          \"customName\": \"incididunt cupidatat ipsum aute\",\n          \"rslinxTagName\": \"mollit cillum Duis\",\n          \"value\": 35485099,\n          \"tagType\": 2,\n          \"plcDeviceId\": -11738287,\n          \"plcDevice\": {\n            \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n          }\n        }\n      ]\n    }\n  ],\n  \"success\": false,\n  \"message\": \"est dolore enim\"\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/MicrologixPlcs",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"plcId\": -12688377,\n  \"name\": \"proident qui et minim\",\n  \"defaultName\": \"aliquip nulla in\",\n  \"gateway\": \"mollit Ut cupidatat\",\n  \"timeoutSeconds\": 23024979,\n  \"plcType\": 6,\n  \"protocol\": 1,\n  \"plcTags\": [\n    {\n      \"tagId\": 71541362,\n      \"customName\": \"non adipisicing cillum in\",\n      \"rslinxTagName\": \"esse\",\n      \"value\": -1496794,\n      \"tagType\": 2,\n      \"plcDeviceId\": 85740793,\n      \"plcDevice\": {\n        \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n      }\n    },\n    {\n      \"tagId\": -84780545,\n      \"customName\": \"quis\",\n      \"rslinxTagName\": \"consequat laborum qui o\",\n      \"value\": 12493787,\n      \"tagType\": 10,\n      \"plcDeviceId\": -9932124,\n      \"plcDevice\": {\n        \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n      }\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/MicrologixPlcs",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"MicrologixPlcs"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"plcId\": -12688377,\n  \"name\": \"proident qui et minim\",\n  \"defaultName\": \"aliquip nulla in\",\n  \"gateway\": \"mollit Ut cupidatat\",\n  \"timeoutSeconds\": 23024979,\n  \"plcType\": 6,\n  \"protocol\": 1,\n  \"plcTags\": [\n    {\n      \"tagId\": 71541362,\n      \"customName\": \"non adipisicing cillum in\",\n      \"rslinxTagName\": \"esse\",\n      \"value\": -1496794,\n      \"tagType\": 2,\n      \"plcDeviceId\": 85740793,\n      \"plcDevice\": {\n        \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n      }\n    },\n    {\n      \"tagId\": -84780545,\n      \"customName\": \"quis\",\n      \"rslinxTagName\": \"consequat laborum qui o\",\n      \"value\": 12493787,\n      \"tagType\": 10,\n      \"plcDeviceId\": -9932124,\n      \"plcDevice\": {\n        \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n      }\n    }\n  ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5241/api/MicrologixPlcs",
+											"host": [
+												"localhost"
+											],
+											"port": "5241",
+											"path": [
+												"api",
+												"MicrologixPlcs"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"plcId\": -12688377,\n  \"name\": \"proident qui et minim\",\n  \"defaultName\": \"aliquip nulla in\",\n  \"gateway\": \"mollit Ut cupidatat\",\n  \"timeoutSeconds\": 23024979,\n  \"plcType\": 6,\n  \"protocol\": 1,\n  \"plcTags\": [\n    {\n      \"tagId\": 71541362,\n      \"customName\": \"non adipisicing cillum in\",\n      \"rslinxTagName\": \"esse\",\n      \"value\": -1496794,\n      \"tagType\": 2,\n      \"plcDeviceId\": 85740793,\n      \"plcDevice\": {\n        \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n      }\n    },\n    {\n      \"tagId\": -84780545,\n      \"customName\": \"quis\",\n      \"rslinxTagName\": \"consequat laborum qui o\",\n      \"value\": 12493787,\n      \"tagType\": 10,\n      \"plcDeviceId\": -9932124,\n      \"plcDevice\": {\n        \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n      }\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/MicrologixPlcs/details/:id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/MicrologixPlcs/details/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"MicrologixPlcs",
+										"details",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "90021384",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:5241/api/MicrologixPlcs/details/:id",
+											"host": [
+												"localhost"
+											],
+											"port": "5241",
+											"path": [
+												"api",
+												"MicrologixPlcs",
+												"details",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "90021384",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"data\": {\n    \"plcId\": -65092586,\n    \"name\": \"sint eu\",\n    \"defaultName\": \"ullamco esse\",\n    \"gateway\": \"aliqua ea\",\n    \"timeoutSeconds\": -78284747,\n    \"plcType\": 0,\n    \"protocol\": 1,\n    \"plcTags\": [\n      {\n        \"tagId\": -72321979,\n        \"customName\": \"ullamco\",\n        \"rslinxTagName\": \"consequat\",\n        \"value\": 18131806,\n        \"tagType\": 12,\n        \"plcDeviceId\": 64017794,\n        \"plcDevice\": {\n          \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n        }\n      },\n      {\n        \"tagId\": -86003572,\n        \"customName\": \"non in laboris\",\n        \"rslinxTagName\": \"Excepteur exercitation Duis\",\n        \"value\": -46673214,\n        \"tagType\": 10,\n        \"plcDeviceId\": -14676830,\n        \"plcDevice\": {\n          \"value\": \"<Circular reference to #/components/schemas/MicrologixPlc detected>\"\n        }\n      }\n    ]\n  },\n  \"success\": true,\n  \"message\": \"id minim consectetur Ut\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Micrologix Tags",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/MicrologixTags/:id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/MicrologixTags/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"MicrologixTags",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "90021384",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "localhost:5241/api/MicrologixTags/:id",
+													"host": [
+														"localhost"
+													],
+													"port": "5241",
+													"path": [
+														"api",
+														"MicrologixTags",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "90021384",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"tagId\": 8551192,\n  \"customName\": \"do sed minim reprehenderit est\",\n  \"rslinxTagName\": \"deserunt aliqua fugiat nostrud reprehenderit\",\n  \"value\": 57617887,\n  \"tagType\": 8,\n  \"plcDeviceId\": 48292059,\n  \"plcDevice\": {\n    \"plcId\": 70644962,\n    \"name\": \"eu sed minim cupidatat\",\n    \"defaultName\": \"dolore minim labore Excepteur\",\n    \"gateway\": \"reprehenderit dolore consectetur tempor\",\n    \"timeoutSeconds\": 6873607,\n    \"plcType\": 0,\n    \"protocol\": 1,\n    \"plcTags\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n      }\n    ]\n  }\n}"
+										}
+									]
+								},
+								{
+									"name": "/api/MicrologixTags/:id",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"tagId\": 8551192,\n  \"customName\": \"do sed minim reprehenderit est\",\n  \"rslinxTagName\": \"deserunt aliqua fugiat nostrud reprehenderit\",\n  \"value\": 57617887,\n  \"tagType\": 8,\n  \"plcDeviceId\": 48292059,\n  \"plcDevice\": {\n    \"plcId\": 70644962,\n    \"name\": \"eu sed minim cupidatat\",\n    \"defaultName\": \"dolore minim labore Excepteur\",\n    \"gateway\": \"reprehenderit dolore consectetur tempor\",\n    \"timeoutSeconds\": 6873607,\n    \"plcType\": 0,\n    \"protocol\": 1,\n    \"plcTags\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n      }\n    ]\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/MicrologixTags/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"MicrologixTags",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "90021384",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"tagId\": 8551192,\n  \"customName\": \"do sed minim reprehenderit est\",\n  \"rslinxTagName\": \"deserunt aliqua fugiat nostrud reprehenderit\",\n  \"value\": 57617887,\n  \"tagType\": 8,\n  \"plcDeviceId\": 48292059,\n  \"plcDevice\": {\n    \"plcId\": 70644962,\n    \"name\": \"eu sed minim cupidatat\",\n    \"defaultName\": \"dolore minim labore Excepteur\",\n    \"gateway\": \"reprehenderit dolore consectetur tempor\",\n    \"timeoutSeconds\": 6873607,\n    \"plcType\": 0,\n    \"protocol\": 1,\n    \"plcTags\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n      }\n    ]\n  }\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "localhost:5241/api/MicrologixTags/:id",
+													"host": [
+														"localhost"
+													],
+													"port": "5241",
+													"path": [
+														"api",
+														"MicrologixTags",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "90021384",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "/api/MicrologixTags/:id",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/MicrologixTags/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"MicrologixTags",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "90021384",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "localhost:5241/api/MicrologixTags/:id",
+													"host": [
+														"localhost"
+													],
+													"port": "5241",
+													"path": [
+														"api",
+														"MicrologixTags",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "90021384",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "/api/MicrologixTags",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/MicrologixTags",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"MicrologixTags"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:5241/api/MicrologixTags",
+											"host": [
+												"localhost"
+											],
+											"port": "5241",
+											"path": [
+												"api",
+												"MicrologixTags"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"tagId\": -48285504,\n    \"customName\": \"aliqua tempor ea\",\n    \"rslinxTagName\": \"aliqua ullamco\",\n    \"value\": 33024024,\n    \"tagType\": 4,\n    \"plcDeviceId\": -88278113,\n    \"plcDevice\": {\n      \"plcId\": 40254760,\n      \"name\": \"sit labore officia ullamco\",\n      \"defaultName\": \"esse irure\",\n      \"gateway\": \"tempor Duis\",\n      \"timeoutSeconds\": 89387431,\n      \"plcType\": 6,\n      \"protocol\": 0,\n      \"plcTags\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n        }\n      ]\n    }\n  },\n  {\n    \"tagId\": -6537050,\n    \"customName\": \"adipisicing sit\",\n    \"rslinxTagName\": \"sint commodo ex\",\n    \"value\": -93564766,\n    \"tagType\": 11,\n    \"plcDeviceId\": 52485307,\n    \"plcDevice\": {\n      \"plcId\": -24257983,\n      \"name\": \"fugiat labore sed irure magna\",\n      \"defaultName\": \"officia Lorem occaecat\",\n      \"gateway\": \"irure nisi qui et do\",\n      \"timeoutSeconds\": -15844250,\n      \"plcType\": 3,\n      \"protocol\": 1,\n      \"plcTags\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n        }\n      ]\n    }\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "/api/MicrologixTags",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"tagId\": 8551192,\n  \"customName\": \"do sed minim reprehenderit est\",\n  \"rslinxTagName\": \"deserunt aliqua fugiat nostrud reprehenderit\",\n  \"value\": 57617887,\n  \"tagType\": 8,\n  \"plcDeviceId\": 48292059,\n  \"plcDevice\": {\n    \"plcId\": 70644962,\n    \"name\": \"eu sed minim cupidatat\",\n    \"defaultName\": \"dolore minim labore Excepteur\",\n    \"gateway\": \"reprehenderit dolore consectetur tempor\",\n    \"timeoutSeconds\": 6873607,\n    \"plcType\": 0,\n    \"protocol\": 1,\n    \"plcTags\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n      }\n    ]\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/MicrologixTags",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"MicrologixTags"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"tagId\": 8551192,\n  \"customName\": \"do sed minim reprehenderit est\",\n  \"rslinxTagName\": \"deserunt aliqua fugiat nostrud reprehenderit\",\n  \"value\": 57617887,\n  \"tagType\": 8,\n  \"plcDeviceId\": 48292059,\n  \"plcDevice\": {\n    \"plcId\": 70644962,\n    \"name\": \"eu sed minim cupidatat\",\n    \"defaultName\": \"dolore minim labore Excepteur\",\n    \"gateway\": \"reprehenderit dolore consectetur tempor\",\n    \"timeoutSeconds\": 6873607,\n    \"plcType\": 0,\n    \"protocol\": 1,\n    \"plcTags\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n      }\n    ]\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:5241/api/MicrologixTags",
+											"host": [
+												"localhost"
+											],
+											"port": "5241",
+											"path": [
+												"api",
+												"MicrologixTags"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"tagId\": 8551192,\n  \"customName\": \"do sed minim reprehenderit est\",\n  \"rslinxTagName\": \"deserunt aliqua fugiat nostrud reprehenderit\",\n  \"value\": 57617887,\n  \"tagType\": 8,\n  \"plcDeviceId\": 48292059,\n  \"plcDevice\": {\n    \"plcId\": 70644962,\n    \"name\": \"eu sed minim cupidatat\",\n    \"defaultName\": \"dolore minim labore Excepteur\",\n    \"gateway\": \"reprehenderit dolore consectetur tempor\",\n    \"timeoutSeconds\": 6873607,\n    \"plcType\": 0,\n    \"protocol\": 1,\n    \"plcTags\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/PlcTag detected>\"\n      }\n    ]\n  }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Get Weather Forecast",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/WeatherForecast",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"WeatherForecast"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:5241/WeatherForecast",
+									"host": [
+										"localhost"
+									],
+									"port": "5241",
+									"path": [
+										"WeatherForecast"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"date\": \"2014-08-15T09:26:47.956Z\",\n    \"temperatureC\": -22199388,\n    \"temperatureF\": -52858649,\n    \"summary\": \"dolore ullamco\"\n  },\n  {\n    \"date\": \"2008-10-24T09:21:27.417Z\",\n    \"temperatureC\": 21528756,\n    \"temperatureF\": 88163616,\n    \"summary\": \"est laborum cillum Ut\"\n  }\n]"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:5241",
+			"type": "string"
+		}
+	]
+}

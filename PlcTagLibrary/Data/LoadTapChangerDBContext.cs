@@ -28,7 +28,7 @@ public partial class LoadTapChangerDBContext : DbContext
             var builder = new DbContextOptionsBuilder<LoadTapChangerDBContext>();
             var connectionString = configuration.GetConnectionString("SqlServerDB");
             builder.UseSqlServer(connectionString);
-                //, sql => sql.MigrationsAssembly(typeof(LoadTapChangerDBContext).Assembly.FullName));
+            //, sql => sql.MigrationsAssembly(typeof(LoadTapChangerDBContext).Assembly.FullName));
             return new LoadTapChangerDBContext(builder.Options);
         }
     }
@@ -113,20 +113,21 @@ public partial class LoadTapChangerDBContext : DbContext
             entity.Property(e => e.TagType).IsRequired();
 
             entity.HasOne(d => d.PlcDevice)
-                .WithMany(p => p.MicrologixTags)
+                .WithMany(p => p.PlcTags)
                 .HasForeignKey(d => d.PlcDeviceId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_PlcTag_Plc");
         });
 
         modelBuilder.Entity<MicrologixPlc>().HasData(
-                new MicrologixPlc { PlcId = 1, Name = "Micrologix1100", Gateway = "192.168.0.23", Protocol = Protocol.ab_eip, PlcType = PlcType.Slc500, TimeoutSeconds = 3 });
+                new MicrologixPlc { PlcId = 1, Name = "Micrologix1100", Gateway = "192.168.0.23", Protocol = Protocol.ab_eip, PlcType = PlcType.Slc500, TimeoutSeconds = 3 },
+                new MicrologixPlc { PlcId = 2, Name = "Micrologix1200", Gateway = "192.168.0.200", Protocol = Protocol.ab_eip, PlcType = PlcType.ControlLogix, TimeoutSeconds = 5 });
 
         modelBuilder.Entity<PlcTag>().HasData(
-            new PlcTag { TagId = 1, CustomName = "Output:1", RslinxTagName = "O0:0/1", TagType = TagType.Output, Value = null, PlcDeviceId = 1 }); ;
-
-        modelBuilder.Entity<PlcTag>().HasData(
-            new PlcTag { TagId = 2, CustomName = "Input:1", RslinxTagName = "I1:0/1", TagType = TagType.Input, Value = null, PlcDeviceId = 1 });
+            new PlcTag { TagId = 1, CustomName = "Output:1", RslinxTagName = "O0:0/1", TagType = TagType.Output, Value = null, PlcDeviceId = 1 },
+            new PlcTag { TagId = 2, CustomName = "Input:1", RslinxTagName = "I1:0/1", TagType = TagType.Input, Value = null, PlcDeviceId = 1 },
+            new PlcTag { TagId = 3, CustomName = "Output:1", RslinxTagName = "O0:0/1", TagType = TagType.Output, Value = null, PlcDeviceId = 2 },
+            new PlcTag { TagId = 4, CustomName = "Input:1", RslinxTagName = "I1:0/1", TagType = TagType.Input, Value = null, PlcDeviceId = 2 });
 
 
         OnModelCreatingPartial(modelBuilder);

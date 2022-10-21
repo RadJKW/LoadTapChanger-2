@@ -4,9 +4,10 @@
 using PlcTagLibrary.Models;
 namespace PlcTagLibrary.Dtos.MicrologixPLC;
 
-public class ReadPlcDto : BaseDto
+public class ReadPlcDto
 {
+    public int? Id { get; set; }
     public string? Name { get; set; }
     public string? Gateway { get; set; }
-    public PlcType PlcType { get; set; }
+    public string? PlcType { get; set; }
 }
