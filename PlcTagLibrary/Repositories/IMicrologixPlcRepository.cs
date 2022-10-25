@@ -7,14 +7,28 @@ using PlcTagLibrary.Models;
 
 namespace PlcTagLibrary.Repositories
 {
+    /// <summary>
+    /// Interface for MicrologixPlcRepository
+    /// </summary>
+    /// 
     public interface IMicrologixPlcRepository : IGenericRepository<MicrologixPlc>
     {
-        Task<ServiceResponse<IEnumerable<ReadPlcDto>>> GetAllPlcAsync();
 
-        Task<ServiceResponse<DetailsPlcDto>> GetPlcDetailsAsync(int id);
 
-        Task<ServiceResponse<ReadPlcDto>> GetPlcByIdAsync(int id);
+        // ----- CreatePlcDto ------
+        Task<ServiceResponse<CreatePlcDto>> Create(CreatePlcDto newPlc);
+        // ----- ReadPlcDto --------
+        Task<ServiceResponse<ReadPlcDto>> GetById(int id);
+        Task<ServiceResponse<IEnumerable<ReadPlcDto>>> List();
+        // ----- DetailsPlcDto -----
+        Task<ServiceResponse<IEnumerable<DetailsPlcDto>>> ListDetails();
+        Task<ServiceResponse<DetailsPlcDto>> GetDetailsById(int id);
+        // ----- UpdatePlcDto ------
+        Task<ServiceResponse<UpdatePlcDto>> Update(UpdatePlcDto updatedPlc);
+        // ----- DeletePlcDto ------
+        Task<ServiceResponse<ReadPlcDto>> Delete(int id);
 
-        Task<ServiceResponse<UpdatePlcDto>> UpdatePlcAsync(UpdatePlcDto updatePlcDto);
+
+
     }
 }

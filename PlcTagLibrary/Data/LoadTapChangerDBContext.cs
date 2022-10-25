@@ -39,6 +39,7 @@ public partial class LoadTapChangerDBContext : DbContext
     }
 
     public virtual DbSet<ListTagsByPlc> ListTagsByPlcs { get; set; }
+    /// <inheritdoc cref="MicrologixPlc"/>
     public virtual DbSet<MicrologixPlc> MicrologixPlcs { get; set; }
     public virtual DbSet<PlcTag> PlcTags { get; set; }
 

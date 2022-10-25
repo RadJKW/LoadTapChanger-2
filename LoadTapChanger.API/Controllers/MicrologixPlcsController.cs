@@ -6,6 +6,11 @@ using PlcTagLibrary.Dtos.MicrologixPLC;
 using PlcTagLibrary.Models;
 using PlcTagLibrary.Repositories;
 
+
+// TODO: Figure out how to add form inputs to swaggerUI
+// TODO: PUT: [Update Plc] should keep previous values if new values are null
+
+
 namespace LoadTapChanger.API.Controllers
 {
     [Route("api/[controller]")]
@@ -29,7 +34,7 @@ namespace LoadTapChanger.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ReadPlcDto>>> GetPlcs()
         {
-            var response = await _plcRepository.GetAllPlcAsync();
+            var response = await _plcRepository.List();
             if (response.Success)
             {
                 return Ok(response.Data);
@@ -41,13 +46,13 @@ namespace LoadTapChanger.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<MicrologixPlc>>> GetPlc(int id)
         {
-            return Ok(await _plcRepository.GetPlcByIdAsync(id));
+            return Ok(await _plcRepository.GetById(id));
         }
 
         [HttpGet("details/{id}")]
         public async Task<ActionResult<ServiceResponse<MicrologixPlc>>> GetPlcDetails(int id)
         {
-            return Ok(await _plcRepository.GetPlcDetailsAsync(id));
+            return Ok(await _plcRepository.GetDetailsById(id));
         }
 
         // PUT: api/MicrologixPlcs/5
@@ -55,7 +60,7 @@ namespace LoadTapChanger.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<IEnumerable<UpdatePlcDto>>> UpdatePlc(int id, UpdatePlcDto updatePlcDto)
         {
-            var response = await _plcRepository.UpdatePlcAsync(updatePlcDto);
+            var response = await _plcRepository.Update(updatePlcDto);
             if (response.Success)
             {
                 return Ok(response.Data);
