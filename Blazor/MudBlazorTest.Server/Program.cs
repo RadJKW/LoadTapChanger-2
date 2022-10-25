@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
-using MudBlazor.Examples.Data;
 using MudBlazor.Services;
 using MudBlazorTest.Server.Data;
 using MudBlazorTest.Server.Services;
@@ -20,7 +19,6 @@ builder.Services.AddScoped<IMicrologixPlcService, MicrologixPlcService>();
 builder.Services.AddMudServices();
 builder.Services.AddMediatR(typeof(Program));
 //builder.Services.AddSingleton<IApiLinkService, ApiLinkService>();
-builder.Services.AddScoped<IPeriodicTableService, PeriodicTableService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddCors(options =>
 {

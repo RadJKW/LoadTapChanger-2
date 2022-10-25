@@ -15,10 +15,6 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\..\MudBlazor\src\MudBlazor.Examples.Data\MudBlazor.Examples.Data.csproj" />
-    </ItemGroup>
-
     <Target Name="CollectMudBlazorStaticAssets" DependsOnTargets="ResolveStaticWebAssetsInputs" AfterTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">
         <Copy SourceFiles="%(StaticWebAsset.Identity)" DestinationFolder="wwwroot/temp" Condition="$([System.String]::Copy(%(StaticWebAsset.Identity)).Contains('mudblazor'))" />
     </Target>
