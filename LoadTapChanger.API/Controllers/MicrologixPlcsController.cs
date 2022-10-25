@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PlcTagLibrary.Data;
+using PlcTagLibrary.Dtos.MicrologixPLC;
 using PlcTagLibrary.Models;
 using PlcTagLibrary.Repositories;
 
@@ -26,9 +27,14 @@ namespace LoadTapChanger.API.Controllers
 
         // GET: api/MicrologixPlcs
         [HttpGet]
-        public async Task<ActionResult<ServiceResponse<IEnumerable<MicrologixPlc>>>> GetPlcs()
+        public async Task<ActionResult<IEnumerable<ReadPlcDto>>> GetPlcs()
         {
-            return Ok(await _plcRepository.GetAllPlcAsync());
+            var response = await _plcRepository.GetAllPlcAsync();
+            if (response.Success)
+            {
+                return Ok(response.Data);
+            }
+            return NotFound(response.Message);
         }
 
         // GET: api/MicrologixPlcs/5
@@ -47,32 +53,15 @@ namespace LoadTapChanger.API.Controllers
         // PUT: api/MicrologixPlcs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePlc(int id, MicrologixPlc micrologixPlc)
+        public async Task<ActionResult<IEnumerable<UpdatePlcDto>>> UpdatePlc(int id, UpdatePlcDto updatePlcDto)
         {
-            if (id != micrologixPlc.PlcId)
+            var response = await _plcRepository.UpdatePlcAsync(updatePlcDto);
+            if (response.Success)
             {
-                return BadRequest();
-            }
+                return Ok(response.Data);
 
-            _context.Entry(micrologixPlc).State = EntityState.Modified;
-
-            try
-            {
-                _ = await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!await PlcExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return NotFound(response.Message);
         }
 
         // POST: api/MicrologixPlcs
