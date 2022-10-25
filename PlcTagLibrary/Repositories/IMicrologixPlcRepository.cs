@@ -14,5 +14,7 @@ namespace PlcTagLibrary.Repositories
         Task<ServiceResponse<DetailsPlcDto>> GetPlcDetailsAsync(int id);
 
         Task<ServiceResponse<ReadPlcDto>> GetPlcByIdAsync(int id);
+
+        Task<ServiceResponse<UpdatePlcDto>> UpdatePlcAsync(UpdatePlcDto updatePlcDto);
     }
 }

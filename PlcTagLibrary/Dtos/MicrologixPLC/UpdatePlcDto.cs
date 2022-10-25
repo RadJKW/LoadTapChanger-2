@@ -14,7 +14,12 @@ public class UpdatePlcDto
 {
     [Required]
     public int Id { get; set; }
+    [Required]
+    public string? Name { get; set; }
     public string? DefaultName { get; set; }
+
+    [Required]
+    public string? Gateway { get; set; }
     public short TimeoutSeconds { get; set; }
     public string? Protocol { get; set; }
 }

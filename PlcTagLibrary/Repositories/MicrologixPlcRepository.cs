@@ -85,5 +85,48 @@ namespace PlcTagLibrary.Repositories
 
 
         }
+
+        public async Task<ServiceResponse<UpdatePlcDto>> UpdatePlcAsync(UpdatePlcDto updatePlcDto)
+        {
+            // TODO: This no work I think. Need to implement the GetPlcById method
+            var response = new ServiceResponse<UpdatePlcDto>();
+            try
+            {
+                var plc = await _context.MicrologixPlcs
+                    .ProjectTo<UpdatePlcDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync(q => q.Id == updatePlcDto.Id);
+
+
+                // set the plc properties to the updatePlcDto properties
+                if (plc != null)
+                {
+                    _mapper.Map(updatePlcDto, plc);
+                    await _context.SaveChangesAsync();
+
+                    response.Data = updatePlcDto;
+
+                }
+                else
+                {
+
+                    response.Success = false;
+                    response.Message = "Plc not found";
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+
+                throw;
+            }
+
+            return response;
+
+
+        }
     }
 }
