@@ -1,9 +1,7 @@
 ﻿@inherits LayoutComponentBase
-
+@using MudBlazor.Utilities
 <style>
-    body {
-        @*background-color:#0e0e16;*@
-    }
+
 </style>
 
 <MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
@@ -14,13 +12,13 @@
 
     <MudAppBar Elevation="0">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
-            OnClick="@((e) => DrawerToggle())" />
+                       OnClick="@((e) => DrawerToggle())" />
         <MudSpacer />
         <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/"
-            Target="_blank">
+                       Target="_blank">
         </MudIconButton>
         <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit"
-            Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank">
+                       Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank">
         </MudIconButton>
     </MudAppBar>
 
@@ -47,22 +45,40 @@
 
 @code {
     bool _drawerOpen = true;
-    private bool _isDarkMode;
+    private bool _isDarkMode = true;
     private MudThemeProvider? _mudThemeProvider;
+
 
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
+
     }
 
+
+    MudTheme _mudTheme = new MudTheme()
+    {
+
+
+        //PaletteDark = new Palette
+        //{
+        //    TableStriped = new MudColor(
+        //        Colors.Shades.Black)
+        //            .SetAlpha(0.2)
+        //            .ToString(MudColorOutputFormats.RGBA)
+        //},
+    };
+
+    //protected override async Task OnInitializedAsync() => _mudThemeProvider!.Theme.PaletteDark.TableStriped = "#000000";
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             _isDarkMode = await _mudThemeProvider!.GetSystemPreference();
-            StateHasChanged();
-            //TODO: Remove this for production
-            _isDarkMode = true;
+            
         }
+        _mudThemeProvider!.Theme.PaletteDark.TableStriped = "#00000026";
+        StateHasChanged();
+        
     }
 }
