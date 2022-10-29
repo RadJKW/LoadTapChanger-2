@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using PlcTagLibrary.Data;
 using PlcTagLibrary.Dtos.MicrologixPLC;
 using PlcTagLibrary.Models;
@@ -30,23 +28,26 @@ namespace LoadTapChanger.API.Controllers
             _plcRepository = plcRepository;
         }
 
-        // GET: api/MicrologixPlcs
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ReadPlcDto>>> GetPlcs()
         {
             var response = await _plcRepository.List();
-            if (response.Success)
-            {
-                return Ok(response.Data);
-            }
-            return NotFound(response.Message);
+            return response.Success ? (ActionResult<IEnumerable<ReadPlcDto>>)Ok(response.Data) : (ActionResult<IEnumerable<ReadPlcDto>>)NotFound(response.Message);
         }
 
-        // GET: api/MicrologixPlcs/5
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<MicrologixPlc>>> GetPlc(int id)
         {
             return Ok(await _plcRepository.GetById(id));
+        }
+
+        [HttpGet("details/", Name = "GetAllPlcDetails")]
+        public async Task<ActionResult<IEnumerable<DetailsPlcDto>>> GetAllPlcDetails()
+        {
+            var response = await _plcRepository.ListDetails();
+            return response.Success ? (ActionResult<IEnumerable<DetailsPlcDto>>)Ok(response.Data) : (ActionResult<IEnumerable<DetailsPlcDto>>)NotFound(response.Message);
         }
 
         [HttpGet("details/{id}")]
@@ -55,32 +56,24 @@ namespace LoadTapChanger.API.Controllers
             return Ok(await _plcRepository.GetDetailsById(id));
         }
 
-        // PUT: api/MicrologixPlcs/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<ActionResult<IEnumerable<UpdatePlcDto>>> UpdatePlc(int id, UpdatePlcDto updatePlcDto)
-        {
-            var response = await _plcRepository.Update(updatePlcDto);
-            if (response.Success)
-            {
-                return Ok(response.Data);
 
-            }
-            return NotFound(response.Message);
+
+        [HttpPut("{id}", Name = "UpdatePlc")]
+        public async Task<ActionResult<DetailsPlcDto>> UpdatePlc(int id, UpdatePlcDto updatePlcDto)
+        {
+            var response = await _plcRepository.Update(id, updatePlcDto);
+            return response.Success ? (ActionResult<DetailsPlcDto>)Ok(response.Data) : (ActionResult<DetailsPlcDto>)NotFound(response.Message);
         }
 
-        // POST: api/MicrologixPlcs
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         [HttpPost]
-        public async Task<ActionResult<MicrologixPlc>> AddPlc(MicrologixPlc micrologixPlc)
+        public async Task<ActionResult<DetailsPlcDto>> AddPlc(CreatePlcDto newPlc)
         {
-            _ = _context.MicrologixPlcs.Add(micrologixPlc);
-            _ = await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetMicrologixPlc", new { id = micrologixPlc.PlcId }, micrologixPlc);
+            var response = await _plcRepository.Create(newPlc);
+            return response.Success ? (ActionResult<DetailsPlcDto>)Ok(response.Data) : (ActionResult<DetailsPlcDto>)NotFound(response.Message);
         }
 
-        // DELETE: api/MicrologixPlcs/5
+        // TODO: Remove Data Access, Use Repository
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePlc(int id)
         {
@@ -93,12 +86,7 @@ namespace LoadTapChanger.API.Controllers
             _ = _context.MicrologixPlcs.Remove(micrologixPlc);
             _ = await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
-
-        private async Task<bool> PlcExists(int id)
-        {
-            return await _plcRepository.Exists(id);
+            return Ok();
         }
     }
 }
