@@ -1,6 +1,17 @@
 ﻿@inherits LayoutComponentBase
 @using MudBlazor.Utilities
 <style>
+    .selected {
+        background-color: #1E88E5 !important;
+    }
+
+        .selected > td {
+            color: white !important;
+        }
+
+            .selected > td .mud-input {
+                color: white !important;
+            }
 
 </style>
 
@@ -22,7 +33,7 @@
         </MudIconButton>
     </MudAppBar>
 
-    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="6" Variant="DrawerVariant.Responsive">
         <MudDrawerHeader>
             <MudText Typo="Typo.h6">
                 MudBlazorTest
@@ -37,7 +48,7 @@
     </MudDrawer>
 
     <MudMainContent>
-        <MudContainer Class="my-8" MaxWidth="MaxWidth.Large">
+        <MudContainer Class="my-8" MaxWidth="MaxWidth.False">
             @Body
         </MudContainer>
     </MudMainContent>
@@ -60,10 +71,10 @@
         if (firstRender)
         {
             _isDarkMode = await _mudThemeProvider!.GetSystemPreference();
-            
+
         }
         _mudThemeProvider!.Theme.PaletteDark.TableStriped = "#00000026";
         StateHasChanged();
-        
+
     }
 }

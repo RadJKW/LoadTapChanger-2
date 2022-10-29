@@ -8,6 +8,6 @@ namespace MudBlazorTest.Server.Services;
 
 public interface IMicrologixPlcService
 {
-    Task<ServiceResponse<List<ReadPlcDto>>> Get();
+    Task<ServiceResponse<List<DetailsPlcDto>>> Get();
 
 }

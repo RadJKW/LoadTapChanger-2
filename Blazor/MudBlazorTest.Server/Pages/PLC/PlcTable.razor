@@ -5,6 +5,8 @@
 @using Newtonsoft.Json
 @using MudBlazorTest.Server.Services
 @using MudBlazorTest.Server.Services.Base
+@using MudBlazor.Services
+@using System.Reflection;
 
 @inject IMicrologixPlcService plcService
 
@@ -30,123 +32,79 @@
 @*// TODO: Make the table min content width*@
 
 
-<MudTable Items="@_plcDto" Hover="true" Striped="true" Bordered="true"
-          FixedHeader="true"
-          FixedFooter="false"
-          RowsPerPage="10"
-          Breakpoint="Breakpoint.Sm"
-          Height="400px">
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">Periodic Elements</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="Search"
-                      Adornment="Adornment.Start"
-                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"
-                      Class=""></MudTextField>
-    </ToolBarContent>
-    <HeaderContent>
+<MudGrid Spacing="3" Justify="Justify.Center">
+    <MudItem xs="12">
+        <MudTable Items="@_localPlcList" @ref="_plcTable" Dense="true" Hover="true" Striped="true" Bordered="true" Elevation="4" FixedHeader="true" FixedFooter="true" Loading="@_loading" CustomFooter="true" RowsPerPage="10" Breakpoint="Breakpoint.Xs"
+                  Height="300px"
+                  RowClassFunc="@SelectedRowClassFunc" OnRowClick="RowClickEvent" T="LocalPlc">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Micrologix PLCs </MudText>
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchString" Placeholder="Search"
+                              Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"
+                              Class=""></MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
 
-        <MudTh>Name</MudTh>
-        <MudTh>Id</MudTh>
-        <MudTh>Gateway</MudTh>
-        <MudTh>PlcType</MudTh>
+                <MudTh>Name</MudTh>
+                <MudTh>Id</MudTh>
+                <MudTh>Gateway</MudTh>
+                <MudTh>PlcType</MudTh>
+                <MudTh>Protocol</MudTh>
 
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Nr">@context.Name</MudTd>
-        <MudTd DataLabel="Sign">@context.Id</MudTd>
-        @*<MudTd DataLabel="Details">@context.Details</MudTd>*@
-        <MudTd DataLabel="Name">@context.Gateway</MudTd>
-        <MudTd DataLabel="Name">@context.PlcType</MudTd>
-    </RowTemplate>
-    <PagerContent>
-        <MudTablePager />
-    </PagerContent>
-</MudTable>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Name">@context!.Name</MudTd>
+                <MudTd DataLabel="Id">@context!.Id</MudTd>
+                @*<MudTd DataLabel="Details">@context.Details</MudTd>*@
+                <MudTd DataLabel="Gateway">@context!.Gateway</MudTd>
+                <MudTd DataLabel="PlcType">@context!.PlcType</MudTd>
+                <MudTd DataLabel="Protocol">@context!.Protocol</MudTd>
+            </RowTemplate>
+            <FooterContent>
+                @* for each tag in context.PlcTags, add a row to the footer
+                for each tag attribute, make a column and show the value
+                *@
+                <MudTFootRow>
+                    <MudTd colspan="5">
+                        <MudText Typo="Typo.body1" Class="text-align-center, bold-text">BreakPoint: </MudText>
+                    </MudTd>
+                </MudTFootRow>
+
+            </FooterContent>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+
+    </MudItem>
+
+    @* for each item in _plcTagList, create a card to display the Tag *@
+    @foreach (var tag in _plcTagList)
+    {
+        <MudItem xs="4">
+            <MudCard Elevation="4">
+                <MudCardHeader>
+                    <MudText Typo="Typo.h6">@(tag.CustomName != null ? tag.CustomName : tag.RslinxTagName)</MudText>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudText Typo="Typo.h6">@tag.Id</MudText>
+                        <MudText Typo="Typo.body1">@tag.TagType</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+    }
+
+</MudGrid>
+
+
 
 @*<div class="table-options">*@
-<MudSwitch @bind-Checked="ronly">Edit</MudSwitch>
+<MudSwitch @bind-Checked="_ronly">Edit</MudSwitch>
 @*</div>*@
 
 
 
 
-@code {
-    private class Element
-    {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Details { get; set; }
-    }
 
-    private class Plc
-    {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Gateway { get; set; }
-        public string? PlcType { get; set; }
-    }
-
-    private List<ReadPlcDto> _plcDto = new List<ReadPlcDto>();
-    private bool ronly = false;
-    private string searchString = "";
-    private Element? selectedItem1 = null;
-    private Element? elementBeforeEdit;
-    private HashSet<Element> selectedItems1 = new HashSet<Element>();
-    private TableApplyButtonPosition applyButtonPosition = TableApplyButtonPosition.End;
-    private List<Element> tempElementList = new();
-    private IEnumerable<Element> Elements = new List<Element>();
-    private IEnumerable<Plc> _plcs = new List<Plc>();
-    private HashSet<Element> selectedItems = new HashSet<Element>();
-    //private HttpClient _client = new HttpClient {
-    //        BaseAddress = new Uri("https://localhost:7241/")
-    //    };
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        //_plcs = await _client.GetFromJsonAsync<List<Plc>>("api/MicrologixPlcs")
-        ////    ?? new List<Plc>();
-
-        ////_plcs = await new HttpClient().GetFromJsonAsync<List<Plc>>("https://localhost:7241/api/MicrologixPlcs")
-        //?? new List<Plc>();
-        var response = await plcService.Get();
-        if (response.Success)
-        {
-            _plcDto = response.Data!;
-        }
-
-
-    }
-
-
-    private async Task<List<Element>> AddElementsToList()
-    {
-        if (!Elements.Any())
-        {
-
-            for (int i = 1; i < 35; i++)
-            {
-
-                tempElementList.Add(new Element
-                    {
-                        Id = i,
-                        Name = $"MyNameIs({i})",
-                        Details = $"Element-{i} Details"
-                    });
-
-            }
-
-        }
-        await Task.CompletedTask;
-        return tempElementList.ToList();
-
-    }
-
-
-
-
-
-
-
-}

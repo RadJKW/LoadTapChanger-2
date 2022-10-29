@@ -16,13 +16,13 @@ public class MicrologixPlcService : IMicrologixPlcService
         _logger = logger;
     }
 
-    public async Task<ServiceResponse<List<ReadPlcDto>>> Get()
+    public async Task<ServiceResponse<List<DetailsPlcDto>>> Get()
     {
-        ServiceResponse<List<ReadPlcDto>> response;
+        ServiceResponse<List<DetailsPlcDto>> response;
         try
         {
-            var data = await _client.MicrologixPlcsAllAsync();
-            response = new ServiceResponse<List<ReadPlcDto>>
+            var data = await _client.GetAllPlcDetailsAsync();
+            response = new ServiceResponse<List<DetailsPlcDto>>
             {
                 Data = data.ToList(),
                 Success = true,
@@ -32,7 +32,7 @@ public class MicrologixPlcService : IMicrologixPlcService
         catch (LtcApiException exception)
         {
 
-            response = new ServiceResponse<List<ReadPlcDto>>
+            response = new ServiceResponse<List<DetailsPlcDto>>
             {
                 Data = null,
                 Success = false,
