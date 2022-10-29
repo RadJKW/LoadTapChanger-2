@@ -14,8 +14,10 @@ namespace PlcTagLibrary.Dtos.MicrologixPLC
         public string? Name { get; set; }
         public string? DefaultName { get; set; }
 
+        public string? Gateway { get; set; }
+
         public string? PlcType { get; set; }
-        public short TimeoutSeconds { get; set; }
+        public short? TimeoutSeconds { get; set; }
         public string? Protocol { get; set; }
 
         public List<ReadPlcTagDto>? PlcTags { get; set; }

@@ -16,7 +16,7 @@ namespace PlcTagLibrary.Repositories
 
 
         // ----- CreatePlcDto ------
-        Task<ServiceResponse<CreatePlcDto>> Create(CreatePlcDto newPlc);
+        Task<ServiceResponse<DetailsPlcDto>> Create(CreatePlcDto newPlc);
         // ----- ReadPlcDto --------
         Task<ServiceResponse<ReadPlcDto>> GetById(int id);
         Task<ServiceResponse<IEnumerable<ReadPlcDto>>> List();
@@ -24,7 +24,7 @@ namespace PlcTagLibrary.Repositories
         Task<ServiceResponse<IEnumerable<DetailsPlcDto>>> ListDetails();
         Task<ServiceResponse<DetailsPlcDto>> GetDetailsById(int id);
         // ----- UpdatePlcDto ------
-        Task<ServiceResponse<UpdatePlcDto>> Update(UpdatePlcDto updatedPlc);
+        Task<ServiceResponse<DetailsPlcDto>> Update(int id, UpdatePlcDto updatedPlc);
         // ----- DeletePlcDto ------
         Task<ServiceResponse<ReadPlcDto>> Delete(int id);
 

@@ -9,7 +9,7 @@ using System.Reflection.Metadata.Ecma335;
 namespace PlcTagLibrary.DtosOneFile;
 public class MicrologixPlcDto : CreatePlcDto
 {
-    public MicrologixPlcDto(int id,string name,PlcType plcType,List<DetailsPlcTagDto>? tags = null) : base(name,plcType)
+    public MicrologixPlcDto(int id, string name, PlcType plcType, List<DetailsPlcTagDto>? tags = null) : base(name, plcType)
     {
         Id = id;
         PlcType = plcType;
@@ -23,7 +23,7 @@ public class MicrologixPlcDto : CreatePlcDto
 
 public abstract class CreatePlcDto
 {
-    protected CreatePlcDto(string name,PlcType plcType)
+    protected CreatePlcDto(string name, PlcType plcType)
     {
         Name = name;
         PlcType = plcType;

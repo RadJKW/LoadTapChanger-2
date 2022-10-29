@@ -9,149 +9,154 @@ using PlcTagLibrary.Data;
 using PlcTagLibrary.Dtos.MicrologixPLC;
 using PlcTagLibrary.Models;
 
-namespace PlcTagLibrary.Repositories;
-
-public class MicrologixPlcRepository : GenericRepository<MicrologixPlc>, IMicrologixPlcRepository
+namespace PlcTagLibrary.Repositories
 {
-    private readonly LoadTapChangerDBContext _context;
-    private readonly IMapper _mapper;
-
-    public MicrologixPlcRepository(LoadTapChangerDBContext context, IMapper mapper) : base(context, mapper)
+    public class MicrologixPlcRepository : GenericRepository<MicrologixPlc>, IMicrologixPlcRepository
     {
-        _context = context;
-        _mapper = mapper;
-    }
+        private readonly LoadTapChangerDBContext _context;
+        private readonly IMapper _mapper;
 
-    public async Task<ServiceResponse<IEnumerable<ReadPlcDto>>> List()
-    {
-        var response = new ServiceResponse<IEnumerable<ReadPlcDto>>();
-        try
+        public MicrologixPlcRepository(LoadTapChangerDBContext context, IMapper mapper) : base(context, mapper)
         {
-            var plc = await _context.MicrologixPlcs.ToListAsync();
-            var plcDto = _mapper.Map<IEnumerable<ReadPlcDto>>(plc);
-            response.Data = plcDto;
+            _context = context;
+            _mapper = mapper;
         }
-        catch (Exception ex)
-        {
-            response.Success = false;
-            response.Message = ex.Message;
-        }
-        return response;
-    }
 
-    public async Task<ServiceResponse<DetailsPlcDto>> GetDetailsById(int id)
-    {
-        var response = new ServiceResponse<DetailsPlcDto>();
-        try
+        public async Task<ServiceResponse<IEnumerable<ReadPlcDto>>> List()
         {
-            var plc = await _context.MicrologixPlcs
-                .Include(p => p.PlcTags)
-                .ProjectTo<DetailsPlcDto>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(p => p.Id == id);
-
-            response.Data = plc;
-        }
-        catch (Exception ex)
-        {
-            response.Success = false;
-            response.Message = ex.Message;
-        }
-        return response;
-    }
-
-    public async Task<ServiceResponse<ReadPlcDto>> GetById(int id)
-    {
-        var response = new ServiceResponse<ReadPlcDto>();
-        try
-        {
-            var plc = await _context.MicrologixPlcs
-                .ProjectTo<ReadPlcDto>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(q => q.Id == id);
-            response.Data = plc;
-        }
-        catch (Exception ex)
-        {
-            response.Success = false;
-            response.Message = ex.Message;
-        }
-        return response;
-    }
-
-    public async Task<ServiceResponse<UpdatePlcDto>> Update(UpdatePlcDto updatedPlc)
-    {
-        // TODO: This no work I think. Need to implement the GetPlcById method
-        var response = new ServiceResponse<UpdatePlcDto>();
-        try
-        {
-            var plc = await _context.MicrologixPlcs
-                .ProjectTo<UpdatePlcDto>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(q => q.Id == updatedPlc.Id);
-
-            if (plc != null)
+            var response = new ServiceResponse<IEnumerable<ReadPlcDto>>();
+            try
             {
-                _mapper.Map(updatedPlc, plc);
-                await _context.SaveChangesAsync();
-
-                response.Data = updatedPlc;
+                var plc = await _context.MicrologixPlcs.ToListAsync();
+                var plcDto = _mapper.Map<IEnumerable<ReadPlcDto>>(plc);
+                response.Data = plcDto;
             }
-            else
+            catch (Exception ex)
             {
                 response.Success = false;
-                response.Message = "Plc not found";
+                response.Message = ex.Message;
             }
+            return response;
         }
-        catch (Exception ex)
+
+        public async Task<ServiceResponse<DetailsPlcDto>> GetDetailsById(int id)
         {
-            response.Success = false;
-            response.Message = ex.Message;
+            var response = new ServiceResponse<DetailsPlcDto>();
+            try
+            {
+                var plc = await _context.MicrologixPlcs
+                    .Include(p => p.PlcTags)
+                    .ProjectTo<DetailsPlcDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync(p => p.Id == id);
+
+                response.Data = plc;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
-        return response;
-    }
 
-    public async Task<ServiceResponse<CreatePlcDto>> Create(CreatePlcDto newPlc)
-    {
-        // add the newPlc to the database
-
-        var response = new ServiceResponse<CreatePlcDto>();
-        try
+        public async Task<ServiceResponse<ReadPlcDto>> GetById(int id)
         {
-            var plc = _mapper.Map<MicrologixPlc>(newPlc);
-            await _context.MicrologixPlcs.AddAsync(plc);
-
-            response.Data = newPlc;
+            var response = new ServiceResponse<ReadPlcDto>();
+            try
+            {
+                var plc = await _context.MicrologixPlcs
+                    .ProjectTo<ReadPlcDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync(q => q.Id == id);
+                response.Data = plc;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
-        catch (Exception ex)
+
+        public async Task<ServiceResponse<DetailsPlcDto>> Update(int id, UpdatePlcDto updatedPlc)
         {
-            response.Success = false;
-            response.Message = ex.Message;
+            // TODO: PUT: [Update Plc] should keep previous values if new values are null
+            // if the update is successfull, return the readPlcDto of the updated plc
+
+            var response = new ServiceResponse<DetailsPlcDto>();
+            try
+            {
+                // retrieves the plc from the database with the given id
+                var plc = await _context.MicrologixPlcs.FirstOrDefaultAsync(q => q.PlcId == id);
+
+                // exit the try if the plc is not found
+                if (plc != null)
+                {
+
+
+
+
+                    // map the updatedPlc to the plc
+                    _mapper.Map(updatedPlc, plc);
+
+                    // update the plc in the database
+                    _context.MicrologixPlcs.Update(plc);
+                    await _context.SaveChangesAsync();
+
+                    //map the plc to the DetailsPlcDto
+                    response.Data = _mapper.Map<DetailsPlcDto>(plc);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
-        return response;
 
-    }
-
-    public async Task<ServiceResponse<IEnumerable<DetailsPlcDto>>> ListDetails()
-    {
-        var response = new ServiceResponse<IEnumerable<DetailsPlcDto>>();
-        try
+        public async Task<ServiceResponse<DetailsPlcDto>> Create(CreatePlcDto newPlc)
         {
-            var plcDetailsList = await _context.MicrologixPlcs
-                .Include(p => p.PlcTags)
-                .ProjectTo<DetailsPlcDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
-
-            response.Data = plcDetailsList;
+            var response = new ServiceResponse<DetailsPlcDto>();
+            try
+            {
+                var plc = _mapper.Map<MicrologixPlc>(newPlc);
+                _ = await _context.MicrologixPlcs.AddAsync(plc);
+                _ = await _context.SaveChangesAsync();
+                response.Data = _mapper.Map<DetailsPlcDto>(plc);
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
-        catch (Exception ex)
+
+
+        public async Task<ServiceResponse<IEnumerable<DetailsPlcDto>>> ListDetails()
         {
-            response.Success = false;
-            response.Message = ex.Message;
+            var response = new ServiceResponse<IEnumerable<DetailsPlcDto>>();
+            try
+            {
+                var plcDetailsList = await _context.MicrologixPlcs
+                    .Include(p => p.PlcTags)
+                    .ProjectTo<DetailsPlcDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+
+                response.Data = plcDetailsList;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
+
         }
-        return response;
 
-    }
-
-    public Task<ServiceResponse<ReadPlcDto>> Delete(int id)
-    {
-        throw new NotImplementedException();
+        public Task<ServiceResponse<ReadPlcDto>> Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -2,24 +2,29 @@
 // MudBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PlcTagLibrary.Models;
 
-namespace PlcTagLibrary.Dtos.MicrologixPLC;
-public class UpdatePlcDto
+namespace PlcTagLibrary.Dtos.MicrologixPLC
 {
-    [Required]
-    public int Id { get; set; }
-    [Required]
-    public string? Name { get; set; }
-    public string? DefaultName { get; set; }
+    public class UpdatePlcDto
+    {
+        public UpdatePlcDto(int id, short? timeoutSeconds)//, Protocol? protocol = null, PlcType? plcType = null)
+        {
+            Id = id;
+            TimeoutSeconds = timeoutSeconds;
+            // TimeoutSeconds = timeoutSeconds;
+            // Protocol = protocol; // ?? Models.Protocol.ab_eip;
+            // PlcType = plcType; // ?? Models.PlcType.MicroLogix;
 
-    [Required]
-    public string? Gateway { get; set; }
-    public short TimeoutSeconds { get; set; }
-    public string? Protocol { get; set; }
+        }
+        public int Id { get; set; }
+        [Required]
+        public string? Name { get; set; } = "hello";
+        public string? Gateway { get; set; }
+        public short? TimeoutSeconds { get; set; }
+        public Protocol? Protocol { get; set; }
+
+        public PlcType? PlcType { get; set; }
+    }
 }
