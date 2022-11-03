@@ -1,13 +1,13 @@
 ﻿using MediatR;
 
-namespace ConsoleTestsPLC;
+namespace ConsoleTestsPLC.Infrastructure.Services;
 
 public class LibPlcTagNotification : INotification
 {
 
-    public LibPlcTagNotification(short _tag)
+    public LibPlcTagNotification(short tag)
     {
-        TagValue = _tag;
+        TagValue = tag;
 
     }
 
