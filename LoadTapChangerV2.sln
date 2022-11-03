@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MudBlazorTest.Server", "Blazor\MudBlazorTest.Server\MudBlazorTest.Server.csproj", "{C3225C6C-9CEB-407E-A7CA-AD9C85F3E7F8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTestsPLC", "Console\libplc_wrapper\ConsoleTestsPLC.csproj", "{0594D9F7-8745-4403-8224-CD1A60C8556F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C3225C6C-9CEB-407E-A7CA-AD9C85F3E7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3225C6C-9CEB-407E-A7CA-AD9C85F3E7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3225C6C-9CEB-407E-A7CA-AD9C85F3E7F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0594D9F7-8745-4403-8224-CD1A60C8556F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0594D9F7-8745-4403-8224-CD1A60C8556F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0594D9F7-8745-4403-8224-CD1A60C8556F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0594D9F7-8745-4403-8224-CD1A60C8556F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
