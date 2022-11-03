@@ -52,42 +52,53 @@ public partial class PlcTable
 
     }
 
-    private int selectedRowNumber = -1;
+    private int _selectedRowNumber = -1;
     private List<string> clickedEvents = new();
     private List<ReadPlcTagDto> _plcTagList = new();
-    private bool _showTags = false;
+    //private bool _showTags = false;
 
-    private void RowClickEvent(TableRowClickEventArgs<LocalPlc> tableRowClickEventArgs)
+    // can use this event to set the _plcTagList
+    private void OnRowClickEvent(TableRowClickEventArgs<LocalPlc> eventArgs)
     {
         clickedEvents.Add("Row has been clicked");
+        // _plcTagList = (List<ReadPlcTagDto>)eventArgs.Item.PlcTags;
 
     }
 
     // TODO: ISSUE: First click on row does not render cards.... 
     private string SelectedRowClassFunc(LocalPlc selectedPlc, int rowNumber)
     {
-        if (selectedRowNumber == rowNumber)
+        if (_selectedRowNumber == rowNumber)
         {
-            selectedRowNumber = -1;
+            _selectedRowNumber = -1;
             clickedEvents.Add("Selected Row: None");
 
             return string.Empty;
         }
         else if (_plcTable!.SelectedItem != null && _plcTable.SelectedItem.Equals(selectedPlc))
         {
-            selectedRowNumber = rowNumber;
+            _selectedRowNumber = rowNumber;
             clickedEvents.Add($"Selected Row: {rowNumber}");
-            _plcTagList = (List<ReadPlcTagDto>)selectedPlc.PlcTags;
-            StateHasChanged(); // this works but the return value is not reached.
             return "selected";
         }
         else
         {
+
             return string.Empty;
         }
 
 
     }
+    // can also use this event to set the _plcTagList
+    private void OnSelectedItemChanged(LocalPlc item)
+    {
+        // no idea what this does yet.. possibly for editing. 
+        //_plcTable!.SetSelectedItem(item);
+        _plcTagList = (List<ReadPlcTagDto>)item.PlcTags;
+
+    }
+
+
 
 
 

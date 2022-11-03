@@ -7,7 +7,7 @@ using PlcTagLibrary.Models;
 namespace LoadTapChanger.API;
 public class DataSeeder
 {
-    public static async Task SeedDataAsync(LoadTapChangerDBContext context)
+    public static async Task SeedDataAsync()    //(LoadTapChangerDBContext context)
     {
         //if (!context.MicrologixPlcs.Any())
         //{

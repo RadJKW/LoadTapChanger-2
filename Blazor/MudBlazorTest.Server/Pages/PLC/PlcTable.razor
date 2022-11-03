@@ -34,9 +34,11 @@
 
 <MudGrid Spacing="3" Justify="Justify.Center">
     <MudItem xs="12">
-        <MudTable Items="@_localPlcList" @ref="_plcTable" Dense="true" Hover="true" Striped="true" Bordered="true" Elevation="4" FixedHeader="true" FixedFooter="true" Loading="@_loading" CustomFooter="true" RowsPerPage="10" Breakpoint="Breakpoint.Xs"
-                  Height="300px"
-                  RowClassFunc="@SelectedRowClassFunc" OnRowClick="RowClickEvent" T="LocalPlc">
+        <MudTable Items="@_localPlcList" @ref="_plcTable" Dense="true" Hover="true" Striped="true"
+                  Bordered="true" Elevation="4" FixedHeader="true" FixedFooter="true" Loading="@_loading"
+                  CustomFooter="true" RowsPerPage="10" Breakpoint="Breakpoint.Xs"
+                  SelectedItemChanged="OnSelectedItemChanged"
+                  RowClassFunc="@SelectedRowClassFunc" OnRowClick="OnRowClickEvent" T="LocalPlc">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Micrologix PLCs </MudText>
                 <MudSpacer />
@@ -66,9 +68,32 @@
                 @* for each tag in context.PlcTags, add a row to the footer
                 for each tag attribute, make a column and show the value
                 *@
+
+                <MudTFootRow class="">
+                    <MudTd colspan="5" Class="">
+                        colspan: 5
+                    </MudTd>
+                </MudTFootRow>
                 <MudTFootRow>
                     <MudTd colspan="5">
-                        <MudText Typo="Typo.body1" Class="text-align-center, bold-text">BreakPoint: </MudText>
+
+                        <MudGrid Justify="Justify.Center">
+
+                            @foreach (var tag in _plcTagList)
+                            {
+                                <MudItem xs="4">
+                                    <MudCard Elevation="4">
+                                        <MudCardHeader>
+                                            <MudText Typo="Typo.h6">@(tag.CustomName != null ? tag.CustomName : tag.RslinxTagName)</MudText>
+                                            </MudCardHeader>
+                                            <MudCardContent>
+                                                <MudText Typo="Typo.h6">@tag.Id</MudText>
+                                                <MudText Typo="Typo.body1">@tag.TagType</MudText>
+                                            </MudCardContent>
+                                        </MudCard>
+                                    </MudItem>
+                            }
+                        </MudGrid>
                     </MudTd>
                 </MudTFootRow>
 
@@ -81,20 +106,7 @@
     </MudItem>
 
     @* for each item in _plcTagList, create a card to display the Tag *@
-    @foreach (var tag in _plcTagList)
-    {
-        <MudItem xs="4">
-            <MudCard Elevation="4">
-                <MudCardHeader>
-                    <MudText Typo="Typo.h6">@(tag.CustomName != null ? tag.CustomName : tag.RslinxTagName)</MudText>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <MudText Typo="Typo.h6">@tag.Id</MudText>
-                        <MudText Typo="Typo.body1">@tag.TagType</MudText>
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
-    }
+
 
 </MudGrid>
 
