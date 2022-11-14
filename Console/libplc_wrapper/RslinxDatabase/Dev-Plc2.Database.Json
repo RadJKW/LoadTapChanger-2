@@ -6,8 +6,8 @@
     "description": "description",
     "ip_address": "192.168.0.23",
     "type": "slc500",
-    "coms_protocol": "ab_eip",
-    "program":  "dev-plc2",
+    "connection_protocol": "ab_eip",
+    "program": "dev-plc2",
     "tags": [
       {
         "id": 1,
@@ -21,7 +21,6 @@
         "symbol": "tap_switch_counter",
         "description": "Tap is in the neutral position"
       }
-
     ]
   }
 }
