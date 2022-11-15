@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlcTagLibrary", "PlcTagLibrary\PlcTagLibrary.csproj", "{234B4CF9-5443-45C7-BDFB-1BC01954B50A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadTapChanger.API", "LoadTapChanger.API\LoadTapChanger.API.csproj", "{EB9339D0-2FE3-4F61-8B0C-877E47131E2A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B4DB361D-B684-42C3-B421-70F962EF1145}"
@@ -17,15 +15,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MudBlazorTest.Server", "Bla
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTestsPLC", "Console\libplc_wrapper\ConsoleTestsPLC.csproj", "{0594D9F7-8745-4403-8224-CD1A60C8556F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlcLib.Core", "PlcLib.Core\PlcLib.Core.csproj", "{D915DD04-ED35-4947-A964-D974E25509D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlcLib.Core", "PlcLib.Core\PlcLib.Core.csproj", "{D915DD04-ED35-4947-A964-D974E25509D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlcLib.Database", "PlcLib.Database\PlcLib.Database.csproj", "{ABCF03D0-C20E-471B-B038-70E7281BA07A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlcLib.Database", "PlcLib.Database\PlcLib.Database.csproj", "{ABCF03D0-C20E-471B-B038-70E7281BA07A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PlcLib", "PlcLib", "{F68C2E66-1A8A-47E5-945A-A6927B4DD31D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlcLib.Interfaces", "PlcLib.Interfaces\PlcLib.Interfaces.csproj", "{4593ECC7-3293-4223-8E1B-C28C5952B302}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlcLib.Interfaces", "PlcLib.Interfaces\PlcLib.Interfaces.csproj", "{4593ECC7-3293-4223-8E1B-C28C5952B302}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlcLib.Utils", "PlcLib.Utils\PlcLib.Utils.csproj", "{A559C300-80FE-4B81-8451-6EDA3F9016A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlcLib.Utils", "PlcLib.Utils\PlcLib.Utils.csproj", "{A559C300-80FE-4B81-8451-6EDA3F9016A3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlcTagLib", "PlcTagLib\PlcTagLib.csproj", "{20BF5D15-9DE2-4D50-9444-96AA92E10EC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlcTagLib.Web", "PlcTagLib.Web\PlcTagLib.Web.csproj", "{CAE1E329-0D32-4A12-A53C-DCFA7AC40D3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +35,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{234B4CF9-5443-45C7-BDFB-1BC01954B50A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{234B4CF9-5443-45C7-BDFB-1BC01954B50A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{234B4CF9-5443-45C7-BDFB-1BC01954B50A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{234B4CF9-5443-45C7-BDFB-1BC01954B50A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EB9339D0-2FE3-4F61-8B0C-877E47131E2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB9339D0-2FE3-4F61-8B0C-877E47131E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB9339D0-2FE3-4F61-8B0C-877E47131E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,6 +63,14 @@ Global
 		{A559C300-80FE-4B81-8451-6EDA3F9016A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A559C300-80FE-4B81-8451-6EDA3F9016A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A559C300-80FE-4B81-8451-6EDA3F9016A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20BF5D15-9DE2-4D50-9444-96AA92E10EC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20BF5D15-9DE2-4D50-9444-96AA92E10EC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20BF5D15-9DE2-4D50-9444-96AA92E10EC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20BF5D15-9DE2-4D50-9444-96AA92E10EC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAE1E329-0D32-4A12-A53C-DCFA7AC40D3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAE1E329-0D32-4A12-A53C-DCFA7AC40D3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAE1E329-0D32-4A12-A53C-DCFA7AC40D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAE1E329-0D32-4A12-A53C-DCFA7AC40D3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

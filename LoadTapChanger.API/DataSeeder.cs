@@ -2,12 +2,12 @@
 // MudBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using PlcTagLibrary.Data;
-using PlcTagLibrary.Models;
+using PlcTagLib.Data;
+using PlcTagLib.Models;
 namespace LoadTapChanger.API;
 public class DataSeeder
 {
-    public static async Task SeedDataAsync()    //(LoadTapChangerDBContext context)
+    public static async Task SeedDataAsync()    //(PlcTagLibDbContext context)
     {
         //if (!context.MicrologixPlcs.Any())
         //{

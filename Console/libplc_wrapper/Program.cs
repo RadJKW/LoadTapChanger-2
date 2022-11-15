@@ -1,5 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-//using PlcTagLibrary.BusinessLogic;
+//using PlcTagLib.BusinessLogic;
 using ConsoleTestsPLC;
 using ConsoleTestsPLC.Application;
 using ConsoleTestsPLC.Application.Common.Interfaces;

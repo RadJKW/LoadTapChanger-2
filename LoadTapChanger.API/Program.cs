@@ -1,9 +1,9 @@
 ﻿using LoadTapChanger.API;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using PlcTagLibrary.Configurations;
-using PlcTagLibrary.Data;
-using PlcTagLibrary.Repositories;
+using PlcTagLib.Repositories;
+using PlcTagLib.Configurations;
+using PlcTagLib.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,10 +26,10 @@ builder.Services
 builder.Services
     .AddAutoMapper(typeof(MapperConfig));
 
-builder.Services.AddDbContext<LoadTapChangerDBContext>(
+builder.Services.AddDbContext<PlcTagLibDbContext>(
     db => db.UseSqlServer(
         builder.Configuration.GetConnectionString("SqlServerDB"),
-        ss => ss.MigrationsAssembly(typeof(LoadTapChangerDBContext).Name)));
+        ss => ss.MigrationsAssembly(typeof(PlcTagLibDbContext).Name)));
 
 builder.Services.AddCors(options =>
 {
@@ -49,7 +49,7 @@ using (var scope = app.Services.CreateScope())
     {
         //get the full filepath of 'appsettings.json' to pass into the DbContextBuilder
 
-        var context = services.GetRequiredService<LoadTapChangerDBContext>();
+        var context = services.GetRequiredService<PlcTagLibDbContext>();
         // TODO: implement DataSeeder
         //await DataSeeder.SeedDataAsync(context);
     }

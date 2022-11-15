@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PlcTagLibrary.Data;
-using PlcTagLibrary.Dtos.MicrologixPLC;
-using PlcTagLibrary.Models;
-using PlcTagLibrary.Repositories;
+using PlcTagLib.Dtos.MicrologixPLC;
+using PlcTagLib.Models;
+using PlcTagLib.Repositories;
+using PlcTagLib.Data;
 
 
 // TODO: Figure out how to add form inputs to swaggerUI
@@ -17,10 +17,10 @@ namespace LoadTapChanger.API.Controllers
     {
 
         private readonly ILogger<MicrologixPlcsController> _logger;
-        private readonly LoadTapChangerDBContext _context;
+        private readonly PlcTagLibDbContext _context;
         private readonly IMicrologixPlcRepository _plcRepository;
 
-        public MicrologixPlcsController(ILogger<MicrologixPlcsController> logger, LoadTapChangerDBContext context, IMicrologixPlcRepository plcRepository)
+        public MicrologixPlcsController(ILogger<MicrologixPlcsController> logger, PlcTagLibDbContext context, IMicrologixPlcRepository plcRepository)
         {
             _logger = logger;
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PlcTagLibrary.Data;
-using PlcTagLibrary.Models;
+using PlcTagLib.Data;
+using PlcTagLib.Models;
 
 namespace LoadTapChanger.API.Controllers
 {
@@ -9,9 +9,9 @@ namespace LoadTapChanger.API.Controllers
     [ApiController]
     public class MicrologixTagsController : ControllerBase
     {
-        private readonly LoadTapChangerDBContext _context;
+        private readonly PlcTagLibDbContext _context;
 
-        public MicrologixTagsController(LoadTapChangerDBContext context)
+        public MicrologixTagsController(PlcTagLibDbContext context)
         {
             _context = context;
         }
