@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using PlcTagLibrary.Data;
-using PlcTagLibrary.Dtos;
+using PlcTagLib.Common.Models;
+using PlcTagLib.Data;
 
-namespace PlcTagLibrary.Repositories
+namespace PlcTagLib.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly LoadTapChangerDBContext _context;
+        private readonly PlcTagLibDbContext _context;
         private readonly IMapper _mapper;
 
-        public GenericRepository(LoadTapChangerDBContext context, IMapper mapper)
+        public GenericRepository(PlcTagLibDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

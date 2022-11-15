@@ -9,7 +9,7 @@
    "OutputContextPath": "Datas",
    "OutputPath": "Modelss",
    "PreserveCasingWithRegex": true,
-   "ProjectRootNamespace": "PlcTagLibrary",
+   "ProjectRootNamespace": "PlcTagLib",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
    "SelectedToBeGenerated": 0,

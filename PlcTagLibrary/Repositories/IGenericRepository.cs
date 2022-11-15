@@ -1,7 +1,7 @@
-﻿using PlcTagLibrary.Dtos;
-using PlcTagLibrary.Models;
+﻿using PlcTagLib.Common.Models;
+using PlcTagLib.Models;
 
-namespace PlcTagLibrary.Repositories
+namespace PlcTagLib.Repositories
 {
     public interface IGenericRepository<T> where T : class
     {

@@ -2,16 +2,16 @@
 // MudBlazor licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using PlcTagLibrary.Dtos.MicrologixPLC;
-using PlcTagLibrary.Models;
+using PlcTagLib.Common.Models;
+using PlcTagLib.MicrologixPlcs.DTOs;
 
-namespace PlcTagLibrary.Repositories
+namespace PlcTagLib.Repositories
 {
     /// <summary>
     /// Interface for MicrologixPlcRepository
     /// </summary>
     /// 
-    public interface IMicrologixPlcRepository : IGenericRepository<MicrologixPlc>
+   /* public interface IMicrologixPlcRepository : IGenericRepository<MicrologixPlc>
     {
 
 
@@ -30,5 +30,5 @@ namespace PlcTagLibrary.Repositories
 
 
 
-    }
+    }*/
 }
