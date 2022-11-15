@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PlcTagLib.Enums;
 using PlcTagLib.Events;
 
 namespace PlcTagLib.Entities;
@@ -10,8 +11,8 @@ public class PlcTag : BaseAuditableEntity
     public string? SymbolName { get; set; }
     public string? Address { get; set; }
     public string? Description { get; set; }
-    public TagType TagType { get; set; }
-    public TagEnum? TagEnum { get; set; }
+    public TagTypeId TagTypeId { get; set; }
+    public TagType? TagType { get; set; }
 
     public bool Value
     {

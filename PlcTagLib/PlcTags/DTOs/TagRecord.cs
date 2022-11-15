@@ -22,7 +22,7 @@ public record TagRecord : IMapFrom<PlcTag>
     {
         // map TagRecord.Tagtype from the Full name of the PlcTag.TagType enum
         profile.CreateMap<PlcTag, TagRecord>()
-            .ForMember(d => d.TagType, opt => opt.MapFrom(s => s.TagType.ToString()));
+            .ForMember(d => d.TagType, opt => opt.MapFrom(s => s.TagTypeId.ToString()));
     }
 
 }

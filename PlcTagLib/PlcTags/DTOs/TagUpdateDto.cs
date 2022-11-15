@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using PlcTagLib.Common.Mappings;
 using PlcTagLib.Entities;
+using PlcTagLib.Enums;
 
 namespace PlcTagLib.PlcTags.DTOs;
 public class TagUpdateDto : IMapFrom<PlcTag>
@@ -14,7 +15,7 @@ public class TagUpdateDto : IMapFrom<PlcTag>
     public string? SymbolName { get; set; }
     public string? Address { get; set; }
     public string? Description { get; set; }
-    public int TagType { get; set; }
+    //public TagTypeId TagTypeId { get; set; }
     public bool? Value { get; set; }
 
     // create a mappin
@@ -26,7 +27,7 @@ public class TagUpdateDto : IMapFrom<PlcTag>
             .ForMember(dest => dest.SymbolName, opt => opt.MapFrom(src => src.SymbolName))
             .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-            .ForMember(dest => dest.TagType, opt => opt.MapFrom(src => src.TagType))
+            //.ForMember(dest => dest.TagType, opt => opt.MapFrom(src => src.TagTypeId))
             .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         // for tagTypeId create mapping

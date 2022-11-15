@@ -5,6 +5,7 @@
 using Newtonsoft.Json;
 using PlcTagLib.Common.Interfaces;
 using PlcTagLib.Entities;
+using PlcTagLib.Enums;
 
 namespace PlcTagLib.Services;
 
@@ -61,7 +62,7 @@ public class RslogixDbImporter : IRsLogixDbImporter
                     SymbolName = _isChild ? _plcTags[^1].SymbolName + $"_{values[addressColumn].Split('/')[1]}" : useCsv,
                     Description = GetDescription(values, descriptionColumns),
                     PlcId = plc.Id,
-                    TagType = GetTagType(values[addressColumn])
+                    TagTypeId = GetTagTypeId(values[addressColumn])
 
                 };
 
@@ -76,23 +77,23 @@ public class RslogixDbImporter : IRsLogixDbImporter
         File.WriteAllText(jsonFilePath.LocalPath, json);
     }
 
-    private static TagType GetTagType(string address)
+    private static TagTypeId GetTagTypeId(string address)
     {
         // get teh first letter of the address
         var firstLetter = address[0];
 
-        // return the TagType based on the first letter of the address
+        // return the TagTypeId based on the first letter of the address
         return firstLetter switch
         {
-            'B' => TagType.Binary,
-            'I' => TagType.Input,
-            'O' => TagType.Output,
-            'S' => TagType.Status,
-            'T' => TagType.Timer,
-            'C' => TagType.Counter,
-            'R' => TagType.Control,
-            'N' => TagType.Integer,
-            _ => TagType.Unknown
+            'B' => TagTypeId.Binary,
+            'I' => TagTypeId.Input,
+            'O' => TagTypeId.Output,
+            'S' => TagTypeId.Status,
+            'T' => TagTypeId.Timer,
+            'C' => TagTypeId.Counter,
+            'R' => TagTypeId.Control,
+            'N' => TagTypeId.Integer,
+            _ => TagTypeId.Unknown
         };
 
     }

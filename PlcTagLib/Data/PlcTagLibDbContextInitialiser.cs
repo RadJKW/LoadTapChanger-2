@@ -74,7 +74,7 @@ public class PlcTagLibDbContextInitialiser
 
         if (!_context.PlcTags.Any())
         {
-            var basePath = new Uri("C:/Users/jwest/source/NoRslinx-AbPlc/NoRslinx/rslogix/");
+            var basePath = new Uri("C:/Users/jwest/source/LoadTapChangerV2/PlcTagLib/RSLogixDbFiles/");
             var csvFilePath = new Uri(basePath, "DEV-PLC2.CSV");
             var jsonFilePath = new Uri(basePath, "DEV-PLC2.JSON");
             var addressColumn = 0;

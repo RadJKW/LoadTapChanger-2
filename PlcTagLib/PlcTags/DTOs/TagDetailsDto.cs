@@ -23,7 +23,7 @@ namespace PlcTagLib.PlcTags.DTOs
         public void Mapping(Profile profile)
         {
             profile.CreateMap<PlcTag, TagDetailsDto>()
-                .ForMember(d => d.TagEnum, opt => opt.MapFrom(s => s.TagType.ToString()))
+                .ForMember(d => d.TagEnum, opt => opt.MapFrom(s => s.TagTypeId.ToString()))
                 .ForMember(d => d.Plc, opt => opt.MapFrom(s => s.Plc));
         }
     }

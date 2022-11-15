@@ -28,7 +28,7 @@ public class PlcTagLibDbContext : DbContext, IPlcTagLibDbContext
 
     public DbSet<PlcTag> PlcTags => Set<PlcTag>();
 
-    public DbSet<TagEnum> TagTypes => Set<TagEnum>();
+    public DbSet<TagType> TagTypes => Set<TagType>();
 
 
 
