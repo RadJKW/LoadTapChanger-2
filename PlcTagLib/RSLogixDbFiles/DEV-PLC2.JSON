@@ -3,7 +3,7 @@
   "IpAddress": "192.168.0.23",
   "Location": null,
   "Description": "Office Dev PLC",
-  "Program": "DEV-PLC2.CSV",
+  "Program": "Dev-Plc2.csv",
   "PlcType": 2,
   "Protocol": 0,
   "Timeout": "00:00:05",
@@ -402,9 +402,9 @@
       "Id": 0
     }
   ],
-  "Created": "2022-11-15T16:59:30.8749218-06:00",
+  "Created": "2022-11-15T21:11:31.4256675-06:00",
   "CreatedBy": null,
-  "LastModified": "2022-11-15T16:59:30.8816663-06:00",
+  "LastModified": "2022-11-15T21:11:31.4308114-06:00",
   "LastModifiedBy": null,
   "Id": 1
 }

@@ -74,9 +74,14 @@ public class PlcTagLibDbContextInitialiser
 
         if (!_context.PlcTags.Any())
         {
-            var basePath = new Uri("C:/Users/jwest/source/LoadTapChangerV2/PlcTagLib/RSLogixDbFiles/");
-            var csvFilePath = new Uri(basePath, "DEV-PLC2.CSV");
-            var jsonFilePath = new Uri(basePath, "DEV-PLC2.JSON");
+            //Get the current directory and then step into the parent/PlcTagLib/RslogixDbFiles/Dev-Plc2.csv
+
+
+            var parentDirectory = Directory.GetParent(Directory.GetCurrentDirectory());
+            var csvFilePath = new Uri(parentDirectory + @"/PlcTagLib/RslogixDbFiles/Dev-Plc2.csv");
+            var jsonFilePath = new Uri(parentDirectory + @"/PlcTagLib/RslogixDbFiles/Dev-Plc2.json");
+
+
             var addressColumn = 0;
             var symbolColumn = 2;
             var descriptionColumns = new int[] { 3, 4, 5, 6, 7 };
