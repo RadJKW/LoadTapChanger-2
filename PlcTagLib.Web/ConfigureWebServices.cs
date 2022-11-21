@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
+using MudBlazor;
+using MudBlazor.Services;
 using Newtonsoft.Json;
 using PlcTagLib.Common.Interfaces;
 using PlcTagLib.Data;
 using PlcTagLib.Web.Data;
 using PlcTagLib.Web.Filters;
-
 
 namespace PlcTagLib.Web;
 public static class ConfigureWebServices
@@ -69,6 +70,8 @@ public static class ConfigureWebServices
                 .AllowAnyHeader()
                 .AllowAnyOrigin());
         });
+        services.AddScoped<DialogService>();
+        services.AddMudServices();
         return services;
     }
 }

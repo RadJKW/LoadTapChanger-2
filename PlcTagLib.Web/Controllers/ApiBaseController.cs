@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace PlcTagLib.Web.Controllers;
 [ApiController]
 [Route("api/[controller]")]
-public abstract class ApiControllerBase : ControllerBase
+public abstract class ApiBaseController : ControllerBase
 {
     private ISender _mediator = null!;
     protected ISender Mediator => _mediator ??=

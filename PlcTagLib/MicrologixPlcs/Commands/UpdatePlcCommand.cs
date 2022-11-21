@@ -6,6 +6,7 @@ using PlcTagLib.Entities;
 using PlcTagLib.MicrologixPlcs.DTOs;
 
 namespace PlcTagLib.MicrologixPlcs.Commands;
+
 public record UpdatePlcCommand(int Id, PlcUpdateDto Dto) : IRequest<PlcDto>;
 
 public class UpdatePlcCommandHandler : IRequestHandler<UpdatePlcCommand, PlcDto>
@@ -42,7 +43,7 @@ public class UpdatePlcCommandHandler : IRequestHandler<UpdatePlcCommand, PlcDto>
             }
         }
 
-        await _context.SaveChangesAsync(cancellationToken);
+        _ = await _context.SaveChangesAsync(cancellationToken);
 
         return _mapper.Map<PlcDto>(entity);
     }

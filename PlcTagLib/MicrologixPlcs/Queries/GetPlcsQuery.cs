@@ -6,6 +6,7 @@ using PlcTagLib.Common.Interfaces;
 using PlcTagLib.MicrologixPlcs.DTOs;
 
 namespace PlcTagLib.MicrologixPlcs.Queries;
+
 public record GetPlcsQuery : IRequest<PlcList>;
 public class GetPlcsQueryHandler : IRequestHandler<GetPlcsQuery, PlcList>
 {

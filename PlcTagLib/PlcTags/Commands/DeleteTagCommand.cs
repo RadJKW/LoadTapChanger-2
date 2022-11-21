@@ -3,34 +3,33 @@ using PlcTagLib.Common.Exceptions;
 using PlcTagLib.Common.Interfaces;
 using PlcTagLib.Entities;
 
-namespace PlcTagLib.PlcTags.Commands
+namespace PlcTagLib.PlcTags.Commands;
+
+public record DeleteTagCommand(int Id) : IRequest;
+
+public class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand>
 {
-    public record DeleteTagCommand(int Id) : IRequest;
+    private readonly IPlcTagLibDbContext _context;
 
-    public class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand>
+    public DeleteTagCommandHandler(IPlcTagLibDbContext context)
     {
-        private readonly IPlcTagLibDbContext _context;
+        _context = context;
+    }
 
-        public DeleteTagCommandHandler(IPlcTagLibDbContext context)
+    public async Task<Unit> Handle(DeleteTagCommand request, CancellationToken cancellationToken)
+    {
+        var entity = await _context.PlcTags.FindAsync(new object?[] { request.Id }, cancellationToken: cancellationToken);
+
+        if (entity == null)
         {
-            _context = context;
+            throw new NotFoundException(nameof(PlcTag), request.Id);
         }
 
-        public async Task<Unit> Handle(DeleteTagCommand request, CancellationToken cancellationToken)
-        {
-            var entity = await _context.PlcTags.FindAsync(new object?[] { request.Id }, cancellationToken: cancellationToken);
+        _ = _context.PlcTags.Remove(entity);
 
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(PlcTag), request.Id);
-            }
+        _ = await _context.SaveChangesAsync(cancellationToken);
 
-            _context.PlcTags.Remove(entity);
-
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
-        }
+        return Unit.Value;
     }
 }
 

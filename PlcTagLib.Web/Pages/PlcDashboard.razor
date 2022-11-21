@@ -1,0 +1,55 @@
+﻿@page "/plcdashboard"
+@using PlcTagLib.MicrologixPlcs.DTOs
+@using PlcTagLib.MicrologixPlcs.Commands
+@using PlcTagLib.MicrologixPlcs.Queries
+@using PlcTagLib.Models
+@using MediatR
+@inject IMediator _mediator
+
+<PageTitle>PLC Dashboard</PageTitle>
+
+
+<MudText Typo="Typo.h3" GutterBottom="true">Plc - Dashboard</MudText>
+
+
+<MudCard Elevation="2" Class="w-75 mx-auto">
+    <MudCardHeader Class="row rows-col-2 sd-flex justify-center align-center">
+        <div class="col px-4">
+            <MudText Typo="Typo.h6" Class="text-center">Plc.Name</MudText>
+        </div>
+        <div class="col px-4">
+            <MudSelect Label="Micrologix Plcs" T="PlcDto" Variant="Variant.Outlined" Clearable>
+                @*(for each plc in the list, createa MudSelectItem)*@
+                @foreach (var plc in _plcList)
+                {
+                    <MudSelectItem Value="plc">@plc.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </div>
+
+    </MudCardHeader>
+
+
+</MudCard>
+
+
+
+@code {
+
+    PlcDto _selectedPlc = new PlcDto();
+
+    // implement MediatR to get the PlcInfo
+    IEnumerable<PlcDto> _plcList = new List<PlcDto>();
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await _mediator.Send(new ListAllPlcsCommand());
+        _plcList = response.Data ?? new List<PlcDto>();
+        await base.OnInitializedAsync();
+
+    }
+}
+<!-- Add your custom styles here -->
+<!-- create a class for the MudCard and apply that to its child elements -->
+
+<style>
+</style>

@@ -3,17 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadTapChanger.API", "LoadTapChanger.API\LoadTapChanger.API.csproj", "{EB9339D0-2FE3-4F61-8B0C-877E47131E2A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B4DB361D-B684-42C3-B421-70F962EF1145}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MudBlazorTest.Server", "Blazor\MudBlazorTest.Server\MudBlazorTest.Server.csproj", "{C3225C6C-9CEB-407E-A7CA-AD9C85F3E7F8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTestsPLC", "Console\libplc_wrapper\ConsoleTestsPLC.csproj", "{0594D9F7-8745-4403-8224-CD1A60C8556F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlcLib.Core", "PlcLib.Core\PlcLib.Core.csproj", "{D915DD04-ED35-4947-A964-D974E25509D6}"
 EndProject
@@ -27,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlcLib.Utils", "PlcLib.Util
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlcTagLib", "PlcTagLib\PlcTagLib.csproj", "{20BF5D15-9DE2-4D50-9444-96AA92E10EC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlcTagLib.Web", "PlcTagLib.Web\PlcTagLib.Web.csproj", "{CAE1E329-0D32-4A12-A53C-DCFA7AC40D3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlcTagLib.Web", "PlcTagLib.Web\PlcTagLib.Web.csproj", "{CAE1E329-0D32-4A12-A53C-DCFA7AC40D3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,18 +29,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EB9339D0-2FE3-4F61-8B0C-877E47131E2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB9339D0-2FE3-4F61-8B0C-877E47131E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB9339D0-2FE3-4F61-8B0C-877E47131E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB9339D0-2FE3-4F61-8B0C-877E47131E2A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C3225C6C-9CEB-407E-A7CA-AD9C85F3E7F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C3225C6C-9CEB-407E-A7CA-AD9C85F3E7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C3225C6C-9CEB-407E-A7CA-AD9C85F3E7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C3225C6C-9CEB-407E-A7CA-AD9C85F3E7F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0594D9F7-8745-4403-8224-CD1A60C8556F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0594D9F7-8745-4403-8224-CD1A60C8556F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0594D9F7-8745-4403-8224-CD1A60C8556F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0594D9F7-8745-4403-8224-CD1A60C8556F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D915DD04-ED35-4947-A964-D974E25509D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D915DD04-ED35-4947-A964-D974E25509D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D915DD04-ED35-4947-A964-D974E25509D6}.Release|Any CPU.ActiveCfg = Release|Any CPU

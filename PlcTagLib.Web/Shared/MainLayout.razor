@@ -1,19 +1,80 @@
 ﻿@inherits LayoutComponentBase
+@using MudBlazor.Utilities
+<style>
+    .selected {
+        background-color: #1E88E5 !important;
+    }
 
-<PageTitle>PlcTagLib.Web</PageTitle>
+        .selected > td {
+            color: white !important;
+        }
 
-<div class="page">
-    <div class="sidebar">
+            .selected > td .mud-input {
+                color: white !important;
+            }
+
+</style>
+
+<MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+
+    <MudAppBar Elevation="0">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
+                       OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/"
+                       Target="_blank">
+        </MudIconButton>
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit"
+                       Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank">
+        </MudIconButton>
+    </MudAppBar>
+
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="6" Variant="DrawerVariant.Responsive">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">
+                MudBlazorTest
+            </MudText>
+        </MudDrawerHeader>
         <NavMenu />
-    </div>
+        <MudSpacer />
+        <MudDivider />
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+        <MudSwitch Class="justify-center" @bind-Checked="@_isDarkMode" Color="Color.Primary" T="bool" Label="Dark Mode">
+        </MudSwitch>
+    </MudDrawer>
 
-        <article class="content px-4">
+    <MudMainContent>
+        <MudContainer Class="my-8 px-16" MaxWidth="MaxWidth.False">
             @Body
-        </article>
-    </main>
-</div>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    bool _drawerOpen = true;
+    private bool _isDarkMode = true;
+    private MudThemeProvider? _mudThemeProvider;
+
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _isDarkMode = await _mudThemeProvider!.GetSystemPreference();
+
+        }
+        _mudThemeProvider!.Theme.PaletteDark.TableStriped = "#00000026";
+        StateHasChanged();
+
+    }
+}

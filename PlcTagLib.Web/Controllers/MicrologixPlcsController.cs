@@ -5,7 +5,7 @@ using PlcTagLib.MicrologixPlcs.Queries;
 
 namespace PlcTagLib.Web.Controllers;
 
-public class MicrologixPlcsController : ApiControllerBase
+public class MicrologixPlcsController : ApiBaseController
 {
     [HttpGet]
     public async Task<ActionResult<PlcList>> Get()
@@ -43,13 +43,7 @@ public class MicrologixPlcsController : ApiControllerBase
 
         var command = new UpdatePlcCommand(id, plc);
 
-        if (id != command.Id)
-        {
-            return BadRequest();
-        }
-
-        return Ok(await Mediator.Send(command));
-
+        return id != command.Id ? (ActionResult<PlcDto>)BadRequest() : (ActionResult<PlcDto>)Ok(await Mediator.Send(command));
     }
 
     /// <summary>
@@ -60,7 +54,7 @@ public class MicrologixPlcsController : ApiControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(int id)
     {
-        await Mediator.Send(new DeletePlcCommand(id));
+        _ = await Mediator.Send(new DeletePlcCommand(id));
 
         return NoContent();
     }

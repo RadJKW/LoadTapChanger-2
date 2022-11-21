@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Blazor/BlazorTest.WASM/BlazorTest.WASM.csproj",
+                "${workspaceFolder}/PlcTagLib.Web/PlcTagLib.Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Blazor/BlazorTest.WASM/BlazorTest.WASM.csproj",
+                "${workspaceFolder}/PlcTagLib.Web/PlcTagLib.Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/Blazor/BlazorTest.WASM/BlazorTest.WASM.csproj"
+                "${workspaceFolder}/PlcTagLib.Web/PlcTagLib.Web.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

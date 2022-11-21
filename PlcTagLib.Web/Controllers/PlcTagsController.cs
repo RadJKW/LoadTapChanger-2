@@ -4,7 +4,7 @@ using PlcTagLib.PlcTags.DTOs;
 using PlcTagLib.PlcTags.Queries;
 
 namespace PlcTagLib.Web.Controllers;
-public class PlcTagsController : ApiControllerBase
+public class PlcTagsController : ApiBaseController
 {
     /// <summary>
     /// Get All Tags

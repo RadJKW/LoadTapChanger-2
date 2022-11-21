@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PlcTagLib.Entities;
+﻿using PlcTagLib.Entities;
 using PlcTagLib.Common.Mappings;
 
 namespace PlcTagLib.MicrologixPlcs.DTOs;
@@ -17,4 +12,3 @@ public class PlcDto : IMapFrom<MicrologixPlc>
     public string? Program { get; set; }
 
 }
-
