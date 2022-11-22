@@ -1,18 +1,18 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager Navigator
 @using MudBlazor.Utilities
 <style>
     .selected {
         background-color: #1E88E5 !important;
     }
 
-        .selected > td {
-            color: white !important;
-        }
+    .selected>td {
+        color: white !important;
+    }
 
-            .selected > td .mud-input {
-                color: white !important;
-            }
-
+    .selected>td .mud-input {
+        color: white !important;
+    }
 </style>
 
 <MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
@@ -23,13 +23,13 @@
 
     <MudAppBar Elevation="0">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
-                       OnClick="@((e) => DrawerToggle())" />
+            OnClick="@((e) => DrawerToggle())" />
         <MudSpacer />
         <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/"
-                       Target="_blank">
+            Target="_blank">
         </MudIconButton>
         <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit"
-                       Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank">
+            Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank">
         </MudIconButton>
     </MudAppBar>
 
@@ -71,7 +71,7 @@
         if (firstRender)
         {
             _isDarkMode = await _mudThemeProvider!.GetSystemPreference();
-
+            Navigator.NavigateTo("plcdashboard");
         }
         _mudThemeProvider!.Theme.PaletteDark.TableStriped = "#00000026";
         StateHasChanged();

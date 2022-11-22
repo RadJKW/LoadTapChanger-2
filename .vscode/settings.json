@@ -18,7 +18,8 @@
   // nest ".vsconfig" and "Directory.Build.props" files unter LoadTapChangerV2.sln
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
-    "LoadTapChangerV2.sln": "*.vsconfig, Directory.Build.props, *.editorconfig, *.gitIgnore"
+    "LoadTapChangerV2.sln": "*.vsconfig, Directory.Build.props, *.editorconfig, *.gitIgnore",
+    "*.csproj": "$(capture).csproj*, appsettings.*"
   },
   "[csharp]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp",
