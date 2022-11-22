@@ -10,6 +10,29 @@
     "**/Blazor": true,
     "**/LoadTapChanger.API": true,
     "**/Console": true,
-    "**/PlcLib**": true
-  }
+    "**/PlcLib**": true,
+    "**/Postman": true,
+    "**/Sql_Files": true,
+    "**/Wiki": true
+  },
+  // nest ".vsconfig" and "Directory.Build.props" files unter LoadTapChangerV2.sln
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "LoadTapChangerV2.sln": "*.vsconfig, Directory.Build.props, *.editorconfig, *.gitIgnore"
+  },
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
+    "editor.codeActionWidget.showHeaders": true,
+    "editor.suggest.insertMode": "insert",
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true,
+      "source.fixAll": false
+    },
+    "editor.codeLens": true
+  },
+
+  "csharp.format.enable": true,
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.enableRoslynAnalyzers": true
 }

@@ -305,3 +305,5 @@ end_of_line = lf
 # RadJKW Overrides
 [*.{cs,vb}]
 csharp_style_namespace_declarations = file_scoped: warning
+csharp_style_unused_value_assignment_preference = unused_local_variable:suggestion
+csharp_style_apply_remove_unused_usings_preferences = true:suggestion

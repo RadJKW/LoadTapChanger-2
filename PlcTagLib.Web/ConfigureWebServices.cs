@@ -1,13 +1,9 @@
 ﻿using System.Reflection;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 using MudBlazor;
 using MudBlazor.Services;
-using Newtonsoft.Json;
-using PlcTagLib.Common.Interfaces;
 using PlcTagLib.Data;
 using PlcTagLib.Web.Data;
 using PlcTagLib.Web.Filters;
@@ -32,8 +28,6 @@ public static class ConfigureWebServices
 
         services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
-
-
 
         services.AddSwaggerGen(options =>
         {

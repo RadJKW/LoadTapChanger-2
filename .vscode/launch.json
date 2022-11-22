@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "debug-hot-reload",
+      "name": "PTL.Web (hot-reload)",
       "type": "coreclr",
       "request": "launch",
       "console": "integratedTerminal",
