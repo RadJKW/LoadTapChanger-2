@@ -9,6 +9,8 @@ public interface IPlcTagLibDbContext
     DbSet<MicrologixPlc> MicrologixPlcs { get; }
 
     DbSet<PlcTag> PlcTags { get; }
+    
+    DbSet<TagType> TagTypes { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Identity.Client;
 using PlcTagLib.Common.Behaviours;
 using PlcTagLib.Common.Interfaces;
 using PlcTagLib.Data;
@@ -39,13 +38,13 @@ public static class ConfigureLibServices
         else
         {
             services.AddDbContext<PlcTagLibDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException(),
                     builder => builder.MigrationsAssembly(typeof(PlcTagLibDbContext).Assembly.FullName)));
         }
 
         services.AddScoped<IPlcTagLibDbContext>(provider => provider.GetRequiredService<PlcTagLibDbContext>());
 
-        services.AddScoped<PlcTagLibDbContextInitialiser>();
+        services.AddScoped<PlcTagLibDbContextInit>();
 
 
         services.AddTransient<IDateTime, DateTimeService>();

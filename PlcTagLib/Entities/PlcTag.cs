@@ -19,11 +19,12 @@ public class PlcTag : BaseAuditableEntity
         get => _value;
         set
         {
-            if (_value != value)
+            if (_value == value)
             {
-                _value = value;
-                AddDomainEvent(new PlcTagValueChangedEvent(this));
+                return;
             }
+            _value = value;
+            AddDomainEvent(new PlcTagValueChangedEvent(this));
         }
     }
 

@@ -36,9 +36,9 @@ public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, int>
 
         };
 
-        _ = _context.PlcTags.Add(entity);
+        _context.PlcTags.Add(entity);
 
-        _ = await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return entity.Id;
     }

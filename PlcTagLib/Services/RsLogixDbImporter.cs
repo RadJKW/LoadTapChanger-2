@@ -11,9 +11,8 @@ namespace PlcTagLib.Services;
 
 public class RslogixDbImporter : IRsLogixDbImporter
 {
-    public List<PlcTag> PlcTags => _plcTags;
+    public List<PlcTag> PlcTags { get; } = new();
 
-    private readonly List<PlcTag> _plcTags = new();
     private bool _isValid = false;
     private bool _isChild = false;
 
@@ -47,31 +46,33 @@ public class RslogixDbImporter : IRsLogixDbImporter
                 _isValid = true;
                 _isChild = false;
             }
-            else if (values[addressColumn].Split('/')[0] == _plcTags[^1].Address)
+            else if (values[addressColumn].Split('/')[0] == PlcTags[^1].Address)
             {
                 _isValid = true;
                 _isChild = true;
             }
 
-            if (_isValid)
+            if (!_isValid)
             {
-                var useCsv = values[symbolColumn];
-                var plcTag = new PlcTag
-                {
-                    Address = values[addressColumn],
-                    SymbolName = _isChild ? _plcTags[^1].SymbolName + $"_{values[addressColumn].Split('/')[1]}" : useCsv,
-                    Description = GetDescription(values, descriptionColumns),
-                    PlcId = plc.Id,
-                    TagTypeId = GetTagTypeId(values[addressColumn])
-
-                };
-
-                _plcTags.Add(plcTag);
-                _isValid = false;
-                _isChild = false;
+                continue;
             }
+            
+            var useCsv = values[symbolColumn];
+            var plcTag = new PlcTag
+            {
+                Address = values[addressColumn],
+                SymbolName = _isChild ? PlcTags[^1].SymbolName + $"_{values[addressColumn].Split('/')[1]}" : useCsv,
+                Description = GetDescription(values, descriptionColumns),
+                PlcId = plc.Id,
+                TagTypeId = GetTagTypeId(values[addressColumn])
+
+            };
+
+            PlcTags.Add(plcTag);
+            _isValid = false;
+            _isChild = false;
         }
-        plc.PlcTags = _plcTags;
+        plc.PlcTags = PlcTags;
         File.WriteAllText(jsonFilePath.LocalPath, string.Empty);
         var json = JsonConvert.SerializeObject(plc, Formatting.Indented);
         File.WriteAllText(jsonFilePath.LocalPath, json);

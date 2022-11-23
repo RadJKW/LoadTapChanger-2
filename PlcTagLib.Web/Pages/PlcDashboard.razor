@@ -1,54 +1,48 @@
 ﻿@page "/plcdashboard"
-
+@namespace PlcTagLib.Web.Pages
 @using PlcTagLib.MicrologixPlcs.DTOs
 
+
 <PageTitle>PLC Dashboard</PageTitle>
-
-
 <MudText Typo="Typo.h3" GutterBottom="true">Plc - Dashboard</MudText>
-
-
-<MudCard Elevation="2" Class="w-75 mx-auto">
+<MudCard Elevation="2" Class="col-6 offset-3">
     <MudCardHeader Class="row d-flex justify-space-between align-center">
         <div class="col px-4">
             <MudSelect Label="Micrologix Plcs" T="PlcDto" Variant="Variant.Outlined" ValueChanged="OnValueChanged"
-                Clearable="true">
-                @foreach (var plc in _plcDtosList!)
+                       Clearable="true">
+                @foreach (var plc in PlcDtosList!)
                 {
                     <MudSelectItem Value="@plc">@plc.Name</MudSelectItem>
                 }
             </MudSelect>
         </div>
         <div class="col px-4">
-            <MudText Typo="Typo.h6" Class="text-center">@(_selectedPlc.Name ?? "Plc [Name]")</MudText>
+            <MudText Typo="Typo.h6" Class="text-center">@(_selectedPlc.Name ?? _defaultPlc.Name)</MudText>
         </div>
-
     </MudCardHeader>
-
     <MudCardContent>
-        <MudList Clickable="true">
+        <MudList Clickable="true" Dense="true" Class="">
             <MudListSubheader>
-                Tags From PLC: 
+                <div class="">
+                    Tags From PLC:
+                </div>
             </MudListSubheader>
-
-            @if (_selectedPlcsTagList != null )
+            @if (TagGroupsList != null)
             {
-                foreach (var tag in _selectedPlcsTagList!)
+                foreach (var tagGroup in TagGroupsList)
                 {
-                    <MudListItem>
-                           <MudText>
-                               @tag.Address
-                           </MudText>      
-                           <MudText>
-                               @tag.SymbolName
-                           </MudText>
+                    <MudListItem Text="@tagGroup.Key.ToString()">
+                        <NestedList>
+
+                            @foreach (var tag in tagGroup)
+                            {
+                                <MudListItem Text="@($"{tag.Address} | {tag.SymbolName}")" Inset="true"/>
+                            }
+                        </NestedList>
                     </MudListItem>
+
                 }
             }
-            <MudListItem >
-                <MudText>Hello World</MudText>
-            </MudListItem>
         </MudList>
     </MudCardContent>
-
 </MudCard>

@@ -71,7 +71,7 @@
         if (firstRender)
         {
             _isDarkMode = await _mudThemeProvider!.GetSystemPreference();
-            Navigator.NavigateTo("plcdashboard");
+            // Navigator.NavigateTo("plcdashboard");
         }
         _mudThemeProvider!.Theme.PaletteDark.TableStriped = "#00000026";
         StateHasChanged();

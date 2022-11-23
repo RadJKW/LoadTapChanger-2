@@ -23,7 +23,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 
     using var scope = app.Services.CreateScope();
-    var initaliser = scope.ServiceProvider.GetRequiredService<PlcTagLibDbContextInitialiser>();
+    var initaliser = scope.ServiceProvider.GetRequiredService<PlcTagLibDbContextInit>();
     await initaliser.InitialiseAsync();
     await initaliser.SeedAsync();
 }   // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
