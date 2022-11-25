@@ -4,20 +4,20 @@
 
 
 <PageTitle>PLC Dashboard</PageTitle>
-<MudCard Elevation="2" Class="col-8 mx-auto">
-    <MudCardHeader Class="row grid">
-        <MudGrid>
-            <MudItem sm="12" md="6">
+<MudCard Elevation="2" Class="col-8 mx-auto align-center" Style="min-width: fit-content">
+    <MudCardHeader>
+        <MudGrid Style="min-width: fit-content">
+            <MudItem xs="12" sm="12" md="8">
 
-                <MudSelect Label="Micrologix Plcs" T="PlcDto" Variant="Variant.Outlined" ValueChanged="OnValueChanged"
-                    Clearable="true">
+                <MudSelect Class="" Label="Micrologix Plcs" T="PlcDto" Variant="Variant.Outlined"
+                    ValueChanged="OnValueChanged" Clearable="true">
                     @foreach (var plc in PlcDtosList!)
                     {
                         <MudSelectItem Value="@plc">@plc.Name</MudSelectItem>
                     }
                 </MudSelect>
             </MudItem>
-            <MudItem sm="12" md="6">
+            <MudItem xs="12" sm="12" md="4">
                 <MudAutocomplete Label="Tags" T="string" Variant="Variant.Outlined" />
             </MudItem>
         </MudGrid>
