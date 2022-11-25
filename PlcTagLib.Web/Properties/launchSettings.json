@@ -14,7 +14,7 @@
       "launchBrowser": true,
       "hotReloadEnabled": true,      
       "applicationUrl": "http://localhost:5284",
-      "launchUrl": "/plcdashboard",
+      "launchUrl": "plcdashboard",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -24,7 +24,7 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7241;http://localhost:5284",
-      "launchUrl": "/plcdashboard",
+      "launchUrl": "plcdashboard",
       "hotReloadEnabled": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
