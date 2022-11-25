@@ -15,7 +15,7 @@
     }
 </style>
 
-<MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
+<MudThemeProvider Theme="_myCustomTheme" @ref="_mudThemeProvider" @bind-IsDarkmode="@_isDarkMode" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -23,7 +23,13 @@
 
     <MudAppBar Elevation="0">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
-            OnClick="@((e) => DrawerToggle())" />
+            OnClick="@(e => DrawerToggle())" />
+        <MudSpacer />
+        @*display the current PAGE TITLE *@
+
+        <MudText Typo="Typo.h6" Class="mud-toolbar-title" NoWrap="true">
+            @(PageTitle)</MudText>
+
         <MudSpacer />
         <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/"
             Target="_blank">
@@ -34,7 +40,7 @@
     </MudAppBar>
 
     <MudDrawer @bind-Open="_drawerOpen" Elevation="6" Variant="DrawerVariant.Responsive">
-        <MudDrawerHeader>
+        <MudDrawerHeader Style="background-color: #1a1a26a6">
             <MudText Typo="Typo.h6">
                 MudBlazorTest
             </MudText>
@@ -55,10 +61,41 @@
 </MudLayout>
 
 @code {
-    bool _drawerOpen = true;
+    bool _drawerOpen = false;
     private bool _isDarkMode = true;
     private MudThemeProvider? _mudThemeProvider;
 
+    private string PageTitle { get; set; } = "MudBlazorTest";
+
+    readonly MudTheme _myCustomTheme = new MudTheme()
+    {
+        Palette = new Palette()
+        {
+            Primary = Colors.Blue.Default,
+            Secondary = Colors.Green.Accent4,
+            AppbarBackground = Colors.Red.Default,
+        },
+        PaletteDark = new PaletteDark()
+        {
+            Primary = Colors.Blue.Lighten1,
+            Background = "#151520",
+            AppbarBackground = "#1a1a27cc",
+            DrawerBackground = "#1A1A26",
+            Surface = "#1e1e2d",
+            TableStriped = "#222233F5",
+
+
+
+        },
+
+        LayoutProperties = new LayoutProperties()
+        {
+            DrawerMiniWidthLeft = "20px",
+            DrawerMiniWidthRight = "20px",
+            DrawerWidthLeft = "240px",
+            DrawerWidthRight = "300px"
+        }
+    };
 
     void DrawerToggle()
     {
@@ -73,8 +110,24 @@
             _isDarkMode = await _mudThemeProvider!.GetSystemPreference();
             // Navigator.NavigateTo("plcdashboard");
         }
-        _mudThemeProvider!.Theme.PaletteDark.TableStriped = "#00000026";
-        StateHasChanged();
+
+        // StateHasChanged();
+
+    }
+
+    // after the route changes, update the page title
+    protected override void OnParametersSet()
+    {
+        var title = Navigator.Uri.Split('/').Last();
+        if (title == "plcdashboard")
+        {
+            PageTitle = "PLC-Dashboard";
+        }
+        else
+        {
+            PageTitle = "MudBlazorTest";
+        }
+
 
     }
 }
