@@ -11,7 +11,7 @@ using PlcTagLib.Web.Filters;
 namespace PlcTagLib.Web;
 public static class ConfigureWebServices
 {
-    public static IServiceCollection AddWebAPIServices(this IServiceCollection services)
+    public static IServiceCollection AddWebApiServices(this IServiceCollection services)
     {
         services.AddControllers(options =>
             options.Filters.Add<ApiExceptionFilterAttribute>());

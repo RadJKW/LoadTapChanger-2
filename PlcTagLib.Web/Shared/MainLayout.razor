@@ -1,19 +1,5 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager Navigator
-@using MudBlazor.Utilities
-<style>
-    .selected {
-        background-color: #1E88E5 !important;
-    }
-
-    .selected>td {
-        color: white !important;
-    }
-
-    .selected>td .mud-input {
-        color: white !important;
-    }
-</style>
 
 <MudThemeProvider Theme="_myCustomTheme" @ref="_mudThemeProvider" @bind-IsDarkmode="@_isDarkMode" />
 <MudDialogProvider />
@@ -23,7 +9,7 @@
 
     <MudAppBar Elevation="0">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
-            OnClick="@(e => DrawerToggle())" />
+            OnClick="@(_ => DrawerToggle())" />
         <MudSpacer />
         @*display the current PAGE TITLE *@
 
@@ -61,7 +47,7 @@
 </MudLayout>
 
 @code {
-    bool _drawerOpen = false;
+    bool _drawerOpen;
     private bool _isDarkMode = true;
     private MudThemeProvider? _mudThemeProvider;
 
@@ -119,14 +105,7 @@
     protected override void OnParametersSet()
     {
         var title = Navigator.Uri.Split('/').Last();
-        if (title == "plcdashboard")
-        {
-            PageTitle = "PLC-Dashboard";
-        }
-        else
-        {
-            PageTitle = "MudBlazorTest";
-        }
+        PageTitle = title == "plcdashboard" ? "PLC-Dashboard" : "MudBlazorTest";
 
 
     }

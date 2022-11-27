@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using PlcTagLib;
+﻿using PlcTagLib;
 using PlcTagLib.Data;
 using PlcTagLib.Web;
-using PlcTagLib.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddWebAPIServices();
+builder.Services.AddWebApiServices();
 builder.Services.AddBlazorServices();
 
 var app = builder.Build();
@@ -23,9 +20,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 
     using var scope = app.Services.CreateScope();
-    var initaliser = scope.ServiceProvider.GetRequiredService<PlcTagLibDbContextInit>();
-    await initaliser.InitialiseAsync();
-    await initaliser.SeedAsync();
+    var initializer = scope.ServiceProvider.GetRequiredService<PlcTagLibDbContextInit>();
+    await initializer.InitialiseAsync();
+    await initializer.SeedAsync();
 }   // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 else
 {

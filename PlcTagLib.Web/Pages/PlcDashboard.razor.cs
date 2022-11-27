@@ -9,7 +9,6 @@ using PlcTagLib.MicrologixPlcs.Commands;
 using PlcTagLib.MicrologixPlcs.DTOs;
 
 namespace PlcTagLib.Web.Pages;
-
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 public partial class PlcDashboard : ComponentBase
 {
@@ -39,9 +38,15 @@ public partial class PlcDashboard : ComponentBase
     }
 
 
-    private readonly PlcDto _defaultPlc = new PlcDto() { Id = 0, Name = "Select PLC" };
+    private readonly PlcDto _defaultPlc = new PlcDto()
+    {
+        Id = 0, Name = "Select PLC"
+    };
 
-    private PlcDto _selectedPlc = new() { Id = 0, Name = "Select PLC" };
+    private PlcDto _selectedPlc = new()
+    {
+        Id = 0, Name = "Select PLC"
+    };
 
 
     // implement MediatR to get the PlcInfo
@@ -75,9 +80,9 @@ public partial class PlcDashboard : ComponentBase
             .Where(t => t.PlcId == plcId)
             .OrderBy(t => t.TagTypeId)
             .ToListAsync();
-        
+
         var myPlcTagList = tagsFromContext.Select(tag => new PlcTagRow(tag)).ToList();
-        
+
         return myPlcTagList;
         // convert each plctag to MyPlcTag and return the list
         //return tagsFromContext.Select(Mapper.Map<MyPlcTag>).ToList();
@@ -87,7 +92,9 @@ public partial class PlcDashboard : ComponentBase
     private static string GetListItemStyle(int count)
     {
 
-        return count % 2 == 0 ? "background-color: var(--mud-palette-surface);" :
+        return count % 2 == 0
+            ? "background-color: var(--mud-palette-surface);"
+            :
             // if count is even return 
             "background-color: var(--mud-palette-drawer-background);";
     }
@@ -96,5 +103,5 @@ public partial class PlcDashboard : ComponentBase
     {
         tag.Value = !tag.Value;
     }
-    
+
 }
