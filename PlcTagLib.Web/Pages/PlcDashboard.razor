@@ -8,9 +8,8 @@
     <MudCardHeader>
         <MudGrid Style="min-width: fit-content">
             <MudItem xs="12" sm="12" md="8">
-
                 <MudSelect Class="" Label="Micrologix Plcs" T="PlcDto" Variant="Variant.Outlined"
-                    ValueChanged="OnValueChanged" Clearable="true">
+                           ValueChanged="OnValueChanged" Clearable="true">
                     @foreach (var plc in PlcDtosList!)
                     {
                         <MudSelectItem Value="@plc">@plc.Name</MudSelectItem>
@@ -18,7 +17,7 @@
                 </MudSelect>
             </MudItem>
             <MudItem xs="12" sm="12" md="4">
-                <MudAutocomplete Label="Tags" T="string" Variant="Variant.Outlined" />
+                <MudAutocomplete Label="Tags" T="string" Variant="Variant.Outlined"/>
             </MudItem>
         </MudGrid>
     </MudCardHeader>
@@ -29,33 +28,39 @@
                 var i = 1;
                 foreach (var tagGroup in TagGroupsList)
                 {
-
-                    <MudDivider DividerType="DividerType.FullWidth" />
+                    <MudDivider DividerType="DividerType.FullWidth"/>
                     <MudListItem Text="@tagGroup.Key.ToString()" Style="@GetListItemStyle(i)">
                         <NestedList>
                             <MudSimpleTable Dense="true" Bordered="true" Striped="false" FixedHeader="true" Outlined="true">
                                 <thead>
-                                    <tr>
-                                        <th style="width: 15%; text-align: center">I/O</th>
-                                        <th style="width: 35%;" class="text-center">Address</th>
-                                        <th style="width: auto" class="text-center">Symbol</th>
-                                    </tr>
+                                <tr>
+                                    <th style="width: 20px" class="text-center">Enable</th>
+                                    <th style="width: 15%;" class="text-center">I/O</th>
+                                    <th style="width: 35%;" class="text-center">Address</th>
+                                    <th style="width: auto" class="text-center">Symbol</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var tag in tagGroup)
-                                    {
-                                        <tr>
-                                            <td style="" class="text-center">
-                                                <MudButton Style="width: 60%;" Class="justify-space-between"
-                                        StartIcon="@Icons.Material.Filled.Circle"
-                                        IconColor="@(tag.Value? Color.Error : Color.Success)"
-                                        OnClick="@(()=> ToggleTagValue(tag))" Variant="Variant.Outlined"
-                                        Size="Size.Small">@(tag.Value ?"Off": "on")</MudButton>
-                                            </td>
-                                            <td class="text-center">@tag.Address</td>
-                                            <td class="text-center">@tag.SymbolName</td>
-                                        </tr>
-                                    }
+                                @foreach (var tag in tagGroup)
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            <MudCheckBox @bind-Checked="(tag.TagRowEnabled)"></MudCheckBox>
+                                        </td>
+                                        <td style="" class="text-center">
+                                            <MudButton Style="width: 60%;" Class="justify-space-between"
+                                                       Disabled="@(!tag.TagRowEnabled)"
+                                                       StartIcon="@Icons.Material.Filled.Circle"
+                                                       IconColor="@(tag.Value ? Color.Error : Color.Success)"
+                                                       OnClick="@(() => ToggleTagValue(tag))" Variant="Variant.Outlined"
+                                                       Size="Size.Small">
+                                                @(tag.Value ? "Off" : "on")
+                                            </MudButton>
+                                        </td>
+                                        <td class="text-center">@tag.Address</td>
+                                        <td class="text-center">@tag.SymbolName</td>
+                                    </tr>
+                                }
                                 </tbody>
                             </MudSimpleTable>
                         </NestedList>
