@@ -9,6 +9,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebApiServices();
 builder.Services.AddBlazorServices();
+builder.Services.AddLogging( options => options.AddConsole());
 
 var app = builder.Build();
 

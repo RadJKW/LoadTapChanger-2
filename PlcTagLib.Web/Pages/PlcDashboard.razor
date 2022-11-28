@@ -3,6 +3,8 @@
 @using PlcTagLib.MicrologixPlcs.DTOs
 
 
+
+
 <PageTitle>PLC Dashboard</PageTitle>
 <MudCard Elevation="2" Class="col-8 mx-auto align-center" Style="min-width: fit-content">
     <MudCardHeader>
@@ -52,7 +54,7 @@
                                                        Disabled="@(!tag.TagRowEnabled)"
                                                        StartIcon="@Icons.Material.Filled.Circle"
                                                        IconColor="@(tag.Value ? Color.Error : Color.Success)"
-                                                       OnClick="@(() => ToggleTagValue(tag))" Variant="Variant.Outlined"
+                                                       OnClick="@(() => StartMonitoringTagValueAsync(tag))" Variant="Variant.Outlined"
                                                        Size="Size.Small">
                                                 @(tag.Value ? "Off" : "on")
                                             </MudButton>
@@ -71,3 +73,7 @@
         </MudList>
     </MudCardContent>
 </MudCard>
+
+@code {
+
+}
