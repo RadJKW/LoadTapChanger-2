@@ -3,8 +3,6 @@
 @using PlcTagLib.MicrologixPlcs.DTOs
 
 
-
-
 <PageTitle>PLC Dashboard</PageTitle>
 <MudCard Elevation="2" Class="col-8 mx-auto align-center" Style="min-width: fit-content">
     <MudCardHeader>
@@ -27,16 +25,15 @@
         <MudList Clickable="true" Dense="true" Class="">
             @if (TagGroupsList != null)
             {
-                var i = 1;
                 foreach (var tagGroup in TagGroupsList)
                 {
                     <MudDivider DividerType="DividerType.FullWidth"/>
-                    <MudListItem Text="@tagGroup.Key.ToString()" Style="@GetListItemStyle(i)">
+                    <MudListItem Text="@tagGroup.Key.ToString()" Style="background-color: var(--mud-palette-drawer-background);">
                         <NestedList>
                             <MudSimpleTable Dense="true" Bordered="true" Striped="false" FixedHeader="true" Outlined="true">
                                 <thead>
                                 <tr>
-                                    <th style="width: 20px" class="text-center">Enable</th>
+                                    <th style="width: 10%" class="text-center"> <MudButton Size="Size.Small" Variant="Variant.Outlined">Enable</MudButton></th>
                                     <th style="width: 15%;" class="text-center">I/O</th>
                                     <th style="width: 35%;" class="text-center">Address</th>
                                     <th style="width: auto" class="text-center">Symbol</th>
@@ -47,15 +44,16 @@
                                 {
                                     <tr>
                                         <td class="text-center">
-                                            <MudCheckBox @bind-Checked="(tag.TagRowEnabled)"></MudCheckBox>
+                                            <MudCheckBox @bind-Checked="tag.TagRowEnabled"></MudCheckBox>
                                         </td>
                                         <td style="" class="text-center">
                                             <MudButton Style="width: 60%;" Class="justify-space-between"
                                                        Disabled="@(!tag.TagRowEnabled)"
                                                        StartIcon="@Icons.Material.Filled.Circle"
                                                        IconColor="@(tag.Value ? Color.Error : Color.Success)"
-                                                       OnClick="@(() => StartMonitoringTagValueAsync(tag))" Variant="Variant.Outlined"
-                                                       Size="Size.Small">
+                                                       Variant="Variant.Outlined"
+                                                       Size="Size.Small"
+                                                       OnClick="@(() => StartMonitoringTagValueAsync(tag))">
                                                 @(tag.Value ? "Off" : "on")
                                             </MudButton>
                                         </td>

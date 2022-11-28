@@ -1,7 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using libplctag;
+﻿using libplctag;
 using libplctag.DataTypes;
-using libplctag.DataTypes.Simple;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +8,6 @@ using PlcTagLib.Entities;
 using PlcTagLib.Enums;
 using PlcTagLib.MicrologixPlcs.Commands;
 using PlcTagLib.MicrologixPlcs.DTOs;
-
 
 namespace PlcTagLib.Web.Pages;
 
@@ -31,7 +28,9 @@ public partial class PlcDashboard : ComponentBase
 
     public class PlcTagRow : PlcTag
     {
-        public PlcTagRow(PlcTag plcTag, bool enabled = false)
+        private ILogger Logger { get; set; }
+        private IPlcTagLibDbContext Context { get; set; }
+        public PlcTagRow(PlcTag plcTag, ILogger logger, IPlcTagLibDbContext context, bool enabled = false)
         {
             TagRowEnabled = enabled;
             Address = plcTag.Address;
@@ -40,9 +39,13 @@ public partial class PlcDashboard : ComponentBase
             TagTypeId = plcTag.TagTypeId;
             TagType = plcTag.TagType;
             Value = plcTag.Value;
+            Logger = logger;
+            Context = context;
+            
         }
 
         public bool TagRowEnabled { get; set; }
+        
 
     }
 
@@ -90,56 +93,69 @@ public partial class PlcDashboard : ComponentBase
             .OrderBy(t => t.TagTypeId)
             .ToListAsync();
 
-        var myPlcTagList = tagsFromContext.Select(tag => new PlcTagRow(tag)).ToList();
+        var myPlcTagList = tagsFromContext.Select(tag => new PlcTagRow(tag, Logger, PlcTagLibDbContext)).ToList();
 
         return myPlcTagList;
         // convert each plctag to MyPlcTag and return the list
         //return tagsFromContext.Select(Mapper.Map<MyPlcTag>).ToList();
 
     }
-
-    private static string GetListItemStyle(int count)
-    {
-
-        return count % 2 == 0
-            ? "background-color: var(--mud-palette-surface);"
-            :
-            // if count is even return 
-            "background-color: var(--mud-palette-drawer-background);";
-    }
-
-    private static void ToggleTagValue(PlcTag tag)
-    {
-        tag.Value = !tag.Value;
-    }
-
-   
-    // ReSharper disable once SuggestBaseTypeForParameter
-    private void StartMonitoringTagValueAsync(PlcTagRow plcTag)
-    {
-        Logger.LogInformation("StartMonitoringTagValueAsync");
-        var plc = PlcTagLibDbContext.MicrologixPlcs.Find(plcTag.PlcId);
-        var tag = new Tag<DintPlcMapper, int>()
+    
+    
+    private class TagValueNotifier<M,T> : Tag<M,T> where M: IPlcMapper<T>, new()
         {
-            // insert "1" after "I" in plcTag.Address to read the value
-            Name = plcTag.Address!.Insert(1, "1"),
-            Gateway = plc!.IpAddress,
-            Path = "1,0",
-            PlcType = libplctag.PlcType.Slc500,
-            Protocol = libplctag.Protocol.ab_eip,
-        };
+            public event EventHandler? ValueChanged;
+            private int _previousHash;
+            public TagValueNotifier()
+            {
+                ReadCompleted += OnValueChanged!;
+            }
+            private void OnValueChanged(object sender, TagEventArgs e)
+            {
+                var currentHash = this.Value!.GetHashCode();
+                if (currentHash != _previousHash)
+                {
+                    ValueChanged?.Invoke(this, EventArgs.Empty);
+                }
+                _previousHash = currentHash;
+            }
+        }
+
+    private async Task StartMonitoringTagValueAsync(PlcTagRow plcTagRow)
+        {
+            if (!plcTagRow.TagRowEnabled) return;
         
-        Console.WriteLine($"Tag Name: {tag.Name}");
-        Console.WriteLine($"Tag Gateway: {tag.Gateway}");
-        Console.WriteLine($"Tag Path: {tag.Path}");
-        Console.WriteLine($"Tag PlcType: {tag.PlcType}");
-        Console.WriteLine($"Tag Protocol: {tag.Protocol}");
-        tag.Read();
-        Console.WriteLine($"Tag Value: {tag.Value}");
+            Logger.LogInformation("StartMonitoringTagValueAsync");
+            plcTagRow.TagRowEnabled = true;
+            var plc = await PlcTagLibDbContext.MicrologixPlcs.FindAsync(plcTagRow.PlcId);
+            var tag = new TagValueNotifier<DintPlcMapper, int>()
+            {
+                // insert "1" after "I" in plcTag.Address to read the value
+                Name = plcTagRow.Address!.Insert(1, "1"),
+                Gateway = plc!.IpAddress,
+                Path = "1,0",
+                PlcType = libplctag.PlcType.Slc500,
+                Protocol = libplctag.Protocol.ab_eip,
+                AutoSyncReadInterval = TimeSpan.FromMilliseconds(50)
+            };
         
-        // check the value of the tag and set the tags value to the value of the tag
-        plcTag.Value = tag.Value == 1;
-    }
+           await tag.InitializeAsync();
+
+           Console.WriteLine($"Tag Name: {tag.Name}");
+            Console.WriteLine($"Tag Gateway: {tag.Gateway}");
+            Console.WriteLine($"Tag Path: {tag.Path}");
+            Console.WriteLine($"Tag PlcType: {tag.PlcType}");
+            Console.WriteLine($"Tag Protocol: {tag.Protocol}");
+            Console.WriteLine($"Tag Value: {tag.Value}");
+            tag.ValueChanged += (sender, args) =>
+            {
+                
+                plcTagRow.Value = tag.Value == 1;
+                InvokeAsync(StateHasChanged);
+                Console.WriteLine($"Tag Value: {tag.Value}");
+            };
+        }
+}
 
     
-}
+
