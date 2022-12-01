@@ -30,42 +30,45 @@
                     <MudDivider DividerType="DividerType.FullWidth"/>
                     <MudListItem Text="@tagGroup.Key.ToString()" Style="background-color: var(--mud-palette-drawer-background);">
                         <NestedList>
-                            <MudSimpleTable Dense="true" Bordered="true" Striped="false" FixedHeader="true" Outlined="true">
+                            <MudSimpleTable Dense="true" Bordered="true" Striped="false"
+                                            FixedHeader="true" Outlined="true">
                                 <thead>
                                 <tr>
-                                    <th style="width: 10%" class="text-center"> <MudButton Size="Size.Small" Variant="Variant.Outlined">Enable</MudButton></th>
+                                    <th style="width: 10%" class="text-center">
+                                        <MudButton Size="Size.Small" Variant="Variant.Outlined">
+                                            Enable
+                                        </MudButton>
+                                    </th>
                                     <th style="width: 15%;" class="text-center">I/O</th>
                                     <th style="width: 35%;" class="text-center">Address</th>
                                     <th style="width: auto" class="text-center">Symbol</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach (var tag in tagGroup)
+                                @foreach (var tagRow in tagGroup)
                                 {
                                     <tr>
                                         <td class="text-center">
-                                            <MudCheckBox @bind-Checked="tag.TagRowEnabled"></MudCheckBox>
+                                            <MudCheckBox T="bool" CheckedChanged="(args) => OnCheckedChanged(args, tagRow)"/>
                                         </td>
                                         <td style="" class="text-center">
                                             <MudButton Style="width: 60%;" Class="justify-space-between"
-                                                       Disabled="@(!tag.TagRowEnabled)"
+                                                       Disabled="@(!tagRow.TagMonitoringEnabled)"
                                                        StartIcon="@Icons.Material.Filled.Circle"
-                                                       IconColor="@(tag.Value ? Color.Error : Color.Success)"
+                                                       IconColor="@(tagRow.Value ? Color.Error : Color.Success)"
                                                        Variant="Variant.Outlined"
-                                                       Size="Size.Small"
-                                                       OnClick="@(() => StartMonitoringTagValueAsync(tag))">
-                                                @(tag.Value ? "Off" : "on")
+                                                       Size="Size.Small">
+                                                @(tagRow.Value ? "Off" : "on")
                                             </MudButton>
                                         </td>
-                                        <td class="text-center">@tag.Address</td>
-                                        <td class="text-center">@tag.SymbolName</td>
+                                        <td class="text-center">@tagRow.Address</td>
+                                        <td class="text-center">@tagRow.SymbolName</td>
                                     </tr>
                                 }
                                 </tbody>
                             </MudSimpleTable>
                         </NestedList>
                     </MudListItem>
-
                 }
             }
         </MudList>
