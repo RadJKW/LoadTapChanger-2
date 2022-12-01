@@ -35,5 +35,6 @@
 
   "csharp.format.enable": true,
   "omnisharp.enableEditorConfigSupport": true,
-  "omnisharp.enableRoslynAnalyzers": true
+  "omnisharp.enableRoslynAnalyzers": true,
+  "omnisharp.sdkIncludePrereleases": false
 }

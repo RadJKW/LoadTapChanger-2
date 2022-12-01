@@ -7,16 +7,10 @@
       "request": "launch",
       "console": "integratedTerminal",
       "preLaunchTask": "build",
-      // "launchSettingsFilePath": "${workspaceFolder}/PlcTagLib.Web/Properties/launchSettings.json",
-      // "launchSettingsProfile": "Https",
       "program": "dotnet",
       "args": ["watch", "--project", "./PlcTagLib.Web", "--verbose"],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
-      "serverReadyAction": {
-        "action": "openExternally",
-        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-      },
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
