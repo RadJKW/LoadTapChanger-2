@@ -1,39 +1,40 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager Navigator
 
-<MudThemeProvider Theme="_myCustomTheme" @ref="_mudThemeProvider" @bind-IsDarkmode="@_isDarkMode" />
-<MudDialogProvider />
-<MudSnackbarProvider />
+<MudThemeProvider Theme="_myCustomTheme" @ref="_mudThemeProvider" @bind-IsDarkmode="@_isDarkMode"/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
 <MudLayout>
 
     <MudAppBar Elevation="0">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
-            OnClick="@(_ => DrawerToggle())" />
-        <MudSpacer />
+                       OnClick="@(_ => DrawerToggle())"/>
+        <MudSpacer/>
         @*display the current PAGE TITLE *@
 
-        <MudText Typo="Typo.h6" Class="mud-toolbar-title" NoWrap="true">
-            @(PageTitle)</MudText>
+        <MudText Typo="Typo.h6" Style="text-wrap: none">
+            @(PageTitle)
+        </MudText>
 
-        <MudSpacer />
+        <MudSpacer/>
         <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/"
-            Target="_blank">
+                       Target="_blank">
         </MudIconButton>
         <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit"
-            Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank">
+                       Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank">
         </MudIconButton>
     </MudAppBar>
 
     <MudDrawer @bind-Open="_drawerOpen" Elevation="6" Variant="DrawerVariant.Responsive">
-        <MudDrawerHeader Style="background-color: #1a1a26a6">
+        <MudDrawerHeader Style="background-color: #1a1a26">
             <MudText Typo="Typo.h6">
                 MudBlazorTest
             </MudText>
         </MudDrawerHeader>
-        <NavMenu />
-        <MudSpacer />
-        <MudDivider />
+        <NavMenu/>
+        <MudSpacer/>
+        <MudDivider/>
 
         <MudSwitch Class="justify-center" @bind-Checked="@_isDarkMode" Color="Color.Primary" T="bool" Label="Dark Mode">
         </MudSwitch>
@@ -73,7 +74,6 @@
 
 
         },
-
         LayoutProperties = new LayoutProperties()
         {
             DrawerMiniWidthLeft = "20px",
@@ -94,10 +94,10 @@
         if (firstRender)
         {
             _isDarkMode = await _mudThemeProvider!.GetSystemPreference();
-            // Navigator.NavigateTo("plcdashboard");
+    // Navigator.NavigateTo("plcdashboard");
         }
 
-        // StateHasChanged();
+    // StateHasChanged();
 
     }
 
@@ -106,7 +106,6 @@
     {
         var title = Navigator.Uri.Split('/').Last();
         PageTitle = title == "plcdashboard" ? "PLC-Dashboard" : "MudBlazorTest";
-
 
     }
 }

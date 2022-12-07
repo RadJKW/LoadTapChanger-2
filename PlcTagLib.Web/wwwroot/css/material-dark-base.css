@@ -96,7 +96,7 @@
 }
 
     .rz-steps .rz-steps-item:not(:last-child):after {
-        display: 'block';
+        display: block;
         content: '';
         flex: auto;
         height: 1px;

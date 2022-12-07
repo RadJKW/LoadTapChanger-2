@@ -8,23 +8,22 @@
     }
   },
   "profiles": {
-    "Http": {
+    "PlcTagLib.Web Http": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "hotReloadEnabled": true,      
       "applicationUrl": "http://localhost:5284",
       "launchUrl": "plcdashboard",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Https": {
+    "PlcTagLIb.Web Https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7241;http://localhost:5284",
-      "launchUrl": "plcdashboard",
+      "launchUrl": "",
       "hotReloadEnabled": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -32,18 +31,6 @@
     },
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "Watch": {
-      "commandName": "Executable",
-      "executablePath": "dotnet",
-      "workingDirectory": "$(ProjectDir)",
-      "hotReloadEnabled": true,
-      "hotReloadProfile": "aspnetcore",
-      "commandLineArgs": "watch",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

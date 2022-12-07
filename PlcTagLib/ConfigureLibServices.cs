@@ -39,7 +39,7 @@ public static class ConfigureLibServices
         {
             services.AddDbContext<PlcTagLibDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException(),
-                    builder => builder.MigrationsAssembly(typeof(PlcTagLibDbContext).Assembly.FullName)));
+                builder => builder.MigrationsAssembly(typeof(PlcTagLibDbContext).Assembly.FullName)));
         }
 
         services.AddScoped<IPlcTagLibDbContext>(provider => provider.GetRequiredService<PlcTagLibDbContext>());
@@ -48,10 +48,12 @@ public static class ConfigureLibServices
 
 
         services.AddTransient<IDateTime, DateTimeService>();
-
         services.AddTransient<ICsvService, CsvService>();
-
         services.AddTransient<IRsLogixDbImporter, RslogixDbImporter>();
+        services.AddSingleton<PeriodicBitToggle>();
+        services.AddSingleton<BitWatcher>();
+
+
 
 
 

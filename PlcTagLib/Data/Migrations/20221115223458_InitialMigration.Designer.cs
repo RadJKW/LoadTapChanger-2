@@ -121,7 +121,7 @@ namespace PlcTagLib.Data.Migrations
                     b.Property<int>("TagTypeId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Value")
+                    b.Property<bool>("BitValue")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");

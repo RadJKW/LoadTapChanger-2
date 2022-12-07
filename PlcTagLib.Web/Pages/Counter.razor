@@ -1,17 +1,36 @@
 ﻿@page "/counter"
+@using PlcTagLib.Services
 
-<PageTitle>Counter</PageTitle>
-
-<MudText Typo="Typo.h3" GutterBottom="true">Counter</MudText>
-<MudText Class="mb-4">Current count: @_currentCount</MudText>
-<MudButton Color="Color.Primary" Variant="Variant.Filled" @onclick="IncrementCount">Click me</MudButton>
+<PageTitle>BitArray</PageTitle>
 
 
-@code {
-    private int _currentCount;
+<MudCard Elevation="2" Class="col-8 mx-auto">
+    <MudCardHeader Class="">
+        <MudNumericField Class="col-2 mx-4" @bind-Value="ToggleInterval" Label="ToggleInterval" Variant="Variant.Outlined" Min="1" Max="300"/>
+        <MudText Class="col-8 text-center" Typo="Typo.h4">BitArrays</MudText>
+        <MudNumericField Class="col-2 mx-4" @bind-Value="BitWatcherInterval" Label="WatcherInterval" Variant="Variant.Outlined" Min="1" Max="300"/>
 
-    private void IncrementCount()
-    {
-        _currentCount++;
-    }
-}
+
+    </MudCardHeader>
+
+    <MudCardContent Class="d-flex flex-wrap">
+        <MudGrid Spacing="2" Justify="Justify.Center">
+            @foreach (var bit in BitWatcher.BitDictionary)
+            {
+                <MudItem>
+                    <div class="col-2">
+                        <MudButton Variant="Variant.Filled" Size="Size.Medium" Color="@(bit.Value ? Color.Success : Color.Error)"
+                                   @onclick="() => PeriodicBitToggle.ToggleBit(bit.Key)">
+                            @bit.Key
+                        </MudButton>
+                    </div>
+                </MudItem>
+
+            }
+        </MudGrid>
+
+    </MudCardContent>
+</MudCard>
+
+
+
