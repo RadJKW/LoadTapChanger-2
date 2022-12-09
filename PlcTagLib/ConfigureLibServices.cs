@@ -50,8 +50,8 @@ public static class ConfigureLibServices
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<ICsvService, CsvService>();
         services.AddTransient<IRsLogixDbImporter, RslogixDbImporter>();
-        services.AddSingleton<PeriodicBitToggle>();
-        services.AddSingleton<BitWatcher>();
+        // services.AddSingleton<PeriodicBitToggle>();
+        // services.AddSingleton<BitWatcher>();
 
 
 

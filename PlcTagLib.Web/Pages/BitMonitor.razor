@@ -1,0 +1,54 @@
+﻿@page "/bit-monitor"
+
+<MudCard Class="col-8 mx-auto" Align="center">
+    <MudCardHeader Class="justify-center flex-column">
+        <MudText Typo="Typo.h3" Align="Align.Center"  GutterBottom="true">Bit Monitor</MudText>
+        <MudSlider Class="bit-card-header" T="int" Min="8" Max="96" Step="4"
+                   Size="Size.Medium" ValueLabel="true" TickMarks="true" Variant="Variant.Filled"
+                   Color="Color.Tertiary" Value="@BitArrayLength"
+                   ValueChanged="@SetBitArrayLength">
+            Bits : @BitArrayLength
+
+        </MudSlider>
+    </MudCardHeader>
+    <MudCardContent>
+
+        <style>
+            .bit-buttons {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                justify-items: center;
+                grid-auto-flow: row;
+                gap: 15px;
+                max-width: calc((8*100px) + (7*15px) + (2*10px));
+                padding: 10px;
+            }       
+    
+            .bit-button {
+                width: 100%;
+                height: 100%;
+            }
+            
+            .bit-card-header {
+                width: 100%;
+                /* make the max width 60% of parent*/
+                max-width: 60%;
+            }
+        
+        </style>
+
+        <div class="bit-buttons">
+
+                        
+                @foreach (var bitWatcher in BitWatchers)
+                {
+                    <MudButton Class="bit-button" Variant="Variant.Outlined" Color="@(bitWatcher.BitValue ? Color.Error : Color.Success)"
+                                StartIcon="@Icons.Material.Filled.Circle" IconColor="@(bitWatcher.BitValue ? Color.Error : Color.Success)"
+                                OnClick="() => bitWatcher.Toggle()">
+                        BIT: @bitWatcher.BitIndex
+                    </MudButton>
+                }
+            
+        </div>
+    </MudCardContent>
+</MudCard>

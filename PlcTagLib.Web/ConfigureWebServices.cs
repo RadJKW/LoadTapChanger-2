@@ -7,6 +7,7 @@ using MudBlazor.Services;
 using PlcTagLib.Data;
 using PlcTagLib.Web.Data;
 using PlcTagLib.Web.Filters;
+using PlcTagLib.Web.Services;
 
 namespace PlcTagLib.Web;
 public static class ConfigureWebServices
@@ -65,6 +66,9 @@ public static class ConfigureWebServices
                 .AllowAnyOrigin());
         });
         services.AddScoped<DialogService>();
+        services.AddScoped<BitToggle>();
+        services.AddScoped<BitWatcher>();
+        services.AddSingleton<IEnumerable<BitWatcher>>(new List<BitWatcher>());
         services.AddMudServices();
         return services;
     }
