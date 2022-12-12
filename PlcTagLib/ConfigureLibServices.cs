@@ -1,9 +1,11 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using PlcTagLib.Common.Behaviours;
 using PlcTagLib.Common.Interfaces;
 using PlcTagLib.Data;
@@ -50,8 +52,9 @@ public static class ConfigureLibServices
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<ICsvService, CsvService>();
         services.AddTransient<IRsLogixDbImporter, RslogixDbImporter>();
-        // services.AddSingleton<PeriodicBitToggle>();
-        // services.AddSingleton<BitWatcher>();
+        services.AddSingleton<PeriodicBitToggle>();
+        services.AddSingleton<BitWatcher>();
+        services.AddSingleton<IBitCollectionService, BitCollection>();
 
 
 

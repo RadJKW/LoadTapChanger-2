@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="/PlcTagLib/RSLogixDbFiles/DEV-PLC2.CSV">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\PlcTagLib\RSLogixDbFiles\DEV-PLC2.CSV">
           <value>
             <Attribute>
