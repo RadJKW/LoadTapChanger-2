@@ -3,6 +3,7 @@ using libplctag.DataTypes;
 using Microsoft.EntityFrameworkCore;
 using PlcTagLib.Common.Interfaces;
 using PlcTagLib.Entities;
+using DebugLevel=libplctag.DebugLevel;
 
 namespace PlcTagLib.Web.Models;
 public class PlcTagRow : PlcTag

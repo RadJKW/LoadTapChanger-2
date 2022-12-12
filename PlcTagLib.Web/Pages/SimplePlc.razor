@@ -1,0 +1,21 @@
+﻿@page "/SimplePlc"
+
+<PlcDeviceCard CardTitle="@SelectedPlc!.Name"/>
+
+@code {
+
+    [Parameter]
+    public Plc? SelectedPlc { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        SelectedPlc = new Plc
+        {
+            Name = "TestPlc",
+            IpAddress = "192.168.0.23",
+            Id = 1
+        };
+    }
+
+}

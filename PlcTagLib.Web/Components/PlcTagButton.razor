@@ -1,0 +1,16 @@
+﻿<MudButton
+    Class="header-left-button"
+    Variant="Variant.Outlined"
+    StartIcon="@Icons.Material.Filled.Circle"
+    IconColor="@(Value ? Color.Success : Color.Error)">
+    @Address
+</MudButton>
+
+@code {
+    [Parameter]
+    public string Address { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool Value { get; set; } = false;
+
+}

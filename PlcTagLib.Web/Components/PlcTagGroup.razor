@@ -1,0 +1,99 @@
+﻿<style>
+    .tag-group {
+        border: 1px solid darkgrey;
+        border-radius: 4px;
+        vertical-align: middle;
+        
+    }
+    
+    .tg-header{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 5px;
+        border-bottom: 1px solid darkgrey;
+        text-align: center;
+    }
+    .add-btn{
+        width:  auto;
+        height: 100%;
+        margin: 0;    
+    }
+    .title{
+        /* offset the width and margin of the button to keep it centered */
+        font-size: 1.5em;
+        margin: 0 auto;
+    }
+    
+    .tg-content{
+        padding: 16px;
+    }
+</style>
+<div class="tag-group">
+    <div class="tg-header">
+        <MudIconButton
+            Class="add-btn"
+            Variant="Variant.Text"
+            Size="Size.Small"
+            Color="Color.Tertiary"
+            Icon="@Icons.Material.Filled.Add">
+        </MudIconButton>
+        <MudDivider Vertical="true" DividerType="DividerType.FullWidth" FlexItem="true" Style="border-color: white"/>
+        <MudText
+            Class="title"
+            Typo="Typo.body1"
+            Align="Align.Center">
+            @TagGroupTypeString
+        </MudText>
+    </div>
+    <MudStack Class="tg-content" AlignItems="AlignItems.Center">
+        @foreach (var tagButton in PlcTagButtons)
+        {
+            <PlcTagButton Address="@tagButton.Address" Value="@tagButton.Value"/>
+        }
+    </MudStack>
+</div>
+
+@code {
+
+    [Parameter]
+    public TagType TagGroupType { get; set; }
+
+    private string TagGroupTypeString => TagGroupType.ToString();
+    private List<TagButton> PlcTagButtons { get; set; } = new List<TagButton>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        PlcTagButtons.Add(new TagButton("Tag1", true));
+    }
+
+    public class TagButton
+    {
+        public TagButton()
+        {
+        }
+
+        public TagButton(string address, bool value)
+        {
+            Address = address;
+            Value = value;
+        }
+
+        public string? Address { get; set; }
+        public bool Value { get; set; }
+
+    }
+
+    public enum TagType
+    {
+        Input,
+        Output,
+        Binary,
+        Counter,
+        Integer,
+        Timer,
+        None = 99
+    }
+
+}
