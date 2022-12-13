@@ -4,11 +4,7 @@
 
 <MudThemeProvider Theme="MyCustomTheme" @ref="_mudThemeProvider" @bind-IsDarkmode="@_isDarkMode"/>
 <MudDialogProvider
-    FullWidth="true"
-    MaxWidth="MaxWidth.Medium"
-    CloseButton="true"
     DisableBackdropClick="true"
-    NoHeader="false"
     Position="DialogPosition.Center"
     CloseOnEscapeKey="true"/>
 <MudSnackbarProvider/>
@@ -47,7 +43,6 @@
         <MudSwitch Class="justify-center" @bind-Checked="@_isDarkMode" Color="Color.Primary" T="bool" Label="Dark Mode">
         </MudSwitch>
     </MudDrawer>
-
     <MudMainContent>
         <MudContainer Class="my-8 px-16" MaxWidth="MaxWidth.False">
             @Body

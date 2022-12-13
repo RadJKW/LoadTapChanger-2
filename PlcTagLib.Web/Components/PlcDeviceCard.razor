@@ -1,44 +1,46 @@
 ﻿@using PlcTagLib.Entities
 @inject IDialogService DialogService
 
-<style>
- 
-        .tag-group-flex {
-            display: flex;
-            justify-items: center;
-            align-items: center;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-            grid-auto-flow: row;
-            margin:  auto;
-        }
-        .tag-group-flex > * {
-            margin: 0.5rem 0.2rem;
-        } 
-                
-        .mud-card > *,p {
-         font-size: calc(0.75rem + 0.2vw);
-        }
+<style> 
+    .tag-group-flex {
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        grid-auto-flow: row;
+        margin:  auto;
+    }
+    .tag-group-flex > * {
+        margin: 0.5rem 0.2rem;
+    } 
+    .not-btn > span{
+        color: #ffffff;
+    }
 </style>
 <MudCard Class="col-8 mx-auto" Style="min-width: 300px">
     <MudCardHeader>
         <div class="col d-flex justify-start">
-            <MudButtonGroup Variant="Variant.Outlined" Size="Size.Small" OverrideStyles="true" VerticalAlign="true">
+            <MudButtonGroup Class="align-center" Variant="Variant.Outlined" Size="Size.Small"
+                            OverrideStyles="true" VerticalAlign="false">
                 <MudIconButton
                     Variant="Variant.Text"
                     Color="Color.Tertiary"
                     Size="Size.Small"
                     Icon="@Icons.Filled.Add"
-                    @onclick="OpenAddTagGroupDialog">
+                    OnClick="OpenAddTagGroupDialog">
                 </MudIconButton>
+                <MudButton Class="not-btn" Disabled="true">
+                    Group Edit
+                </MudButton>
                 <MudIconButton
                     Variant="Variant.Text"
                     Color="Color.Error"
                     Size="Size.Small"
                     Icon="@Icons.Filled.Remove"
-                    @onclick="OpenRemoveTagGroupDialog">
-                    </MudIconButton>
+                    OnClick="OpenRemoveTagGroupDialog">
+                </MudIconButton>
             </MudButtonGroup>
         </div>
         <div class="col-4 d-flex justify-center">
@@ -63,7 +65,9 @@
         <div class="tag-group-flex">
             @foreach (var tagGroup in TagGroups)
             {
-                <PlcTagGroup TagGroupType="@tagGroup.TagGroupType"/>
+                <div class="col" style="max-width: 25%;">
+                    <PlcTagGroup TagGroupType="@tagGroup.TagGroupType"/>
+                </div>
             }
         </div>
     </MudCardContent>
@@ -74,62 +78,93 @@
     public string CardTitle { get; set; } = "Card Title";
 
     private List<TagGroup> TagGroups { get; set; } = new List<TagGroup>();
+    private List<PlcTagGroup.TagType> TagGroupTypes { get; set; } = new();
 
-    private TagGroup? TagGroupToDelete { get; set; }
-
-    async Task OpenAddTagGroupDialog()
+    protected override async Task OnInitializedAsync()
     {
+        TagGroupTypes = await Task.FromResult
+            (
+                Enum.GetValues(typeof(PlcTagGroup.TagType))
+                    .Cast<PlcTagGroup.TagType>()
+                    .ToList()
+            );
+
+    // add the Input, Output, and Binary TagTypes as the initial TagGroups
+
+        var initialTagGroups = TagGroupTypes
+            .Where(t => t
+                is PlcTagGroup.TagType.Input
+                    or PlcTagGroup.TagType.Output 
+                    or PlcTagGroup.TagType.Binary)
+            .ToList();
+
+        TagGroups.AddRange(initialTagGroups.Select(t => new TagGroup(t)));
+
+
+    }
+    async Task OpenAddTagGroupDialog(EventArgs args)
+    {
+        var usedTagGroupTypes = TagGroups.Select(tg => tg.TagGroupType).ToList();
         var parameters = new DialogParameters()
         {
-            ["UsedTagGroupTypes"] = TagGroups.Select(x => x.TagGroupType).ToList()
+    // remove usedTagGroupTypes from tagGroupTypes
+            {
+                "TagGroupTypes", TagGroupTypes.Except(usedTagGroupTypes).ToList()
+            }
         };
         var options = new DialogOptions()
         {
-            MaxWidth = MaxWidth.Small
+            MaxWidth = MaxWidth.Small,
+            CloseButton = true,
+            FullWidth = false
+
         };
 
-        var dialog = await DialogService.ShowAsync<AddTagGroupForm>("Simple Dialog", parameters, options);
+        var dialog = await DialogService
+            .ShowAsync<EditPlcTagGroups>
+            ("Add Tag Group", parameters, options);
 
         var result = await dialog.Result;
 
         if (!result.Cancelled)
         {
-            var tagGroupType = (PlcTagGroup.TagType)result.Data;
-            TagGroups.Add(new TagGroup(tagGroupType));
+            var tagGroupType = (List<PlcTagGroup.TagType>)result.Data;
+            foreach (var type in tagGroupType)
+            {
+                TagGroups.Add(new TagGroup(type));
+            }
         }
     }
-
     async Task OpenRemoveTagGroupDialog()
     {
-        var parameters = new DialogParameters()
+        var parameters = new DialogParameters
         {
-            ["TagGroups"] = TagGroups
+            ["TagGroupTypes"] = TagGroups
+                .Select(tg => tg.TagGroupType)
+                .ToList()
         };
         var options = new DialogOptions()
         {
+            CloseButton = true,
             MaxWidth = MaxWidth.Small
         };
 
-        var dialog = await DialogService.ShowAsync<RemoveTagGroupForm>("Simple Dialog", parameters, options);
+        var dialog = await DialogService.ShowAsync<EditPlcTagGroups>("Remove Tag Groups", parameters, options);
 
         var result = await dialog.Result;
 
         if (!result.Cancelled)
         {
-            TagGroupToDelete = (TagGroup)result.Data;
-            TagGroups.Remove(TagGroupToDelete);
+            var tagGroupType = (List<PlcTagGroup.TagType>)result.Data;
+            TagGroups.RemoveAll(tg => tagGroupType.Contains(tg.TagGroupType));
         }
     }
-    
 
     public class TagGroup
     {
         public PlcTagGroup.TagType TagGroupType { get; set; }
 
-        public TagGroup()
-        {
-            TagGroupType = PlcTagGroup.TagType.None;
-        }
+
         public TagGroup(PlcTagGroup.TagType tagGroupType)
         {
             TagGroupType = tagGroupType;

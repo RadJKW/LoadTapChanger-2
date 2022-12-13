@@ -1,4 +1,6 @@
-﻿<style>
+﻿@using libplctag
+@inject IDialogService DialogService
+<style>
     .tag-group {
         border: 1px solid darkgrey;
         border-radius: 4px;
@@ -15,7 +17,7 @@
         text-align: center;
     }
     .add-btn{
-        width:  auto;
+        width:  15%;
         height: 100%;
         margin: 0;    
     }
@@ -35,21 +37,30 @@
             Class="add-btn"
             Variant="Variant.Text"
             Size="Size.Small"
-            Color="Color.Tertiary"
-            Icon="@Icons.Material.Filled.Add">
+            Color="Color.Success"
+            Icon="@Icons.Material.Filled.Add"
+            OnClick="() => OpenEditTagButtons(false)">
         </MudIconButton>
-        <MudDivider Vertical="true" DividerType="DividerType.FullWidth" FlexItem="true" Style="border-color: white"/>
+        <MudDivider Vertical="true" DividerType="DividerType.FullWidth" FlexItem="true" Style="border: 1px solid white"/>
         <MudText
             Class="title"
             Typo="Typo.body1"
             Align="Align.Center">
             @TagGroupTypeString
         </MudText>
+        <MudIconButton
+            Class="rm-btn"
+            Variant="Variant.Text"
+            Size="Size.Small"
+            Color="Color.Error"
+            Icon="@Icons.Material.Filled.Remove"
+            OnClick="() => OpenEditTagButtons(true)">
+        </MudIconButton>
     </div>
     <MudStack Class="tg-content" AlignItems="AlignItems.Center">
         @foreach (var tagButton in PlcTagButtons)
         {
-            <PlcTagButton Address="@tagButton.Address" Value="@tagButton.Value"/>
+            <PlcTagButton Address="@tagButton.Name" Value="@tagButton.Value"/>
         }
     </MudStack>
 </div>
@@ -70,18 +81,17 @@
 
     public class TagButton
     {
-        public TagButton()
+        public TagButton(string? name = null, bool value = false)
         {
-        }
-
-        public TagButton(string address, bool value)
-        {
-            Address = address;
+            Name = name;
             Value = value;
         }
 
-        public string? Address { get; set; }
+
+        public string? Name { get; set; }
+        public string? Gateway { get; set; }
         public bool Value { get; set; }
+        public DebugLevel DebugLevel { get; set; } = DebugLevel.None;
 
     }
 
@@ -93,7 +103,40 @@
         Counter,
         Integer,
         Timer,
-        None = 99
     }
 
+    async Task OpenEditTagButtons(bool delete)
+    {
+        var parameters = new DialogParameters
+        {
+            {
+                "TagButtons", PlcTagButtons
+            }
+        };
+        var options = new DialogOptions()
+        {
+            MaxWidth = MaxWidth.Large,
+            CloseButton = true
+        };
+
+        var dialog = await DialogService.ShowAsync<EditTagButtons>("Edit Tag Buttons", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            if (delete)
+            {
+
+            }
+            else
+            {
+                PlcTagButtons = (List<TagButton>)result.Data;
+
+            }
+        }
+
+
+
+    }
 }

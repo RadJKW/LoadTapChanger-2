@@ -1,0 +1,142 @@
+﻿@using libplctag
+@using CsvHelper.Configuration.Attributes
+<style>
+    .dialog-header{
+        display:  flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 5px 0;
+        justify-content: space-between;
+    
+    }
+    .dialog-head-right{
+        float: right;
+    } 
+    .dialog-head-left
+    {
+        margin-inline: 0;
+        float: left;
+    }
+    .dialog-head-body{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        min-width:  450px;
+    }
+   
+    .mud-dialog-title{
+        border-bottom: 1px solid darkslategrey;
+    
+    }
+    
+    
+       
+</style>
+<MudDialog Class="px-1">
+    <DialogContent>
+        <div class="dialog-head-body mt-4 mx-1 mb-n4 border">
+            <MudButtonGroup
+                Class="px-2 py-1 justify-start align-center"
+                OverrideStyles="false"
+                VerticalAlign="true">
+                <MudText
+                    Class="pa-0 ma-0"
+                    Typo="Typo.subtitle2">
+                    Select All
+                </MudText>
+                <MudToggleIconButton
+                    @bind-Toggled="@SelectAllChecked"
+                    ToggledIcon="@Icons.Outlined.CheckBox"
+                    Icon="@Icons.Outlined.CheckBoxOutlineBlank"
+                    Color="Color.Info"
+                    Size="Size.Small">
+                </MudToggleIconButton>
+            </MudButtonGroup>
+            <MudDivider
+                Vertical="true"
+                FlexItem="true"
+                DividerType="DividerType.FullWidth"/>
+            <MudButtonGroup
+                Class="col-8 mx-auto justify-center"
+                Color="Color.Primary"
+                Variant="Variant.Outlined">
+                @foreach (var tagButton in TagButtons!.ToList())
+                {
+                    <MudButton
+                        OnClick="@(() => _selectedTagButtons.Add(tagButton))"
+                        Disabled="@(_selectedTagButtons.Contains(tagButton))">
+                        @tagButton.Name
+                    </MudButton>
+                }
+                <MudIconButton
+                    OnClick="@(() => ShowCreateTagForm = !ShowCreateTagForm)"
+                    Icon="@Icons.Filled.Add">
+                </MudIconButton>
+            </MudButtonGroup>
+        </div>
+        @if (ShowCreateTagForm)
+        {
+            <MudForm>
+
+                <MudTextField @bind-Value="_newTagButton.Name" Label="Name"/>
+                <MudTextField @bind-Value="_newTagButton.Gateway" Label="Gateway"/>
+                <MudSwitch @bind-Checked="_newTagButton.Value" Label="Value" Color="Color.Error"/>
+                <MudSelect @bind-Value="_newTagButton.DebugLevel" Label="DebugLevel" Dense="true">
+                    @foreach (var debugLevel in Enum.GetValues(typeof(DebugLevel)).Cast<DebugLevel>())
+                    {
+                        <MudSelectItem Value="@debugLevel">@debugLevel</MudSelectItem>
+                    }
+                </MudSelect>
+                <MudButton Class="pa-2" OnClick="AddNewTagToList" Variant="Variant.Outlined">Close</MudButton>
+            </MudForm>
+
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudIconButton Icon="@Icons.Outlined.Refresh" Color="Color.Warning" OnClick="@(() => _selectedTagButtons.Clear())"/>
+        <MudIconButton Icon="@Icons.Outlined.Check" Color="Color.Success" OnClick="Submit"/>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public MudDialogInstance? MudDialog { get; set; }
+    [Parameter]
+    public List<PlcTagGroup.TagButton>? TagButtons { get; set; }
+
+    private PlcTagGroup.TagButton _newTagButton = new()
+    {
+        Gateway = "192.168.0.23"
+    };
+
+    private readonly List<PlcTagGroup.TagButton> _selectedTagButtons = new();
+
+    private bool ShowCreateTagForm { get; set; }
+    private bool SelectAllChecked
+    {
+        get => _selectedTagButtons.Count == TagButtons!.Count();
+        set => SelectAll(value);
+    }
+
+    private void SelectAll(bool obj)
+    {
+        if (obj)
+        {
+            _selectedTagButtons.AddRange(TagButtons!.ToList());
+        }
+        else
+        {
+            _selectedTagButtons.Clear();
+        }
+    }
+    private void Submit() => MudDialog?.Close(DialogResult.Ok(_selectedTagButtons));
+
+
+    private void AddNewTagToList()
+    {
+        ShowCreateTagForm = false;
+        TagButtons!.Add(_newTagButton);
+        _newTagButton = new PlcTagGroup.TagButton();
+    }
+}

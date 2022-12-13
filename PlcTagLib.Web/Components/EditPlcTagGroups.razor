@@ -1,0 +1,51 @@
+﻿<MudDialog>
+
+    <DialogContent>
+        <MudCheckBox Class="justify-start my-1" @bind-Checked="@SelectAllChecked">Select All</MudCheckBox>
+        <MudButtonGroup Class="justify-center" Color="Color.Primary" Variant="Variant.Outlined">
+            @foreach (var tagType in TagGroupTypes!.ToList())
+            {
+                <MudButton
+                    Tag="@(tagType)"
+                    OnClick="@(() => _selectedTagTypes.Add(tagType))"
+                    Disabled="@(_selectedTagTypes.Contains(tagType))">
+                    @tagType.ToString()
+                </MudButton>
+            }
+        </MudButtonGroup>
+    </DialogContent>
+    <DialogActions>
+        <MudIconButton Icon="@Icons.Outlined.Refresh" Color="Color.Warning" OnClick="@(() => _selectedTagTypes.Clear())"/>
+        <MudIconButton Icon="@Icons.Outlined.Check" Color="Color.Success" OnClick="Submit"/>
+    </DialogActions>
+</MudDialog>
+
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance? MudDialog { get; set; }
+    [Parameter]
+    public List<PlcTagGroup.TagType>? TagGroupTypes { get; set; }
+
+    private readonly List<PlcTagGroup.TagType> _selectedTagTypes = new();
+
+    private bool SelectAllChecked
+    {
+        get => _selectedTagTypes.Count == TagGroupTypes!.Count();
+        set => SelectAll(value);
+    }
+
+    private void SelectAll(bool obj)
+    {
+        if (obj)
+        {
+            _selectedTagTypes.AddRange(TagGroupTypes!.ToList());
+        }
+        else
+        {
+            _selectedTagTypes.Clear();
+        }
+    }
+
+    void Submit() => MudDialog?.Close(DialogResult.Ok(_selectedTagTypes));
+}

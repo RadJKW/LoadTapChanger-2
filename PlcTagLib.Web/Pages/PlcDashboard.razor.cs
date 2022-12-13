@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
 using PlcTagLib.Common.Interfaces;
 using PlcTagLib.Enums;
@@ -70,7 +69,7 @@ public partial class PlcDashboard : ComponentBase
 
     }
 
-    public async Task OnCheckedChanged(bool args, PlcTagRow tagRow)
+    private async Task OnCheckedChanged(bool args, PlcTagRow tagRow)
     {
         // if (args) => StartMonitoringTagAsync();
         // else => StopMonitoringTagAsync();
@@ -114,9 +113,9 @@ public partial class PlcDashboard : ComponentBase
 
 
 
-    private async Task WriteTagValue(PlcTagRow tagRow)
-    {
-        await tagRow.WriteToTagAsync(tagRow.Value);
-
-    }
+    // private async Task WriteTagValue(PlcTagRow tagRow)
+    // {
+    //     await tagRow.WriteToTagAsync(tagRow.Value);
+    //
+    // }
 }
