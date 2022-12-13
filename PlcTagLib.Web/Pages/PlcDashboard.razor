@@ -8,7 +8,7 @@
     <MudCardHeader>
         <MudGrid Style="min-width: fit-content">
             <MudItem xs="12" sm="12" md="8">
-                <MudSelect Class="" Label="Micrologix Plcs" T="PlcDto" Variant="Variant.Outlined"
+                <MudSelect Label="Micrologix Plcs" T="PlcDto" Variant="Variant.Outlined"
                            ValueChanged="OnValueChanged" Clearable="true">
                     @foreach (var plc in PlcDtosList!)
                     {
@@ -28,7 +28,7 @@
                 foreach (var tagGroup in TagGroupsList)
                 {
                     <MudDivider DividerType="DividerType.FullWidth"/>
-                    <MudListItem Text="@tagGroup.Key.ToString()" Style="background-color: var(--mud-palette-drawer-background);">
+                    <MudListItem Text="@tagGroup.Key.ToString()" Style="background-color: #0a0a0a5e;">
                         <NestedList>
                             <MudSimpleTable Dense="true" Bordered="true" Striped="false"
                                             FixedHeader="true" Outlined="true">

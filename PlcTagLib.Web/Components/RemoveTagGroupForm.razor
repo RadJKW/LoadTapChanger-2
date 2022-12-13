@@ -1,0 +1,35 @@
+
+<MudDialog>
+    <DialogContent>
+        <MudSelect 
+            @bind-Value="@_selectedPlcTagGroup" 
+            Label="TagGroupType" 
+            AnchorOrigin="Origin.BottomCenter" 
+            Placeholder="Hello World"
+            Variant="Variant.Outlined">
+            @foreach (var groupType in TagGroups!.ToList())
+            {
+                <MudSelectItem Value="@groupType">@groupType.TagGroupType.ToString()</MudSelectItem>
+            }
+        </MudSelect>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    // take in a list of existing PlcTagGroups. This is a list of components that have been created. 
+    // The user can select one of these to remove.
+    
+    // return the selected PlcTagGroup to be removed.
+    [CascadingParameter] MudDialogInstance? MudDialog { get; set; }
+    [Parameter] public List<PlcDeviceCard.TagGroup>? TagGroups { get; set; }
+
+    private PlcDeviceCard.TagGroup? _selectedPlcTagGroup; 
+    
+    void Submit() => MudDialog?.Close(DialogResult.Ok(_selectedPlcTagGroup));
+    void Cancel() => MudDialog?.Cancel();
+    
+}

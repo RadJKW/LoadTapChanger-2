@@ -1,9 +1,15 @@
-﻿<MudDialog>
+﻿
+<MudDialog>
     <DialogContent>
-        <MudSelect T="PlcTagGroup.TagType" Label="TagGroupType" AnchorOrigin="Origin.BottomCenter">
-            @foreach (var groupType in TagGroupTypes!)
+        <MudSelect 
+            @bind-Value="_selectedTagGroupType" 
+            Label="TagGroupType" 
+            AnchorOrigin="Origin.BottomCenter" 
+            Placeholder="Hello World"
+            Variant="Variant.Outlined">
+            @foreach (var groupType in TagGroupTypes.ToList())
             {
-                <MudSelectItem Value="@groupType"></MudSelectItem>
+                <MudSelectItem Value="groupType" Disabled="@(groupType == PlcTagGroup.TagType.None)">@(groupType is PlcTagGroup.TagType.None ? string.Empty : groupType.ToString())</MudSelectItem>
             }
         </MudSelect>
     </DialogContent>
@@ -18,12 +24,12 @@
     [CascadingParameter]
     MudDialogInstance? MudDialog { get; set; }
 
-    [Parameter]
     // make a list of enum values that have already been used, so we can filter them out
+    [Parameter]
     public List<PlcTagGroup.TagType>? UsedTagGroupTypes { get; set; }
 
-    private PlcTagGroup.TagType TagGroupType { get; set; }
-    public List<PlcTagGroup.TagType>? TagGroupTypes { get; set; } = new List<PlcTagGroup.TagType>();
+    private PlcTagGroup.TagType _selectedTagGroupType = PlcTagGroup.TagType.None;
+    private List<PlcTagGroup.TagType> TagGroupTypes { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,6 +40,6 @@
     }
 
 
-    void Submit() => MudDialog?.Close(DialogResult.Ok(TagGroupType));
+    void Submit() => MudDialog?.Close(DialogResult.Ok(_selectedTagGroupType));
     void Cancel() => MudDialog?.Cancel();
 }
